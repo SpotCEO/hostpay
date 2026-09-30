@@ -44,56 +44,133 @@ export default function HomePage() {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            gap: "20px",
-            padding: "0 0 18px"
+            gap: "24px",
+            padding: "4px 0 20px",
+            borderBottom: "1px solid rgba(255,255,255,0.07)",
+            flexWrap: "wrap"
           }}
         >
-          <div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "13px"
+            }}
+          >
             <div
               style={{
-                fontSize: "26px",
-                fontWeight: 900,
-                letterSpacing: "0.08em"
+                width: "46px",
+                height: "46px",
+                borderRadius: "14px",
+                display: "grid",
+                placeItems: "center",
+                background:
+                  "linear-gradient(145deg, rgba(75,188,255,1), rgba(39,101,255,1))",
+                boxShadow:
+                  "0 10px 30px rgba(54,160,255,0.28), inset 0 1px 0 rgba(255,255,255,0.35)",
+                color: "#ffffff",
+                fontSize: "27px",
+                fontWeight: 950,
+                letterSpacing: "-0.08em"
               }}
             >
-              HOSTPAY
+              H
             </div>
 
-            <div
-              style={{
-                marginTop: "3px",
-                color: "#5dc5ff",
-                fontSize: "12px",
-                fontWeight: 800,
-                letterSpacing: "0.08em"
-              }}
-            >
-              LAUNCH. REWARD. GROW.
+            <div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "baseline",
+                  gap: "6px"
+                }}
+              >
+                <span
+                  style={{
+                    fontSize: "25px",
+                    fontWeight: 950,
+                    letterSpacing: "-0.025em"
+                  }}
+                >
+                  HOST
+                </span>
+
+                <span
+                  style={{
+                    fontSize: "25px",
+                    fontWeight: 950,
+                    letterSpacing: "-0.025em",
+                    color: "#55c3ff"
+                  }}
+                >
+                  PAY
+                </span>
+              </div>
+
+              <div
+                style={{
+                  marginTop: "2px",
+                  color: "#7189a3",
+                  fontSize: "10px",
+                  fontWeight: 800,
+                  letterSpacing: "0.18em"
+                }}
+              >
+                LAUNCH · REWARD · GROW
+              </div>
             </div>
           </div>
 
           <div
             style={{
-              padding: "9px 13px",
-              borderRadius: "999px",
-              border: "1px solid rgba(91,196,255,0.28)",
-              background: "rgba(14,35,57,0.72)",
-              color: "#9edfff",
-              fontSize: "12px",
-              fontWeight: 800
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-end",
+              gap: "22px",
+              flexWrap: "wrap"
             }}
           >
-            Built on Solana
+            <div
+              style={{
+                display: "flex",
+                gap: "20px",
+                alignItems: "center",
+                color: "#9fb2c7",
+                fontSize: "13px",
+                fontWeight: 700,
+                flexWrap: "wrap"
+              }}
+            >
+              <span>How It Works</span>
+              <span>Economics</span>
+              <span>For Developers</span>
+              <span>Rewards</span>
+            </div>
+
+            <div
+              style={{
+                padding: "9px 13px",
+                borderRadius: "999px",
+                border: "1px solid rgba(91,196,255,0.28)",
+                background: "rgba(14,35,57,0.72)",
+                color: "#9edfff",
+                fontSize: "12px",
+                fontWeight: 800,
+                boxShadow: "inset 0 1px 0 rgba(255,255,255,0.04)"
+              }}
+            >
+              Built on Solana
+            </div>
           </div>
         </header>
 
         <section
           style={{
             display: "grid",
-            gridTemplateColumns: "1.05fr 0.95fr",
+            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
             gap: "34px",
             alignItems: "start",
-            padding: "14px 0 18px"
+            padding: "22px 0 16px"
           }}
         >
           <div>
@@ -293,7 +370,7 @@ export default function HomePage() {
 
         <section
           style={{
-            marginTop: "14px",
+            marginTop: "12px",
             padding: "24px",
             borderRadius: "22px",
             background:
@@ -350,7 +427,7 @@ export default function HomePage() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(4, 1fr)",
+              gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))",
               gap: "12px",
               marginTop: "20px"
             }}

@@ -39,101 +39,41 @@ export default function HomePage() {
           padding: "18px 22px 70px"
         }}
       >
-        <header
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: "24px",
-            padding: "4px 0 20px",
-            borderBottom: "1px solid rgba(255,255,255,0.07)",
-            flexWrap: "wrap"
-          }}
-        >
+        <header>
           <div
             style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "13px"
+              borderRadius: "22px",
+              overflow: "hidden",
+              border: "1px solid rgba(95,190,255,0.22)",
+              boxShadow: "0 20px 60px rgba(0,0,0,0.28)",
+              background: "#ffffff"
             }}
           >
-            <div
+            <img
+              src="/hostpay-header.png"
+              alt="HOSTPAY - Launch. Reward. Grow."
               style={{
-                width: "46px",
-                height: "46px",
-                borderRadius: "14px",
-                display: "grid",
-                placeItems: "center",
-                background:
-                  "linear-gradient(145deg, rgba(75,188,255,1), rgba(39,101,255,1))",
-                boxShadow:
-                  "0 10px 30px rgba(54,160,255,0.28), inset 0 1px 0 rgba(255,255,255,0.35)",
-                color: "#ffffff",
-                fontSize: "27px",
-                fontWeight: 950,
-                letterSpacing: "-0.08em"
+                display: "block",
+                width: "100%",
+                height: "auto"
               }}
-            >
-              H
-            </div>
-
-            <div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "baseline",
-                  gap: "6px"
-                }}
-              >
-                <span
-                  style={{
-                    fontSize: "25px",
-                    fontWeight: 950,
-                    letterSpacing: "-0.025em"
-                  }}
-                >
-                  HOST
-                </span>
-
-                <span
-                  style={{
-                    fontSize: "25px",
-                    fontWeight: 950,
-                    letterSpacing: "-0.025em",
-                    color: "#55c3ff"
-                  }}
-                >
-                  PAY
-                </span>
-              </div>
-
-              <div
-                style={{
-                  marginTop: "2px",
-                  color: "#7189a3",
-                  fontSize: "10px",
-                  fontWeight: 800,
-                  letterSpacing: "0.18em"
-                }}
-              >
-                LAUNCH · REWARD · GROW
-              </div>
-            </div>
+            />
           </div>
 
           <div
             style={{
               display: "flex",
+              justifyContent: "space-between",
               alignItems: "center",
-              justifyContent: "flex-end",
-              gap: "22px",
+              gap: "20px",
+              padding: "15px 4px 4px",
               flexWrap: "wrap"
             }}
           >
             <div
               style={{
                 display: "flex",
-                gap: "20px",
+                gap: "22px",
                 alignItems: "center",
                 color: "#9fb2c7",
                 fontSize: "13px",
@@ -145,6 +85,7 @@ export default function HomePage() {
               <span>Economics</span>
               <span>For Developers</span>
               <span>Rewards</span>
+              <span>ASK ROBO</span>
             </div>
 
             <div
@@ -155,8 +96,7 @@ export default function HomePage() {
                 background: "rgba(14,35,57,0.72)",
                 color: "#9edfff",
                 fontSize: "12px",
-                fontWeight: 800,
-                boxShadow: "inset 0 1px 0 rgba(255,255,255,0.04)"
+                fontWeight: 800
               }}
             >
               Built on Solana
@@ -170,7 +110,7 @@ export default function HomePage() {
             gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
             gap: "34px",
             alignItems: "start",
-            padding: "22px 0 16px"
+            padding: "20px 0 16px"
           }}
         >
           <div>

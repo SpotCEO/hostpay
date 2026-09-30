@@ -27,7 +27,7 @@ export default function HomePage() {
       style={{
         minHeight: "100vh",
         background:
-          "radial-gradient(circle at top right, rgba(42,140,255,0.18), transparent 30%), linear-gradient(180deg, #06111f 0%, #081522 58%, #050d17 100%)",
+          "radial-gradient(circle at top right, rgba(40,130,255,0.18), transparent 28%), linear-gradient(180deg, #06111f 0%, #081522 58%, #050d17 100%)",
         color: "#ffffff",
         fontFamily: "Arial, Helvetica, sans-serif"
       }}
@@ -36,7 +36,7 @@ export default function HomePage() {
         style={{
           maxWidth: "1180px",
           margin: "0 auto",
-          padding: "26px 22px 80px"
+          padding: "18px 22px 70px"
         }}
       >
         <header
@@ -45,7 +45,7 @@ export default function HomePage() {
             alignItems: "center",
             justifyContent: "space-between",
             gap: "20px",
-            padding: "8px 0 34px"
+            padding: "0 0 18px"
           }}
         >
           <div>
@@ -61,9 +61,9 @@ export default function HomePage() {
 
             <div
               style={{
-                marginTop: "4px",
+                marginTop: "3px",
                 color: "#5dc5ff",
-                fontSize: "13px",
+                fontSize: "12px",
                 fontWeight: 800,
                 letterSpacing: "0.08em"
               }}
@@ -74,12 +74,12 @@ export default function HomePage() {
 
           <div
             style={{
-              padding: "10px 14px",
+              padding: "9px 13px",
               borderRadius: "999px",
               border: "1px solid rgba(91,196,255,0.28)",
               background: "rgba(14,35,57,0.72)",
               color: "#9edfff",
-              fontSize: "13px",
+              fontSize: "12px",
               fontWeight: 800
             }}
           >
@@ -90,22 +90,22 @@ export default function HomePage() {
         <section
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+            gridTemplateColumns: "1.05fr 0.95fr",
             gap: "34px",
-            alignItems: "center",
-            padding: "42px 0 34px"
+            alignItems: "start",
+            padding: "14px 0 18px"
           }}
         >
           <div>
             <div
               style={{
                 display: "inline-block",
-                padding: "8px 12px",
+                padding: "7px 11px",
                 borderRadius: "999px",
                 background: "rgba(58,173,255,0.12)",
                 border: "1px solid rgba(58,173,255,0.22)",
                 color: "#67c9ff",
-                fontSize: "13px",
+                fontSize: "12px",
                 fontWeight: 800,
                 letterSpacing: "0.08em"
               }}
@@ -115,9 +115,9 @@ export default function HomePage() {
 
             <h1
               style={{
-                fontSize: "clamp(52px, 8vw, 92px)",
-                lineHeight: 0.98,
-                margin: "24px 0 22px",
+                fontSize: "clamp(50px, 6.7vw, 82px)",
+                lineHeight: 0.96,
+                margin: "18px 0 18px",
                 letterSpacing: "-0.055em"
               }}
             >
@@ -130,10 +130,10 @@ export default function HomePage() {
 
             <p
               style={{
-                maxWidth: "760px",
+                maxWidth: "650px",
                 color: "#b9c8da",
-                fontSize: "clamp(18px, 2.2vw, 24px)",
-                lineHeight: 1.55,
+                fontSize: "clamp(17px, 1.8vw, 21px)",
+                lineHeight: 1.5,
                 margin: 0
               }}
             >
@@ -145,17 +145,18 @@ export default function HomePage() {
               style={{
                 display: "flex",
                 flexWrap: "wrap",
-                gap: "12px",
-                marginTop: "28px"
+                gap: "10px",
+                marginTop: "22px"
               }}
             >
               <div
                 style={{
-                  padding: "13px 18px",
-                  borderRadius: "12px",
+                  padding: "12px 17px",
+                  borderRadius: "11px",
                   background: "#4bbcff",
                   color: "#06111f",
-                  fontWeight: 900
+                  fontWeight: 900,
+                  fontSize: "14px"
                 }}
               >
                 1% Platform Fee Model
@@ -163,12 +164,13 @@ export default function HomePage() {
 
               <div
                 style={{
-                  padding: "13px 18px",
-                  borderRadius: "12px",
+                  padding: "12px 17px",
+                  borderRadius: "11px",
                   border: "1px solid rgba(255,255,255,0.13)",
                   background: "rgba(255,255,255,0.035)",
                   color: "#d9e6f3",
-                  fontWeight: 800
+                  fontWeight: 800,
+                  fontSize: "14px"
                 }}
               >
                 No staking required
@@ -178,56 +180,122 @@ export default function HomePage() {
 
           <div
             style={{
-              borderRadius: "26px",
-              padding: "28px",
-              background:
-                "linear-gradient(180deg, rgba(14,34,55,0.96), rgba(8,21,35,0.96))",
-              border: "1px solid rgba(81,181,255,0.22)",
-              boxShadow: "0 28px 70px rgba(0,0,0,0.35)"
+              display: "grid",
+              gap: "14px"
             }}
           >
             <div
               style={{
-                color: "#6fd0ff",
-                fontWeight: 800,
-                fontSize: "13px",
-                letterSpacing: "0.08em"
+                borderRadius: "22px",
+                padding: "24px",
+                background:
+                  "linear-gradient(145deg, rgba(16,48,78,0.98), rgba(8,24,40,0.98))",
+                border: "1px solid rgba(84,193,255,0.3)",
+                boxShadow: "0 20px 55px rgba(0,0,0,0.28)"
               }}
             >
-              HOW VALUE FLOWS
+              <div
+                style={{
+                  color: "#63cbff",
+                  fontSize: "12px",
+                  fontWeight: 800,
+                  letterSpacing: "0.08em"
+                }}
+              >
+                ASK ROBO
+              </div>
+
+              <h2
+                style={{
+                  fontSize: "30px",
+                  lineHeight: 1.12,
+                  margin: "10px 0 10px",
+                  letterSpacing: "-0.025em"
+                }}
+              >
+                Why did I receive HOST?
+              </h2>
+
+              <p
+                style={{
+                  color: "#b7c6d8",
+                  fontSize: "15px",
+                  lineHeight: 1.55,
+                  margin: 0
+                }}
+              >
+                ASK ROBO is being built to explain HOSTPAY, launches and reward
+                provenance — including why HOST appeared in a wallet.
+              </p>
+
+              <div
+                style={{
+                  marginTop: "17px",
+                  display: "inline-block",
+                  padding: "11px 15px",
+                  borderRadius: "11px",
+                  background: "#4bbcff",
+                  color: "#06111f",
+                  fontWeight: 900,
+                  fontSize: "14px"
+                }}
+              >
+                Why did I receive HOST?
+              </div>
             </div>
 
             <div
               style={{
-                marginTop: "18px",
-                fontSize: "30px",
-                fontWeight: 900,
-                lineHeight: 1.18
+                borderRadius: "22px",
+                padding: "22px",
+                background:
+                  "linear-gradient(180deg, rgba(14,34,55,0.96), rgba(8,21,35,0.96))",
+                border: "1px solid rgba(81,181,255,0.22)"
               }}
             >
-              Every successful launch feeds the HOSTPAY ecosystem.
-            </div>
+              <div
+                style={{
+                  color: "#6fd0ff",
+                  fontWeight: 800,
+                  fontSize: "12px",
+                  letterSpacing: "0.08em"
+                }}
+              >
+                HOW VALUE FLOWS
+              </div>
 
-            <div
-              style={{
-                marginTop: "22px",
-                color: "#aebed0",
-                lineHeight: 1.7,
-                fontSize: "16px"
-              }}
-            >
-              Developers earn in SOL. HOST holder and host-community allocations
-              are used to buy HOST for rewards. Treasury remains available to
-              operate the machinery behind the platform.
+              <div
+                style={{
+                  marginTop: "10px",
+                  fontSize: "24px",
+                  fontWeight: 900,
+                  lineHeight: 1.17
+                }}
+              >
+                Every successful launch feeds the HOSTPAY ecosystem.
+              </div>
+
+              <div
+                style={{
+                  marginTop: "12px",
+                  color: "#aebed0",
+                  lineHeight: 1.55,
+                  fontSize: "14px"
+                }}
+              >
+                Developers earn in SOL. HOST holder and host-community
+                allocations are used to buy HOST for rewards. Treasury supports
+                platform operations and distribution.
+              </div>
             </div>
           </div>
         </section>
 
         <section
           style={{
-            marginTop: "22px",
-            padding: "28px",
-            borderRadius: "24px",
+            marginTop: "14px",
+            padding: "24px",
+            borderRadius: "22px",
             background:
               "linear-gradient(145deg, rgba(12,31,51,0.98), rgba(7,20,34,0.98))",
             border: "1px solid rgba(83,190,255,0.22)",
@@ -248,7 +316,7 @@ export default function HomePage() {
                 style={{
                   color: "#67c9ff",
                   fontWeight: 800,
-                  fontSize: "13px",
+                  fontSize: "12px",
                   letterSpacing: "0.08em"
                 }}
               >
@@ -257,8 +325,8 @@ export default function HomePage() {
 
               <h2
                 style={{
-                  fontSize: "clamp(30px, 4vw, 48px)",
-                  margin: "10px 0 0",
+                  fontSize: "clamp(30px, 4vw, 46px)",
+                  margin: "7px 0 0",
                   letterSpacing: "-0.035em"
                 }}
               >
@@ -269,12 +337,12 @@ export default function HomePage() {
             <div
               style={{
                 color: "#9fb2c6",
-                fontSize: "15px",
+                fontSize: "14px",
                 maxWidth: "430px",
-                lineHeight: 1.5
+                lineHeight: 1.45
               }}
             >
-              Every 1% platform fee is designed to flow across developers,
+              The 1% platform fee model is designed to flow across developers,
               HOST holders, operations and the selected host community.
             </div>
           </div>
@@ -282,24 +350,24 @@ export default function HomePage() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))",
-              gap: "14px",
-              marginTop: "24px"
+              gridTemplateColumns: "repeat(4, 1fr)",
+              gap: "12px",
+              marginTop: "20px"
             }}
           >
             {splitCards.map((card) => (
               <div
                 key={card.title}
                 style={{
-                  borderRadius: "18px",
-                  padding: "22px",
+                  borderRadius: "16px",
+                  padding: "18px",
                   background: "rgba(15,35,57,0.94)",
                   border: "1px solid rgba(92,191,255,0.18)"
                 }}
               >
                 <div
                   style={{
-                    fontSize: "34px",
+                    fontSize: "32px",
                     fontWeight: 900,
                     color: "#50c1ff"
                   }}
@@ -309,9 +377,9 @@ export default function HomePage() {
 
                 <div
                   style={{
-                    fontSize: "20px",
+                    fontSize: "18px",
                     fontWeight: 850,
-                    marginTop: "8px"
+                    marginTop: "6px"
                   }}
                 >
                   {card.title}
@@ -320,9 +388,9 @@ export default function HomePage() {
                 <div
                   style={{
                     color: "#aebed0",
-                    fontSize: "14px",
-                    lineHeight: 1.5,
-                    marginTop: "6px"
+                    fontSize: "13px",
+                    lineHeight: 1.45,
+                    marginTop: "5px"
                   }}
                 >
                   {card.text}
@@ -334,7 +402,7 @@ export default function HomePage() {
 
         <section
           style={{
-            marginTop: "50px",
+            marginTop: "42px",
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
             gap: "18px"
@@ -342,8 +410,8 @@ export default function HomePage() {
         >
           <div
             style={{
-              borderRadius: "24px",
-              padding: "30px",
+              borderRadius: "22px",
+              padding: "28px",
               background:
                 "linear-gradient(160deg, rgba(17,43,70,0.96), rgba(7,20,33,0.98))",
               border: "1px solid rgba(79,188,255,0.22)"
@@ -353,7 +421,7 @@ export default function HomePage() {
               style={{
                 color: "#61c8ff",
                 fontWeight: 800,
-                fontSize: "13px",
+                fontSize: "12px",
                 letterSpacing: "0.08em"
               }}
             >
@@ -362,8 +430,8 @@ export default function HomePage() {
 
             <h3
               style={{
-                fontSize: "30px",
-                margin: "14px 0 12px"
+                fontSize: "28px",
+                margin: "12px 0 10px"
               }}
             >
               Launch into an existing community.
@@ -372,7 +440,7 @@ export default function HomePage() {
             <p
               style={{
                 color: "#afc0d3",
-                lineHeight: 1.65,
+                lineHeight: 1.6,
                 margin: 0
               }}
             >
@@ -384,8 +452,8 @@ export default function HomePage() {
 
           <div
             style={{
-              borderRadius: "24px",
-              padding: "30px",
+              borderRadius: "22px",
+              padding: "28px",
               background:
                 "linear-gradient(160deg, rgba(17,43,70,0.96), rgba(7,20,33,0.98))",
               border: "1px solid rgba(79,188,255,0.22)"
@@ -395,17 +463,17 @@ export default function HomePage() {
               style={{
                 color: "#61c8ff",
                 fontWeight: 800,
-                fontSize: "13px",
+                fontSize: "12px",
                 letterSpacing: "0.08em"
               }}
             >
-              FOR COMMUNITIES
+              FOR HOST COMMUNITIES
             </div>
 
             <h3
               style={{
-                fontSize: "30px",
-                margin: "14px 0 12px"
+                fontSize: "28px",
+                margin: "12px 0 10px"
               }}
             >
               Get rewarded when projects choose you.
@@ -414,7 +482,7 @@ export default function HomePage() {
             <p
               style={{
                 color: "#afc0d3",
-                lineHeight: 1.65,
+                lineHeight: 1.6,
                 margin: 0
               }}
             >
@@ -427,80 +495,16 @@ export default function HomePage() {
 
         <section
           style={{
-            marginTop: "56px",
-            padding: "34px",
-            borderRadius: "26px",
-            background:
-              "linear-gradient(145deg, rgba(17,47,77,0.98), rgba(7,22,37,0.98))",
-            border: "1px solid rgba(84,193,255,0.27)",
-            boxShadow: "0 22px 60px rgba(0,0,0,0.28)"
-          }}
-        >
-          <div
-            style={{
-              color: "#63cbff",
-              fontSize: "13px",
-              fontWeight: 800,
-              letterSpacing: "0.08em"
-            }}
-          >
-            ASK ROBO
-          </div>
-
-          <h2
-            style={{
-              fontSize: "clamp(34px, 5vw, 52px)",
-              margin: "12px 0 12px",
-              letterSpacing: "-0.03em"
-            }}
-          >
-            Why did HOST appear in my wallet?
-          </h2>
-
-          <p
-            style={{
-              color: "#b7c6d8",
-              fontSize: "18px",
-              lineHeight: 1.65,
-              maxWidth: "800px",
-              margin: 0
-            }}
-          >
-            ASK ROBO is being built to explain HOSTPAY, launches, reward
-            provenance and why a wallet received HOST. Later, users will be able
-            to provide a public wallet address or transaction signature and
-            trace the source of a reward.
-          </p>
-
-          <div
-            style={{
-              marginTop: "24px",
-              padding: "16px 18px",
-              borderRadius: "14px",
-              background: "rgba(255,255,255,0.045)",
-              border: "1px solid rgba(255,255,255,0.09)",
-              color: "#d7e4ef",
-              fontSize: "15px",
-              lineHeight: 1.55
-            }}
-          >
-            ROBO will never ask for your seed phrase, private key, recovery
-            phrase or wallet password.
-          </div>
-        </section>
-
-        <section
-          style={{
-            marginTop: "56px",
+            marginTop: "48px",
             textAlign: "center",
-            padding: "42px 20px"
+            padding: "34px 20px"
           }}
         >
           <div
             style={{
               color: "#5dc5ff",
               fontWeight: 800,
-              fontSize: "13px",
+              fontSize: "12px",
               letterSpacing: "0.08em"
             }}
           >
@@ -509,9 +513,9 @@ export default function HomePage() {
 
           <div
             style={{
-              fontSize: "clamp(34px, 5vw, 54px)",
+              fontSize: "clamp(32px, 5vw, 50px)",
               fontWeight: 900,
-              marginTop: "12px"
+              marginTop: "10px"
             }}
           >
             Launch. Reward. Grow.
@@ -521,8 +525,8 @@ export default function HomePage() {
             style={{
               color: "#93a7bc",
               maxWidth: "720px",
-              margin: "16px auto 0",
-              lineHeight: 1.65
+              margin: "14px auto 0",
+              lineHeight: 1.6
             }}
           >
             HOSTPAY is under active development. Reward mechanics, timing,

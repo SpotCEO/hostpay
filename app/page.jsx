@@ -1,133 +1,512 @@
 export default function HomePage() {
+  const splitCards = [
+    {
+      percent: "40%",
+      title: "Developer",
+      text: "Paid in SOL from real HOSTPAY platform activity."
+    },
+    {
+      percent: "30%",
+      title: "HOST Holders",
+      text: "Used to buy HOST and reward qualifying HOST holders."
+    },
+    {
+      percent: "20%",
+      title: "Treasury",
+      text: "Keeps the platform operating, secure and able to distribute rewards."
+    },
+    {
+      percent: "10%",
+      title: "Host Community",
+      text: "Used to buy HOST and reward qualifying holders of the selected community token."
+    }
+  ];
+
   return (
     <main
       style={{
         minHeight: "100vh",
-        background: "#07111f",
-        color: "white",
-        fontFamily: "Arial, sans-serif",
-        padding: "60px 24px"
+        background:
+          "radial-gradient(circle at top right, rgba(42,140,255,0.16), transparent 28%), linear-gradient(180deg, #06111f 0%, #081522 58%, #050d17 100%)",
+        color: "#ffffff",
+        fontFamily: "Arial, Helvetica, sans-serif"
       }}
     >
       <div
         style={{
-          maxWidth: "1100px",
-          margin: "0 auto"
+          maxWidth: "1180px",
+          margin: "0 auto",
+          padding: "28px 22px 80px"
         }}
       >
-        <p
+        <header
           style={{
-            color: "#49b7ff",
-            fontWeight: 700,
-            letterSpacing: "0.12em",
-            textTransform: "uppercase"
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "20px",
+            padding: "8px 0 34px"
           }}
         >
-          HOSTPAY
-        </p>
+          <div>
+            <div
+              style={{
+                fontSize: "24px",
+                fontWeight: 900,
+                letterSpacing: "0.08em"
+              }}
+            >
+              HOSTPAY
+            </div>
 
-        <h1
-          style={{
-            fontSize: "64px",
-            lineHeight: 1.05,
-            margin: "20px 0"
-          }}
-        >
-          Launch. Reward. Grow.
-        </h1>
+            <div
+              style={{
+                marginTop: "4px",
+                color: "#5dc5ff",
+                fontSize: "13px",
+                fontWeight: 700,
+                letterSpacing: "0.08em"
+              }}
+            >
+              LAUNCH. REWARD. GROW.
+            </div>
+          </div>
 
-        <p
-          style={{
-            fontSize: "22px",
-            lineHeight: 1.6,
-            maxWidth: "760px",
-            color: "#c7d2e3"
-          }}
-        >
-          HOSTPAY is a Solana launchpad designed to reward developers,
-          HOST holders and selected host communities from real platform activity.
-        </p>
+          <div
+            style={{
+              padding: "10px 14px",
+              borderRadius: "999px",
+              border: "1px solid rgba(91,196,255,0.28)",
+              background: "rgba(14,35,57,0.72)",
+              color: "#9edfff",
+              fontSize: "13px",
+              fontWeight: 700
+            }}
+          >
+            Built on Solana
+          </div>
+        </header>
 
-        <div
+        <section
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-            gap: "18px",
-            marginTop: "50px"
+            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+            gap: "34px",
+            alignItems: "center",
+            padding: "44px 0 54px"
           }}
         >
-          {[
-            ["40%", "Developer", "Paid in SOL"],
-            ["30%", "HOST Holders", "Rewarded in HOST"],
-            ["20%", "Treasury", "Operations and distribution"],
-            ["10%", "Host Community", "Rewarded in HOST"]
-          ].map(([percent, title, text]) => (
+          <div>
             <div
-              key={title}
               style={{
-                border: "1px solid #1c3654",
-                borderRadius: "18px",
-                padding: "24px",
-                background: "#0b1728"
+                display: "inline-block",
+                padding: "8px 12px",
+                borderRadius: "999px",
+                background: "rgba(58,173,255,0.12)",
+                border: "1px solid rgba(58,173,255,0.22)",
+                color: "#67c9ff",
+                fontSize: "13px",
+                fontWeight: 800,
+                letterSpacing: "0.08em"
+              }}
+            >
+              A DIFFERENT KIND OF LAUNCHPAD
+            </div>
+
+            <h1
+              style={{
+                fontSize: "clamp(52px, 8vw, 92px)",
+                lineHeight: 0.98,
+                margin: "24px 0 22px",
+                letterSpacing: "-0.055em"
+              }}
+            >
+              Launch.
+              <br />
+              Reward.
+              <br />
+              Grow.
+            </h1>
+
+            <p
+              style={{
+                maxWidth: "760px",
+                color: "#b9c8da",
+                fontSize: "clamp(18px, 2.2vw, 24px)",
+                lineHeight: 1.55,
+                margin: 0
+              }}
+            >
+              HOSTPAY is a Solana launchpad designed so platform activity can
+              reward developers, HOST holders and selected host communities.
+            </p>
+
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "12px",
+                marginTop: "30px"
               }}
             >
               <div
                 style={{
-                  fontSize: "34px",
-                  fontWeight: 800,
-                  color: "#49b7ff"
+                  padding: "13px 18px",
+                  borderRadius: "12px",
+                  background: "#4bbcff",
+                  color: "#06111f",
+                  fontWeight: 900
                 }}
               >
-                {percent}
+                1% Platform Fee Model
               </div>
 
-              <h2 style={{ margin: "12px 0 8px" }}>{title}</h2>
-
-              <p style={{ color: "#aebcd0", margin: 0 }}>
-                {text}
-              </p>
+              <div
+                style={{
+                  padding: "13px 18px",
+                  borderRadius: "12px",
+                  border: "1px solid rgba(255,255,255,0.13)",
+                  background: "rgba(255,255,255,0.035)",
+                  color: "#d9e6f3",
+                  fontWeight: 800
+                }}
+              >
+                No staking required
+              </div>
             </div>
-          ))}
-        </div>
+          </div>
 
-        <section
-          style={{
-            marginTop: "70px",
-            padding: "36px",
-            borderRadius: "24px",
-            background: "#0d1c30",
-            border: "1px solid #1d456d"
-          }}
-        >
-          <h2 style={{ fontSize: "36px", marginTop: 0 }}>
-            ASK ROBO
+          <div
+            style={{
+              borderRadius: "26px",
+              padding: "28px",
+              background:
+                "linear-gradient(180deg, rgba(14,34,55,0.96), rgba(8,21,35,0.96))",
+              border: "1px solid rgba(81,181,255,0.22)",
+              boxShadow: "0 28px 70px rgba(0,0,0,0.35)"
+            }}
+          >
+            <div
+              style={{
+                color: "#6fd0ff",
+                fontWeight: 800,
+                fontSize: "13px",
+                letterSpacing: "0.08em"
+              }}
+            >
+              HOW VALUE FLOWS
+            </div>
+
+            <div
+              style={{
+                marginTop: "18px",
+                fontSize: "30px",
+                fontWeight: 900,
+                lineHeight: 1.18
+              }}
+            >
+              Every successful launch feeds the HOSTPAY ecosystem.
+            </div>
+
+            <div
+              style={{
+                marginTop: "22px",
+                color: "#aebed0",
+                lineHeight: 1.7,
+                fontSize: "16px"
+              }}
+            >
+              Developers earn in SOL. HOST holder and host-community allocations
+              are used to buy HOST for rewards. Treasury remains available to
+              operate the machinery behind the platform.
+            </div>
+          </div>
+        </section>
+
+        <section style={{ padding: "26px 0 18px" }}>
+          <div
+            style={{
+              color: "#67c9ff",
+              fontWeight: 800,
+              fontSize: "13px",
+              letterSpacing: "0.08em"
+            }}
+          >
+            THE 1% ECONOMICS
+          </div>
+
+          <h2
+            style={{
+              fontSize: "clamp(34px, 5vw, 56px)",
+              margin: "12px 0 10px",
+              letterSpacing: "-0.035em"
+            }}
+          >
+            Four aligned outcomes.
           </h2>
 
           <p
             style={{
+              margin: 0,
+              color: "#aebed0",
               fontSize: "18px",
               lineHeight: 1.6,
-              color: "#c7d2e3"
+              maxWidth: "780px"
             }}
           >
-            Ask anything about HOSTPAY, launches, rewards, HOST, or why HOST
-            appeared in your wallet.
+            HOSTPAY is being designed around a simple 40 / 30 / 20 / 10 model.
           </p>
 
-          <button
+          <div
             style={{
-              marginTop: "14px",
-              padding: "14px 22px",
-              borderRadius: "12px",
-              border: "none",
-              background: "#49b7ff",
-              color: "#07111f",
-              fontWeight: 800,
-              cursor: "pointer"
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(230px, 1fr))",
+              gap: "16px",
+              marginTop: "28px"
             }}
           >
-            Why did I receive HOST?
-          </button>
+            {splitCards.map((card) => (
+              <div
+                key={card.title}
+                style={{
+                  borderRadius: "20px",
+                  padding: "24px",
+                  background: "rgba(12,28,46,0.9)",
+                  border: "1px solid rgba(92,191,255,0.18)"
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: "36px",
+                    fontWeight: 900,
+                    color: "#50c1ff"
+                  }}
+                >
+                  {card.percent}
+                </div>
+
+                <div
+                  style={{
+                    fontSize: "21px",
+                    fontWeight: 850,
+                    marginTop: "10px"
+                  }}
+                >
+                  {card.title}
+                </div>
+
+                <div
+                  style={{
+                    color: "#aebed0",
+                    fontSize: "15px",
+                    lineHeight: 1.55,
+                    marginTop: "8px"
+                  }}
+                >
+                  {card.text}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section
+          style={{
+            marginTop: "52px",
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+            gap: "18px"
+          }}
+        >
+          <div
+            style={{
+              borderRadius: "24px",
+              padding: "30px",
+              background:
+                "linear-gradient(160deg, rgba(17,43,70,0.96), rgba(7,20,33,0.98))",
+              border: "1px solid rgba(79,188,255,0.22)"
+            }}
+          >
+            <div
+              style={{
+                color: "#61c8ff",
+                fontWeight: 800,
+                fontSize: "13px",
+                letterSpacing: "0.08em"
+              }}
+            >
+              FOR DEVELOPERS
+            </div>
+
+            <h3
+              style={{
+                fontSize: "30px",
+                margin: "14px 0 12px"
+              }}
+            >
+              Launch into an existing community.
+            </h3>
+
+            <p
+              style={{
+                color: "#afc0d3",
+                lineHeight: 1.65,
+                margin: 0
+              }}
+            >
+              Choose a host community, earn from the activity your token
+              creates, and give that community a real reason to notice your
+              launch.
+            </p>
+          </div>
+
+          <div
+            style={{
+              borderRadius: "24px",
+              padding: "30px",
+              background:
+                "linear-gradient(160deg, rgba(17,43,70,0.96), rgba(7,20,33,0.98))",
+              border: "1px solid rgba(79,188,255,0.22)"
+            }}
+          >
+            <div
+              style={{
+                color: "#61c8ff",
+                fontWeight: 800,
+                fontSize: "13px",
+                letterSpacing: "0.08em"
+              }}
+            >
+              FOR COMMUNITIES
+            </div>
+
+            <h3
+              style={{
+                fontSize: "30px",
+                margin: "14px 0 12px"
+              }}
+            >
+              Get rewarded when projects choose you.
+            </h3>
+
+            <p
+              style={{
+                color: "#afc0d3",
+                lineHeight: 1.65,
+                margin: 0
+              }}
+            >
+              A child token can select your community as its host. Part of the
+              platform activity it generates can then be used to buy HOST for
+              qualifying members of your community.
+            </p>
+          </div>
+        </section>
+
+        <section
+          style={{
+            marginTop: "56px",
+            padding: "34px",
+            borderRadius: "26px",
+            background:
+              "linear-gradient(145deg, rgba(17,47,77,0.98), rgba(7,22,37,0.98))",
+            border: "1px solid rgba(84,193,255,0.27)",
+            boxShadow: "0 22px 60px rgba(0,0,0,0.28)"
+          }}
+        >
+          <div
+            style={{
+              color: "#63cbff",
+              fontSize: "13px",
+              fontWeight: 800,
+              letterSpacing: "0.08em"
+            }}
+          >
+            ASK ROBO
+          </div>
+
+          <h2
+            style={{
+              fontSize: "clamp(34px, 5vw, 52px)",
+              margin: "12px 0 12px",
+              letterSpacing: "-0.03em"
+            }}
+          >
+            Why did HOST appear in my wallet?
+          </h2>
+
+          <p
+            style={{
+              color: "#b7c6d8",
+              fontSize: "18px",
+              lineHeight: 1.65,
+              maxWidth: "800px",
+              margin: 0
+            }}
+          >
+            ASK ROBO is being built to explain HOSTPAY, launches, reward
+            provenance and why a wallet received HOST. Later, users will be able
+            to provide a public wallet address or transaction signature and
+            trace the source of a reward.
+          </p>
+
+          <div
+            style={{
+              marginTop: "24px",
+              padding: "16px 18px",
+              borderRadius: "14px",
+              background: "rgba(255,255,255,0.045)",
+              border: "1px solid rgba(255,255,255,0.09)",
+              color: "#d7e4ef",
+              fontSize: "15px",
+              lineHeight: 1.55
+            }}
+          >
+            ROBO will never ask for your seed phrase, private key, recovery
+            phrase or wallet password.
+          </div>
+        </section>
+
+        <section
+          style={{
+            marginTop: "56px",
+            textAlign: "center",
+            padding: "42px 20px"
+          }}
+        >
+          <div
+            style={{
+              color: "#5dc5ff",
+              fontWeight: 800,
+              fontSize: "13px",
+              letterSpacing: "0.08em"
+            }}
+          >
+            HOSTPAY
+          </div>
+
+          <div
+            style={{
+              fontSize: "clamp(34px, 5vw, 54px)",
+              fontWeight: 900,
+              marginTop: "12px"
+            }}
+          >
+            Launch. Reward. Grow.
+          </div>
+
+          <p
+            style={{
+              color: "#93a7bc",
+              maxWidth: "720px",
+              margin: "16px auto 0",
+              lineHeight: 1.65
+            }}
+          >
+            HOSTPAY is under active development. Reward mechanics, timing,
+            custody, fee enforcement and legal treatment remain subject to
+            final technical validation and review before public launch.
+          </p>
         </section>
       </div>
     </main>

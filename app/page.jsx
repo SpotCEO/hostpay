@@ -3,22 +3,22 @@ export default function HomePage() {
     {
       percent: "40%",
       title: "Developer",
-      text: "Paid in SOL from real HOSTPAY platform activity."
+      text: "Paid in SOL"
     },
     {
       percent: "30%",
       title: "HOST Holders",
-      text: "Used to buy HOST and reward qualifying HOST holders."
+      text: "HOST rewards"
     },
     {
       percent: "20%",
       title: "Treasury",
-      text: "Keeps the platform operating, secure and able to distribute rewards."
+      text: "Operations"
     },
     {
       percent: "10%",
       title: "Host Community",
-      text: "Used to buy HOST and reward qualifying holders of the selected community token."
+      text: "HOST rewards"
     }
   ];
 
@@ -27,7 +27,7 @@ export default function HomePage() {
       style={{
         minHeight: "100vh",
         background:
-          "radial-gradient(circle at top right, rgba(42,140,255,0.16), transparent 28%), linear-gradient(180deg, #06111f 0%, #081522 58%, #050d17 100%)",
+          "radial-gradient(circle at top right, rgba(42,140,255,0.18), transparent 30%), linear-gradient(180deg, #06111f 0%, #081522 58%, #050d17 100%)",
         color: "#ffffff",
         fontFamily: "Arial, Helvetica, sans-serif"
       }}
@@ -36,7 +36,7 @@ export default function HomePage() {
         style={{
           maxWidth: "1180px",
           margin: "0 auto",
-          padding: "28px 22px 80px"
+          padding: "26px 22px 80px"
         }}
       >
         <header
@@ -51,7 +51,7 @@ export default function HomePage() {
           <div>
             <div
               style={{
-                fontSize: "24px",
+                fontSize: "26px",
                 fontWeight: 900,
                 letterSpacing: "0.08em"
               }}
@@ -64,7 +64,7 @@ export default function HomePage() {
                 marginTop: "4px",
                 color: "#5dc5ff",
                 fontSize: "13px",
-                fontWeight: 700,
+                fontWeight: 800,
                 letterSpacing: "0.08em"
               }}
             >
@@ -80,7 +80,7 @@ export default function HomePage() {
               background: "rgba(14,35,57,0.72)",
               color: "#9edfff",
               fontSize: "13px",
-              fontWeight: 700
+              fontWeight: 800
             }}
           >
             Built on Solana
@@ -93,7 +93,7 @@ export default function HomePage() {
             gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
             gap: "34px",
             alignItems: "center",
-            padding: "44px 0 54px"
+            padding: "42px 0 34px"
           }}
         >
           <div>
@@ -146,7 +146,7 @@ export default function HomePage() {
                 display: "flex",
                 flexWrap: "wrap",
                 gap: "12px",
-                marginTop: "30px"
+                marginTop: "28px"
               }}
             >
               <div
@@ -223,61 +223,83 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section style={{ padding: "26px 0 18px" }}>
+        <section
+          style={{
+            marginTop: "22px",
+            padding: "28px",
+            borderRadius: "24px",
+            background:
+              "linear-gradient(145deg, rgba(12,31,51,0.98), rgba(7,20,34,0.98))",
+            border: "1px solid rgba(83,190,255,0.22)",
+            boxShadow: "0 18px 50px rgba(0,0,0,0.22)"
+          }}
+        >
           <div
             style={{
-              color: "#67c9ff",
-              fontWeight: 800,
-              fontSize: "13px",
-              letterSpacing: "0.08em"
+              display: "flex",
+              justifyContent: "space-between",
+              gap: "18px",
+              alignItems: "end",
+              flexWrap: "wrap"
             }}
           >
-            THE 1% ECONOMICS
+            <div>
+              <div
+                style={{
+                  color: "#67c9ff",
+                  fontWeight: 800,
+                  fontSize: "13px",
+                  letterSpacing: "0.08em"
+                }}
+              >
+                THE 1% SPLIT
+              </div>
+
+              <h2
+                style={{
+                  fontSize: "clamp(30px, 4vw, 48px)",
+                  margin: "10px 0 0",
+                  letterSpacing: "-0.035em"
+                }}
+              >
+                40 / 30 / 20 / 10
+              </h2>
+            </div>
+
+            <div
+              style={{
+                color: "#9fb2c6",
+                fontSize: "15px",
+                maxWidth: "430px",
+                lineHeight: 1.5
+              }}
+            >
+              Every 1% platform fee is designed to flow across developers,
+              HOST holders, operations and the selected host community.
+            </div>
           </div>
-
-          <h2
-            style={{
-              fontSize: "clamp(34px, 5vw, 56px)",
-              margin: "12px 0 10px",
-              letterSpacing: "-0.035em"
-            }}
-          >
-            Four aligned outcomes.
-          </h2>
-
-          <p
-            style={{
-              margin: 0,
-              color: "#aebed0",
-              fontSize: "18px",
-              lineHeight: 1.6,
-              maxWidth: "780px"
-            }}
-          >
-            HOSTPAY is being designed around a simple 40 / 30 / 20 / 10 model.
-          </p>
 
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(230px, 1fr))",
-              gap: "16px",
-              marginTop: "28px"
+              gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))",
+              gap: "14px",
+              marginTop: "24px"
             }}
           >
             {splitCards.map((card) => (
               <div
                 key={card.title}
                 style={{
-                  borderRadius: "20px",
-                  padding: "24px",
-                  background: "rgba(12,28,46,0.9)",
+                  borderRadius: "18px",
+                  padding: "22px",
+                  background: "rgba(15,35,57,0.94)",
                   border: "1px solid rgba(92,191,255,0.18)"
                 }}
               >
                 <div
                   style={{
-                    fontSize: "36px",
+                    fontSize: "34px",
                     fontWeight: 900,
                     color: "#50c1ff"
                   }}
@@ -287,9 +309,9 @@ export default function HomePage() {
 
                 <div
                   style={{
-                    fontSize: "21px",
+                    fontSize: "20px",
                     fontWeight: 850,
-                    marginTop: "10px"
+                    marginTop: "8px"
                   }}
                 >
                   {card.title}
@@ -298,9 +320,9 @@ export default function HomePage() {
                 <div
                   style={{
                     color: "#aebed0",
-                    fontSize: "15px",
-                    lineHeight: 1.55,
-                    marginTop: "8px"
+                    fontSize: "14px",
+                    lineHeight: 1.5,
+                    marginTop: "6px"
                   }}
                 >
                   {card.text}
@@ -312,7 +334,7 @@ export default function HomePage() {
 
         <section
           style={{
-            marginTop: "52px",
+            marginTop: "50px",
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
             gap: "18px"

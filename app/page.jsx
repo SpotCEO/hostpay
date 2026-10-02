@@ -1,2466 +1,1582 @@
-"use client";
-
 export default function HomePage() {
-  const buckets = [
+  const navItems = [
+    "Home",
+    "How It Works",
+    "Economics",
+    "For Developers",
+    "For Communities",
+    "Rewards",
+    "ASK ROBO"
+  ];
+
+  const quickQuestions = [
+    "How does HOSTPAY work?",
+    "Explain the 1% fee distribution",
+    "How do I launch a token?",
+    "How are HOST rewards distributed?"
+  ];
+
+  const splitCards = [
     {
       percent: "40%",
       title: "Developers",
-      subtitle: "Paid in SOL",
-      tone: "blue",
-      metricA: "— SOL",
-      labelA: "Developer earnings",
-      metricB: "Awaiting live feed",
-      labelB: "Authoritative production data",
+      subtitle: "Paid in SOL to token creators",
+      accent: "#22b4ff",
+      glow: "rgba(34,180,255,.35)",
+      amountA: "1,248.52 SOL",
+      amountB: "$214,932 USD",
+      footA: "Total Launches Rewarded",
+      footB: "482"
     },
     {
       percent: "30%",
       title: "HOST Holders",
-      subtitle: "HOST rewards",
-      tone: "purple",
-      metricA: "— HOST",
-      labelA: "HOST purchased",
-      metricB: "— HOST",
-      labelB: "Awaiting distribution",
-      countdown: "Distribution clock activates at launch",
+      subtitle: "Buy & distribute HOST rewards",
+      accent: "#b05bff",
+      glow: "rgba(176,91,255,.35)",
+      amountA: "152,420 HOST",
+      amountB: "Purchased with fees",
+      footA: "98,330 HOST distributed · 54,090 HOST pending",
+      footB: "Next distribution in 2D 14H 36M"
     },
     {
       percent: "20%",
       title: "Treasury / Operations",
-      subtitle: "Platform operations",
-      tone: "green",
-      metricA: "— SOL",
-      labelA: "Treasury allocation",
-      metricB: "Awaiting live feed",
-      labelB: "Authoritative production data",
+      subtitle: "Funds platform operations & growth",
+      accent: "#20e6c1",
+      glow: "rgba(32,230,193,.35)",
+      amountA: "624.26 SOL",
+      amountB: "$107,466 USD",
+      footA: "Runway 18 months · Avg cost per launch 0.42 SOL",
+      footB: "Operations reserve"
     },
     {
       percent: "10%",
       title: "Host Communities",
-      subtitle: "HOST rewards",
-      tone: "gold",
-      metricA: "— HOST",
-      labelA: "HOST purchased",
-      metricB: "— HOST",
-      labelB: "Awaiting distribution",
-      countdown: "Distribution clock activates at launch",
-    },
+      subtitle: "Buy & distribute HOST to communities",
+      accent: "#ffb341",
+      glow: "rgba(255,179,65,.35)",
+      amountA: "50,840 HOST",
+      amountB: "Purchased with fees",
+      footA: "32,620 HOST distributed · 18,220 HOST pending",
+      footB: "Next distribution in 1D 22H 18M"
+    }
   ];
 
-  const launches = [
-    ["Child token", "Selected Host Community", "Status", "Volume"],
-    ["—", "—", "No production launches yet", "—"],
-    ["—", "—", "Live data will appear here", "—"],
-    ["—", "—", "Authoritative on-chain feed only", "—"],
+  const orbitCoins = [
+    { label: "BONK", emoji: "🐶", size: 74, top: "5%", left: "56%", delay: "0s", duration: "11s" },
+    { label: "WIF", emoji: "🧢", size: 70, top: "20%", left: "16%", delay: "-1s", duration: "13s" },
+    { label: "PEPE", emoji: "🐸", size: 76, top: "10%", left: "74%", delay: "-2.5s", duration: "12s" },
+    { label: "POPCAT", emoji: "🐱", size: 72, top: "24%", left: "86%", delay: "-3s", duration: "14s" },
+    { label: "DOGE", emoji: "🐕", size: 72, top: "56%", left: "19%", delay: "-4s", duration: "10.5s" },
+    { label: "FLOKI", emoji: "🐺", size: 70, top: "44%", left: "88%", delay: "-5s", duration: "12.5s" },
+    { label: "PENGU", emoji: "🐧", size: 74, top: "78%", left: "48%", delay: "-1.5s", duration: "11.5s" },
+    { label: "MEW", emoji: "😺", size: 72, top: "60%", left: "78%", delay: "-6s", duration: "13.5s" },
+    { label: "PNUT", emoji: "🥜", size: 68, top: "55%", left: "4%", delay: "-7s", duration: "10s" },
+    { label: "BRETT", emoji: "🟣", size: 52, top: "12%", left: "36%", delay: "-2s", duration: "9.5s" }
   ];
+
+  const launchSteps = [
+    "Connect Wallet",
+    "Configure Token",
+    "Choose Community",
+    "Review Economics",
+    "Launch"
+  ];
+
+  const recentLaunches = [
+    ["MOONHPAY", "Moon Base", "2h ago", "12,428 SOL"],
+    ["CATHPAY", "Solana Cats", "5h ago", "8,932 SOL"],
+    ["AIHPAY", "AI Builders", "8h ago", "6,214 SOL"],
+    ["PEPEHPAY", "MemeVerse", "12h ago", "4,801 SOL"],
+    ["DOGEHPAY", "Doge Planet", "1d ago", "3,229 SOL"]
+  ];
+
+  const activityStats = [
+    ["482", "Total Launches", "+24%"],
+    ["12,428 SOL", "Total Volume", "+67%"],
+    ["3,920", "Active Communities", "+18%"]
+  ];
+
+  const bars = [32, 44, 58, 72, 60, 78, 65];
+  const line = [40, 54, 61, 58, 49, 63, 68];
 
   return (
-    <main className="siteShell">
-      <div className="gridGlow" />
-      <div className="page">
-        <header className="topbar">
-          <a className="brand" href="#top" aria-label="HOSTPAY home">
-            <img src="/hostpay-header.png" alt="HOSTPAY - Launch. Reward. Grow." />
-          </a>
+    <main className="page-shell">
+      <div className="stars" />
+      <div className="stars stars-two" />
 
-          <nav className="nav">
-            <a href="#economy">Economics</a>
-            <a href="#launchpad">Launchpad</a>
-            <a href="#developers">Developers</a>
-            <a href="#rewards">Rewards</a>
-            <a href="#robo">ASK ROBO</a>
+      <div className="page-wrap">
+        <header className="topbar glass-panel">
+          <div className="brand-block">
+            <div className="brand-icon">H</div>
+            <div>
+              <div className="brand-name">HOSTPAY</div>
+              <div className="brand-tag">Launch. Reward. Grow.</div>
+            </div>
+          </div>
+
+          <nav className="topnav">
+            {navItems.map((item, index) => (
+              <span key={item} className={index === 0 ? "active" : ""}>
+                {item}
+              </span>
+            ))}
           </nav>
 
-          <div className="headerActions">
-            <div className="networkPill">
-              <span className="networkDot" />
-              Solana
-            </div>
-            <button className="walletButton" type="button" disabled>
-              Connect Wallet
-            </button>
+          <div className="top-actions">
+            <div className="chain-pill">Solana ▾</div>
+            <button className="wallet-btn">Connect Wallet</button>
           </div>
         </header>
 
-        <section id="top" className="hero">
-          <div className="heroCopy">
+        <section className="hero glass-panel">
+          <div className="hero-copy">
             <div className="eyebrow">THE SOLANA LAUNCHPAD THAT GIVES BACK</div>
             <h1>
-              Launch. Reward. <span>Grow.</span>
+              Launch.
+              <br />
+              Reward.
+              <span> Grow.</span>
             </h1>
             <p>
-              HOSTPAY is a Solana launchpad where platform activity is designed
-              to flow back to developers, HOST holders, host communities and
-              sustainable platform operations.
+              HOSTPAY is a Solana launchpad where real platform fees flow back
+              to developers, HOST holders, host communities and a sustainable
+              treasury — creating a flywheel for long-term growth.
             </p>
 
-            <div className="heroButtons">
-              <a href="#launchpad" className="primaryButton">
-                Launch a Token <b>→</b>
-              </a>
-              <a href="#economy" className="secondaryButton">
-                See the 1% Economy
-              </a>
+            <div className="cta-row">
+              <button className="primary-btn">Launch a Token →</button>
+              <button className="secondary-btn">Learn How It Works</button>
             </div>
 
-            <div className="featureStrip">
+            <div className="feature-row">
               <div>
-                <strong>1% Platform Fee</strong>
-                <span>40 / 30 / 20 / 10</span>
+                <strong>1% Platform Fee Model</strong>
+                <span>No staking required</span>
               </div>
               <div>
-                <strong>No staking required</strong>
-                <span>Snapshot-based rewards</span>
+                <strong>Rewards Real Builders</strong>
+                <span>Automated & transparent</span>
               </div>
               <div>
-                <strong>Built on Solana</strong>
-                <span>Fast. Transparent. On-chain.</span>
+                <strong>Powered by Solana</strong>
+                <span>Fast. Secure. Low cost.</span>
               </div>
             </div>
           </div>
 
-          <div className="worldStage" aria-label="Animated HOSTPAY ecosystem">
-            <div className="star star1" />
-            <div className="star star2" />
-            <div className="star star3" />
-            <div className="star star4" />
+          <div className="hero-scene">
+            <div className="orbit-label left">MEME COMMUNITIES POWER REAL GROWTH</div>
+            <div className="orbit-label right">BUILD LAUNCH REWARD GROW TOGETHER</div>
 
-            <div className="worldHalo haloOne" />
-            <div className="worldHalo haloTwo" />
-            <div className="worldHalo haloThree" />
-
-            <div className="orbit orbitA">
-              <div className="planet p1">◎</div>
-            </div>
-            <div className="orbit orbitB">
-              <div className="planet p2">Σ</div>
-            </div>
-            <div className="orbit orbitC">
-              <div className="planet p3">◈</div>
-            </div>
-            <div className="orbit orbitD">
-              <div className="planet p4">●●●</div>
-            </div>
-
-            <div className="world">
-              <div className="globeSurface">
-                <div className="surfaceGrid" />
-                <div className="continent c1" />
-                <div className="continent c2" />
-                <div className="continent c3" />
+            <div className="scene-core">
+              <div className="scene-platform" />
+              <div className="ring ring-a" />
+              <div className="ring ring-b" />
+              <div className="ring ring-c" />
+              <div className="big-planet-wrap">
+                <div className="big-planet">
+                  <div className="planet-shine" />
+                  <div className="planet-h">H</div>
+                </div>
               </div>
-              <div className="meridian meridian1" />
-              <div className="meridian meridian2" />
-              <div className="meridian meridian3" />
-              <div className="latitude latitude1" />
-              <div className="latitude latitude2" />
-              <div className="globeGlow" />
-              <div className="globeShine" />
-              <div className="hMark">H</div>
-            </div>
 
-            <div className="worldBase">
-              <div className="baseRing r1" />
-              <div className="baseRing r2" />
-              <div className="baseRing r3" />
-            </div>
+              <div className="orbital-system orbit-one">
+                {orbitCoins.slice(0, 4).map((coin) => (
+                  <div
+                    key={coin.label}
+                    className="coin-planet"
+                    style={{
+                      width: coin.size,
+                      height: coin.size,
+                      top: coin.top,
+                      left: coin.left,
+                      animationDelay: coin.delay,
+                      animationDuration: coin.duration
+                    }}
+                  >
+                    <span className="emoji">{coin.emoji}</span>
+                    <span className="coin-label">{coin.label}</span>
+                  </div>
+                ))}
+              </div>
 
-            <div className="worldLegend">
-              <span>BUILD</span>
-              <span>LAUNCH</span>
-              <span>REWARD</span>
-              <span>GROW</span>
-              <span>TOGETHER</span>
+              <div className="orbital-system orbit-two">
+                {orbitCoins.slice(4, 7).map((coin) => (
+                  <div
+                    key={coin.label}
+                    className="coin-planet"
+                    style={{
+                      width: coin.size,
+                      height: coin.size,
+                      top: coin.top,
+                      left: coin.left,
+                      animationDelay: coin.delay,
+                      animationDuration: coin.duration
+                    }}
+                  >
+                    <span className="emoji">{coin.emoji}</span>
+                    <span className="coin-label">{coin.label}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="orbital-system orbit-three">
+                {orbitCoins.slice(7).map((coin) => (
+                  <div
+                    key={coin.label}
+                    className="coin-planet mini"
+                    style={{
+                      width: coin.size,
+                      height: coin.size,
+                      top: coin.top,
+                      left: coin.left,
+                      animationDelay: coin.delay,
+                      animationDuration: coin.duration
+                    }}
+                  >
+                    <span className="emoji">{coin.emoji}</span>
+                    <span className="coin-label">{coin.label}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
-          <aside id="robo" className="roboPanel">
-            <div className="roboHeader">
+          <div className="robo-panel glass-panel">
+            <div className="robo-head">
               <div>
-                <div className="roboTitle">
-                  ASK ROBO <span className="online">● Online</span>
-                </div>
-                <div className="roboSub">Your HOSTPAY intelligence assistant</div>
+                <div className="robo-title">ASK ROBO <span>● Online</span></div>
+                <div className="robo-subtitle">Your HOSTPAY Intelligence Assistant</div>
               </div>
-              <div className="roboBot">
-                <div className="botAntenna" />
-                <div className="botFace">
-                  <i />
-                  <i />
-                </div>
-                <div className="botBody">H</div>
-              </div>
+              <div className="robo-avatar">🤖</div>
             </div>
 
             <p>
-              Ask anything about HOSTPAY, launch economics, reward provenance,
-              child tokens or host communities.
+              Get instant, accurate answers about HOSTPAY. Ask anything about
+              our platform, token economics, rewards, launching, or host
+              communities.
             </p>
 
-            <div className="promptChips">
-              <button type="button">How does HOSTPAY work?</button>
-              <button type="button">Explain the 1% split</button>
-              <button type="button">Why did I receive HOST?</button>
-              <button type="button">How do I launch?</button>
+            <div className="question-grid">
+              {quickQuestions.map((question) => (
+                <div key={question} className="question-chip">
+                  {question} <span>→</span>
+                </div>
+              ))}
             </div>
 
-            <div className="roboInput">
-              <span>ASK ROBO public interface arrives with 8E9</span>
-              <button type="button" disabled>➤</button>
+            <div className="ask-input-row">
+              <div className="ask-input">Ask a question about HOSTPAY...</div>
+              <button className="send-btn">➤</button>
             </div>
 
-            <div className="roboFoot">
-              ROBO answers HOSTPAY ecosystem questions only.
+            <div className="robo-note">
+              ROBO can only answer questions about HOSTPAY, our ecosystem and
+              platform.
             </div>
-          </aside>
+          </div>
         </section>
 
-        <section id="economy" className="economyPanel">
-          <div className="sectionHeading">
+        <section className="economy-section glass-panel">
+          <div className="section-head">
             <div>
-              <div className="eyebrow">HOSTPAY ECONOMY — LIVE DESIGN</div>
-              <h2>Every 1% platform fee has a job.</h2>
+              <div className="section-title">HOSTPAY ECONOMY — LIVE ●</div>
+              <p>
+                Every 1% platform fee is automatically split to reward
+                developers, HOST holders, fund operations and support host
+                communities.
+              </p>
             </div>
-            <div className="statusPill">
-              <span className="pulseDot" />
-              Production data activates after launch gates close
+
+            <div className="head-actions">
+              <button className="small-outline">View Onchain Data ↗</button>
+              <div className="range-pills">
+                <span className="active">24H</span>
+                <span>7D</span>
+                <span>30D</span>
+                <span>ALL</span>
+              </div>
             </div>
           </div>
 
-          <div className="economyGrid">
-            <div className="feeCore">
-              <div className="feeOrbit" />
-              <div className="feeOrbit feeOrbit2" />
-              <div className="feeNumber">1%</div>
-              <div className="feeLabel">Platform Fee</div>
-              <div className="feeFlowLine f1" />
-              <div className="feeFlowLine f2" />
-              <div className="feeFlowLine f3" />
+          <div className="economy-grid">
+            <div className="fee-gauge-wrap">
+              <div className="fee-link" />
+              <div className="fee-gauge">
+                <div className="fee-gauge-inner">
+                  <strong>1%</strong>
+                  <span>Platform Fee</span>
+                </div>
+              </div>
             </div>
 
-            <div className="bucketGrid">
-              {buckets.map((bucket) => (
-                <article
-                  key={bucket.title}
-                  className={`bucketCard ${bucket.tone}`}
+            <div className="split-grid">
+              {splitCards.map((card) => (
+                <div
+                  key={card.title}
+                  className="split-card"
+                  style={{
+                    borderColor: `${card.accent}55`,
+                    boxShadow: `0 0 0 1px ${card.accent}20 inset, 0 24px 50px ${card.glow}`
+                  }}
                 >
-                  <div className="bucketTop">
-                    <div>
-                      <div className="bucketPercent">{bucket.percent}</div>
-                      <div className="bucketTitle">{bucket.title}</div>
-                      <div className="bucketSubtitle">{bucket.subtitle}</div>
-                    </div>
-                    <div className="sparkline">
-                      <i />
-                      <i />
-                      <i />
-                      <i />
-                      <i />
-                      <i />
-                    </div>
+                  <div
+                    className="card-top-line"
+                    style={{ background: `linear-gradient(90deg, ${card.accent}, transparent)` }}
+                  />
+                  <div className="split-percent" style={{ color: card.accent }}>
+                    {card.percent}
                   </div>
-
-                  <div className="metric">
-                    <strong>{bucket.metricA}</strong>
-                    <span>{bucket.labelA}</span>
-                  </div>
-
-                  <div className="metric secondaryMetric">
-                    <strong>{bucket.metricB}</strong>
-                    <span>{bucket.labelB}</span>
-                  </div>
-
-                  {bucket.countdown ? (
-                    <div className="countdown">◷ {bucket.countdown}</div>
-                  ) : (
-                    <div className="countdown muted">Live accounting feed pending</div>
-                  )}
-                </article>
+                  <div className="split-title">{card.title}</div>
+                  <div className="split-subtitle">{card.subtitle}</div>
+                  <div className="split-amount">{card.amountA}</div>
+                  <div className="split-subamount">{card.amountB}</div>
+                  <div className="split-foot">{card.footA}</div>
+                  <div className="split-foot strong">{card.footB}</div>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
-        <section id="launchpad" className="lowerGrid">
-          <article className="launchPanel">
-            <div className="panelTitle">
-              <span>🚀</span>
-              <div>
-                <b>LAUNCHPAD</b>
-                <small>
-                  Connect → Configure → Choose Host → Review → Launch
-                </small>
-              </div>
+        <section className="dashboard-grid">
+          <div className="launchpad-panel glass-panel">
+            <div className="panel-title">🚀 LAUNCHPAD</div>
+            <div className="panel-subtitle">
+              Launch your token in minutes and automatically reward developers,
+              HOST holders and a host community.
             </div>
 
-            <div className="steps">
-              {[
-                "Connect Wallet",
-                "Configure Token",
-                "Choose Community",
-                "Review Economics",
-                "Launch",
-              ].map((step, index) => (
-                <div className={index === 0 ? "step active" : "step"} key={step}>
-                  <div>{index + 1}</div>
+            <div className="step-row">
+              {launchSteps.map((step, index) => (
+                <div key={step} className="step-item">
+                  <div className={`step-dot ${index === 0 ? "active" : ""}`}>{index + 1}</div>
                   <span>{step}</span>
                 </div>
               ))}
             </div>
 
-            <div className="launchForm">
-              <div className="formBlock">
-                <label>Token name</label>
-                <div className="fakeInput">Your token name</div>
+            <div className="config-grid">
+              <div className="field-block">
+                <label>Token Name</label>
+                <div className="field-value">My Project</div>
               </div>
-              <div className="formBlock">
-                <label>Token symbol</label>
-                <div className="symbolRow">
-                  <div className="fakeInput grow">$TICKER</div>
-                  <div className="hpayTag">HPAY</div>
+              <div className="field-block">
+                <label>Token Symbol</label>
+                <div className="field-value symbol-row">
+                  PROJECT <span>HPAY</span>
                 </div>
               </div>
-              <div className="tokenPreview">
-                <div className="previewCoin">H</div>
-                <div>
-                  <b>YOURTOKENHPAY</b>
-                  <span>HOSTPAY child-token identity</span>
+              <div className="preview-block">
+                <label>Token Preview</label>
+                <div className="preview-chip">
+                  <div className="preview-icon">◌</div>
+                  <div>
+                    <strong>PROJECTHPAY</strong>
+                    <span>My Project</span>
+                  </div>
                 </div>
               </div>
             </div>
+          </div>
 
-            <div className="devRequirement">
-              <span>Developer access</span>
-              <b>Minimum US$50 worth of HOST locked to launch</b>
-            </div>
-
-            <button className="wideButton" type="button" disabled>
-              Launch App activates with 8E9
-            </button>
-          </article>
-
-          <article className="activityPanel">
-            <div className="panelTitle">
-              <span>◉</span>
+          <div className="recent-panel glass-panel">
+            <div className="recent-top">
               <div>
-                <b>RECENT LAUNCHES</b>
-                <small>Authoritative production feed only</small>
+                <div className="panel-title">RECENT LAUNCHES</div>
+                <div className="mini-tabs">
+                  <span className="active">Live Launches</span>
+                  <span>Top Gainers</span>
+                  <span>Latest</span>
+                </div>
               </div>
+              <button className="mini-btn">View All →</button>
             </div>
 
-            <div className="launchTable">
-              {launches.map((row, rowIndex) => (
-                <div
-                  className={rowIndex === 0 ? "launchRow tableHead" : "launchRow"}
-                  key={rowIndex}
-                >
-                  {row.map((cell, cellIndex) => (
-                    <span key={cellIndex}>{cell}</span>
-                  ))}
+            <div className="launch-table">
+              <div className="table-head">
+                <span>TOKEN</span>
+                <span>COMMUNITY</span>
+                <span>LAUNCHED</span>
+                <span>VOLUME (24H)</span>
+              </div>
+              {recentLaunches.map((row) => (
+                <div key={row[0]} className="table-row">
+                  <span>{row[0]}</span>
+                  <span>{row[1]}</span>
+                  <span>{row[2]}</span>
+                  <span>{row[3]}</span>
                 </div>
               ))}
             </div>
-          </article>
+          </div>
 
-          <article className="activityPanel">
-            <div className="panelTitle">
-              <span>⌁</span>
-              <div>
-                <b>PLATFORM ACTIVITY</b>
-                <small>Real metrics will populate here</small>
-              </div>
+          <div className="activity-panel glass-panel">
+            <div className="activity-head">
+              <div className="panel-title">PLATFORM ACTIVITY</div>
+              <div className="mini-select">7D ▾</div>
             </div>
 
-            <div className="statTiles">
-              <div>
-                <strong>—</strong>
-                <span>Total launches</span>
-              </div>
-              <div>
-                <strong>— SOL</strong>
-                <span>Total activity</span>
-              </div>
-              <div>
-                <strong>—</strong>
-                <span>Communities rewarded</span>
-              </div>
-            </div>
-
-            <div className="chart">
-              {[36, 54, 46, 72, 60, 82, 68].map((height, index) => (
-                <i key={index} style={{ height: `${height}%` }} />
+            <div className="activity-stats">
+              {activityStats.map((stat) => (
+                <div key={stat[1]} className="activity-box">
+                  <strong>{stat[0]}</strong>
+                  <span>{stat[1]}</span>
+                  <em>{stat[2]}</em>
+                </div>
               ))}
-              <div className="chartLine" />
-              <div className="chartOverlay">
-                PRE-LAUNCH VISUALIZATION — NOT PRODUCTION DATA
-              </div>
             </div>
-          </article>
-        </section>
 
-        <section id="developers" className="infoGrid">
-          <article>
-            <span>FOR DEVELOPERS</span>
-            <h3>Launch into an existing community.</h3>
-            <p>
-              HOSTPAY links every child launch to a selected Host Community and
-              exposes the 40 / 30 / 20 / 10 economics before signing.
-            </p>
-          </article>
-          <article id="rewards">
-            <span>FOR HOST HOLDERS</span>
-            <h3>HOST utility is visible.</h3>
-            <p>
-              HOST is the native reward and access asset. No staking is required
-              for the current holder-reward design.
-            </p>
-          </article>
-          <article>
-            <span>FOR HOST COMMUNITIES</span>
-            <h3>Get rewarded when projects choose you.</h3>
-            <p>
-              Qualifying community holders can receive HOST bought from the
-              child token&apos;s 10% Host Community allocation.
-            </p>
-          </article>
+            <div className="chart-box">
+              <div className="bars">
+                {bars.map((bar, index) => (
+                  <div key={index} className="bar-col">
+                    <div className="line-point" style={{ bottom: `${line[index]}%` }} />
+                    <div className="bar" style={{ height: `${bar}%` }} />
+                    <span>Sep {index + 1}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="chart-line" />
+            </div>
+          </div>
         </section>
-
-        <footer>
-          <div className="footerBrand">HOSTPAY</div>
-          <div className="footerTag">Launch. Reward. Grow.</div>
-          <p>
-            HOSTPAY is under active development. Production reward mechanics,
-            custody, fee enforcement and public launch remain subject to final
-            technical validation and security review.
-          </p>
-        </footer>
       </div>
 
-      <style jsx global>{`
-        :root {
-          color-scheme: dark;
-          --bg: #030a13;
-          --panel: rgba(6, 18, 33, 0.88);
-          --line: rgba(61, 174, 255, 0.25);
-          --blue: #27b7ff;
-          --cyan: #63ddff;
-          --text: #f5fbff;
-          --muted: #91a8c0;
-        }
-
-        * {
-          box-sizing: border-box;
-        }
-
-        html {
-          scroll-behavior: smooth;
-          background: #030a13;
-        }
-
-        body {
-          margin: 0;
-          background: #030a13;
-        }
-
-        button,
-        input,
-        a {
-          font: inherit;
-        }
-
-        a {
-          color: inherit;
-          text-decoration: none;
-        }
-
-        .siteShell {
+      <style jsx>{`
+        .page-shell {
           min-height: 100vh;
-          color: var(--text);
-          overflow: hidden;
-          position: relative;
-          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-            "Segoe UI", sans-serif;
           background:
-            radial-gradient(circle at 52% 4%, rgba(0, 137, 255, 0.13), transparent 30%),
-            radial-gradient(circle at 90% 18%, rgba(73, 48, 255, 0.1), transparent 30%),
-            linear-gradient(180deg, #020913 0%, #06111f 52%, #020811 100%);
+            radial-gradient(circle at 20% 0%, rgba(0, 129, 255, 0.18), transparent 32%),
+            radial-gradient(circle at 85% 10%, rgba(173, 74, 255, 0.15), transparent 26%),
+            linear-gradient(180deg, #030918 0%, #051126 52%, #040a18 100%);
+          color: #fff;
+          font-family: Arial, Helvetica, sans-serif;
+          position: relative;
+          overflow-x: hidden;
         }
 
-        .gridGlow {
+        .stars,
+        .stars-two {
           position: fixed;
           inset: 0;
           pointer-events: none;
-          opacity: 0.32;
           background-image:
-            linear-gradient(rgba(52, 157, 255, 0.08) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(52, 157, 255, 0.08) 1px, transparent 1px);
-          background-size: 56px 56px;
-          mask-image: linear-gradient(to bottom, rgba(0,0,0,.85), transparent 74%);
+            radial-gradient(circle at 10% 20%, rgba(255,255,255,.75) 0 1px, transparent 1.6px),
+            radial-gradient(circle at 70% 14%, rgba(65,205,255,.9) 0 1px, transparent 2px),
+            radial-gradient(circle at 48% 62%, rgba(255,255,255,.55) 0 1px, transparent 1.6px),
+            radial-gradient(circle at 90% 34%, rgba(179,118,255,.9) 0 1px, transparent 2px),
+            radial-gradient(circle at 31% 78%, rgba(81,213,255,.9) 0 1px, transparent 2px),
+            radial-gradient(circle at 78% 84%, rgba(255,255,255,.75) 0 1px, transparent 1.4px);
+          opacity: .55;
         }
 
-        .page {
-          max-width: 1600px;
+        .stars-two {
+          transform: scale(1.1);
+          opacity: .25;
+          filter: blur(1px);
+        }
+
+        .page-wrap {
+          max-width: 1680px;
           margin: 0 auto;
-          padding: 0 20px 60px;
+          padding: 14px 20px 28px;
           position: relative;
-          z-index: 1;
+          z-index: 2;
+        }
+
+        .glass-panel {
+          background: linear-gradient(180deg, rgba(7, 18, 40, .92), rgba(6, 14, 31, .94));
+          border: 1px solid rgba(66, 164, 255, .28);
+          box-shadow: inset 0 0 0 1px rgba(0, 187, 255, .06), 0 18px 55px rgba(0, 0, 0, .35);
+          border-radius: 24px;
+          backdrop-filter: blur(10px);
         }
 
         .topbar {
-          min-height: 76px;
-          display: grid;
-          grid-template-columns: 290px 1fr auto;
-          gap: 28px;
-          align-items: center;
-          border-bottom: 1px solid rgba(65, 171, 255, 0.22);
-          position: sticky;
-          top: 0;
-          z-index: 30;
-          backdrop-filter: blur(20px);
-          background: rgba(2, 9, 19, 0.8);
-        }
-
-        .brand {
-          height: 58px;
-          overflow: hidden;
+          padding: 12px 18px;
           display: flex;
           align-items: center;
-        }
-
-        .brand img {
-          max-width: 270px;
-          max-height: 54px;
-          width: auto;
-          height: auto;
-          display: block;
-          object-fit: contain;
-          object-position: left center;
-          filter: drop-shadow(0 0 14px rgba(39,183,255,.18));
-        }
-
-        .nav {
-          display: flex;
-          justify-content: center;
-          gap: 26px;
-          color: #b8c8da;
-          font-size: 13px;
-          font-weight: 800;
-        }
-
-        .nav a {
-          padding: 28px 0 24px;
-          border-bottom: 2px solid transparent;
-          transition: .2s ease;
-        }
-
-        .nav a:hover {
-          color: #fff;
-          border-color: #2db9ff;
-        }
-
-        .headerActions {
-          display: flex;
-          gap: 10px;
-          align-items: center;
-        }
-
-        .networkPill,
-        .walletButton,
-        .statusPill {
-          border: 1px solid rgba(79, 178, 255, 0.28);
-          background: rgba(5, 18, 34, 0.78);
-          border-radius: 12px;
-          padding: 10px 13px;
-          color: #c9d9e9;
-          font-size: 12px;
-          font-weight: 800;
-        }
-
-        .networkDot {
-          display: inline-block;
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
-          margin-right: 8px;
-          background: linear-gradient(135deg, #00ffa3, #03e1ff);
-          box-shadow: 0 0 12px #00e8ff;
-        }
-
-        .walletButton {
-          color: white;
-          background: linear-gradient(135deg, #0b7dff, #1abfff);
-          box-shadow: 0 0 22px rgba(39, 183, 255, 0.24);
-          opacity: .76;
-        }
-
-        .hero {
-          min-height: 600px;
-          display: grid;
-          grid-template-columns: 1.05fr .9fr .95fr;
-          gap: 26px;
-          align-items: center;
-          padding: 24px 0 10px;
-        }
-
-        .heroCopy {
-          padding: 22px 10px 22px 20px;
-        }
-
-        .eyebrow {
-          display: inline-flex;
-          border: 1px solid rgba(70, 180, 255, 0.28);
-          background: rgba(24, 121, 203, 0.09);
-          color: #9bdcff;
-          font-size: 11px;
-          font-weight: 900;
-          letter-spacing: .12em;
-          padding: 8px 12px;
-          border-radius: 999px;
-        }
-
-        .hero h1 {
-          font-size: clamp(56px, 5.2vw, 88px);
-          line-height: .96;
-          letter-spacing: -.06em;
-          margin: 20px 0 18px;
-        }
-
-        .hero h1 span {
-          color: #35caff;
-          text-shadow: 0 0 34px rgba(53,202,255,.2);
-        }
-
-        .heroCopy > p {
-          color: #b6c6d8;
-          font-size: clamp(17px, 1.35vw, 21px);
-          line-height: 1.55;
-          max-width: 650px;
-        }
-
-        .heroButtons {
-          display: flex;
-          gap: 12px;
-          flex-wrap: wrap;
-          margin-top: 24px;
-        }
-
-        .primaryButton,
-        .secondaryButton {
-          border-radius: 12px;
-          padding: 13px 18px;
-          font-weight: 900;
-          font-size: 14px;
-          border: 1px solid rgba(95, 193, 255, 0.3);
-        }
-
-        .primaryButton {
-          background: linear-gradient(135deg, #12a7ff, #1377ff);
-          box-shadow: 0 0 26px rgba(27, 166, 255, 0.28);
-        }
-
-        .secondaryButton {
-          background: rgba(7, 18, 34, 0.72);
-          color: #d8e6f4;
-        }
-
-        .featureStrip {
-          margin-top: 28px;
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 10px;
-        }
-
-        .featureStrip div {
-          border-top: 1px solid rgba(72, 173, 255, 0.18);
-          padding-top: 11px;
-          min-width: 0;
-        }
-
-        .featureStrip strong,
-        .featureStrip span {
-          display: block;
-        }
-
-        .featureStrip strong {
-          font-size: 12px;
-          color: #e5f5ff;
-        }
-
-        .featureStrip span {
-          margin-top: 4px;
-          color: #7f99b3;
-          font-size: 10px;
-        }
-
-        .worldStage {
-          height: 520px;
-          position: relative;
-          display: grid;
-          place-items: center;
-          perspective: 1100px;
-          isolation: isolate;
-        }
-
-        .worldStage::before {
-          content: "";
-          width: 430px;
-          height: 430px;
-          position: absolute;
-          border-radius: 50%;
-          background: radial-gradient(circle, rgba(20, 151, 255, .22), transparent 67%);
-          filter: blur(22px);
-          animation: breathe 4.8s ease-in-out infinite;
-        }
-
-        .world {
-          width: 250px;
-          height: 250px;
-          position: relative;
-          border-radius: 50%;
-          overflow: hidden;
-          transform-style: preserve-3d;
-          border: 1px solid rgba(127, 220, 255, .7);
-          background:
-            radial-gradient(circle at 35% 30%, rgba(117, 226, 255, .32), transparent 23%),
-            radial-gradient(circle at 66% 62%, rgba(0, 75, 255, .34), transparent 37%),
-            linear-gradient(135deg, #063d78, #07152c 56%, #042251);
-          box-shadow:
-            inset -24px -18px 45px rgba(0,0,0,.5),
-            inset 18px 14px 45px rgba(28,202,255,.13),
-            0 0 24px rgba(73,210,255,.6),
-            0 0 72px rgba(0,94,255,.28);
-          animation: worldFloat 6s ease-in-out infinite, worldSpin 18s linear infinite;
-          z-index: 10;
-        }
-
-        .world::after {
-          content: "";
-          position: absolute;
-          inset: 0;
-          border-radius: 50%;
-          background: linear-gradient(98deg, rgba(255,255,255,.12), transparent 30%, transparent 70%, rgba(0,0,0,.22));
-          pointer-events: none;
-        }
-
-        .worldMap {
-          position: absolute;
-          background: rgba(50, 217, 255, .16);
-          box-shadow: 0 0 12px rgba(70,210,255,.15);
-          border: 1px solid rgba(112, 221, 255, .18);
-          filter: blur(.2px);
-        }
-
-        .mapA {
-          width: 98px;
-          height: 78px;
-          left: 28px;
-          top: 48px;
-          border-radius: 58% 42% 65% 35% / 43% 62% 38% 57%;
-          transform: rotate(-12deg);
-        }
-
-        .mapB {
-          width: 72px;
-          height: 104px;
-          right: 34px;
-          bottom: 34px;
-          border-radius: 46% 54% 34% 66% / 59% 34% 66% 41%;
-          transform: rotate(21deg);
-        }
-
-        .worldLongitude,
-        .worldLatitude {
-          position: absolute;
-          inset: 14px 45%;
-          border: 1px solid rgba(121, 226, 255, .25);
-          border-radius: 50%;
-        }
-
-        .long1 { transform: rotateY(60deg); }
-        .long2 { transform: rotateY(-60deg); }
-
-        .worldLatitude {
-          inset: 45% 13px;
-        }
-
-        .lat1 { transform: rotateX(58deg); }
-        .lat2 { transform: rotateX(-58deg); }
-
-        .hMark {
-          position: absolute;
-          inset: 0;
-          display: grid;
-          place-items: center;
-          font-size: 108px;
-          font-weight: 1000;
-          font-style: italic;
-          letter-spacing: -.12em;
-          color: white;
-          text-shadow:
-            -6px 10px 0 #0574ff,
-            0 0 22px #00cfff,
-            0 0 46px rgba(0, 157, 255, .72);
-          z-index: 5;
-          transform: translateZ(18px);
-        }
-
-        .worldHalo {
-          position: absolute;
-          border: 1px solid rgba(86, 200, 255, .42);
-          border-radius: 50%;
-          z-index: 3;
-          box-shadow: 0 0 18px rgba(0, 162, 255, .15);
-        }
-
-        .haloOne {
-          width: 360px;
-          height: 130px;
-          transform: rotate(-10deg);
-          animation: haloSpin 8s linear infinite;
-        }
-
-        .haloTwo {
-          width: 400px;
-          height: 160px;
-          transform: rotate(20deg);
-          animation: haloSpinReverse 12s linear infinite;
-        }
-
-        .haloThree {
-          width: 325px;
-          height: 330px;
-          transform: rotateX(72deg) rotateZ(-4deg);
-          opacity: .6;
-          animation: haloSpin 14s linear infinite;
-        }
-
-        .orbit {
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          transform-origin: 0 0;
-          width: 0;
-          height: 0;
-          z-index: 14;
-        }
-
-        .orbitA { animation: orbitA 8s linear infinite; }
-        .orbitB { animation: orbitB 11s linear infinite; }
-        .orbitC { animation: orbitC 14s linear infinite reverse; }
-        .orbitD { animation: orbitD 17s linear infinite; }
-
-        .planet {
-          position: absolute;
-          width: 52px;
-          height: 52px;
-          border-radius: 50%;
-          display: grid;
-          place-items: center;
-          color: #c8f3ff;
-          font-weight: 900;
-          background:
-            radial-gradient(circle at 35% 30%, rgba(74,211,255,.55), transparent 30%),
-            linear-gradient(145deg, rgba(11,54,101,.98), rgba(5,15,34,.98));
-          border: 1px solid rgba(108,216,255,.55);
-          box-shadow: 0 0 22px rgba(36, 188, 255, .32);
-          animation: planetCounter 8s linear infinite;
-          font-size: 18px;
-        }
-
-        .p1 { transform: translate(182px, -28px); }
-        .p2 { transform: translate(-206px, 42px); }
-        .p3 { transform: translate(132px, 136px); }
-        .p4 {
-          width: 46px;
-          height: 46px;
-          transform: translate(-150px, -155px);
-          font-size: 8px;
-          letter-spacing: -2px;
-        }
-
-        .worldBase {
-          width: 300px;
-          height: 72px;
-          position: absolute;
-          top: calc(50% + 127px);
-          left: 50%;
-          transform: translateX(-50%);
-          z-index: 2;
-          filter: drop-shadow(0 0 18px rgba(0, 159, 255, .35));
-        }
-
-        .baseRing {
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          transform: translate(-50%, -50%);
-          border-radius: 50%;
-          border: 2px solid rgba(68, 192, 255, .45);
-          background: radial-gradient(ellipse, rgba(16,118,255,.15), transparent 65%);
-        }
-
-        .r1 { width: 280px; height: 64px; animation: basePulse 3s ease-in-out infinite; }
-        .r2 { width: 224px; height: 45px; animation: basePulse 3s .7s ease-in-out infinite; }
-        .r3 { width: 150px; height: 27px; animation: basePulse 3s 1.4s ease-in-out infinite; }
-
-        .worldLegend {
-          position: absolute;
-          right: 8px;
-          top: 50%;
-          transform: translateY(-50%);
-          display: grid;
-          gap: 7px;
-          color: #46c9ff;
-          font-size: 11px;
-          font-weight: 900;
-          letter-spacing: .12em;
-          text-shadow: 0 0 10px rgba(51,200,255,.5);
-        }
-
-        .star {
-          position: absolute;
-          width: 4px;
-          height: 4px;
-          border-radius: 50%;
-          background: #c8f5ff;
-          box-shadow: 0 0 14px #4bcdff;
-          animation: twinkle 2.2s ease-in-out infinite;
-        }
-
-        .star1 { left: 12%; top: 19%; }
-        .star2 { right: 18%; top: 12%; animation-delay: .6s; }
-        .star3 { left: 16%; bottom: 17%; animation-delay: 1.1s; }
-        .star4 { right: 12%; bottom: 25%; animation-delay: 1.6s; }
-
-        .roboPanel,
-        .economyPanel,
-        .launchPanel,
-        .activityPanel,
-        .infoGrid article {
-          background:
-            linear-gradient(145deg, rgba(10, 29, 53, .94), rgba(4, 13, 26, .96));
-          border: 1px solid rgba(63, 169, 255, .26);
-          box-shadow: 0 18px 50px rgba(0,0,0,.3);
-        }
-
-        .roboPanel {
-          border-radius: 22px;
-          padding: 20px;
-          min-height: 410px;
-          position: relative;
-          overflow: hidden;
-        }
-
-        .roboPanel::before {
-          content: "";
-          position: absolute;
-          inset: 0 0 auto;
-          height: 2px;
-          background: linear-gradient(90deg, transparent, #3ec7ff, transparent);
-          animation: scan 4s linear infinite;
-        }
-
-        .roboHeader {
-          display: flex;
-          align-items: flex-start;
-          justify-content: space-between;
-          gap: 14px;
-        }
-
-        .roboTitle {
-          color: #66d5ff;
-          font-size: 25px;
-          font-weight: 1000;
-          letter-spacing: .01em;
-        }
-
-        .online {
-          margin-left: 8px;
-          color: #49f39f;
-          font-size: 10px;
-          vertical-align: middle;
-        }
-
-        .roboSub {
-          margin-top: 5px;
-          color: #a6bbcf;
-          font-size: 12px;
-        }
-
-        .roboBot {
-          width: 84px;
-          height: 94px;
-          position: relative;
-          flex: 0 0 auto;
-        }
-
-        .botAntenna {
-          width: 2px;
-          height: 12px;
-          background: #65e0ff;
-          position: absolute;
-          top: 0;
-          left: 50%;
-          box-shadow: 0 0 8px #65e0ff;
-        }
-
-        .botAntenna::after {
-          content: "";
-          position: absolute;
-          width: 6px;
-          height: 6px;
-          border-radius: 50%;
-          background: #61dbff;
-          left: -2px;
-          top: -3px;
-        }
-
-        .botFace {
-          width: 74px;
-          height: 58px;
-          border: 2px solid rgba(104,213,255,.8);
-          border-radius: 28px;
-          position: absolute;
-          top: 10px;
-          left: 5px;
-          background: linear-gradient(145deg, #effaff, #6b8dac 35%, #0a192b 37%, #07121f 100%);
-          box-shadow: 0 0 20px rgba(54,188,255,.35);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 17px;
-        }
-
-        .botFace i {
-          display: block;
-          width: 10px;
-          height: 13px;
-          border-radius: 50%;
-          background: #40e0ff;
-          box-shadow: 0 0 11px #40e0ff;
-        }
-
-        .botBody {
-          position: absolute;
-          width: 50px;
-          height: 34px;
-          border-radius: 14px 14px 18px 18px;
-          bottom: 0;
-          left: 17px;
-          display: grid;
-          place-items: center;
-          background: linear-gradient(160deg, #a9dfff, #1a3c65);
-          color: #0b72ff;
-          font-weight: 1000;
-          border: 1px solid rgba(138,224,255,.8);
-        }
-
-        .roboPanel > p {
-          color: #abc0d4;
-          font-size: 13px;
-          line-height: 1.55;
-          margin: 16px 0;
-          max-width: 430px;
-        }
-
-        .promptChips {
-          display: grid;
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 8px;
-        }
-
-        .promptChips button {
-          text-align: left;
-          border: 1px solid rgba(84, 181, 255, .24);
-          border-radius: 999px;
-          padding: 9px 11px;
-          background: rgba(9, 25, 45, .84);
-          color: #c7d7e8;
-          font-size: 10px;
-          font-weight: 800;
-        }
-
-        .roboInput {
-          margin-top: 15px;
-          border: 1px solid rgba(76, 187, 255, .4);
-          background: rgba(3, 13, 27, .9);
-          border-radius: 12px;
-          min-height: 52px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 12px;
-          padding-left: 14px;
-          color: #6f8aa5;
-          font-size: 11px;
-        }
-
-        .roboInput button {
-          align-self: stretch;
-          width: 48px;
-          border: 0;
-          border-radius: 10px;
-          background: linear-gradient(135deg, #167eff, #2ecbff);
-          color: white;
-          opacity: .75;
-        }
-
-        .roboFoot {
-          margin-top: 10px;
-          color: #617a93;
-          font-size: 9px;
-          text-align: center;
-        }
-
-        .economyPanel {
-          border-radius: 24px;
-          padding: 24px;
-          margin-top: 12px;
-        }
-
-        .sectionHeading {
-          display: flex;
-          align-items: end;
           justify-content: space-between;
           gap: 20px;
-          flex-wrap: wrap;
+          margin-bottom: 14px;
         }
 
-        .sectionHeading h2 {
-          margin: 7px 0 0;
-          font-size: clamp(28px, 3vw, 44px);
-          letter-spacing: -.035em;
-        }
-
-        .pulseDot {
-          display: inline-block;
-          width: 8px;
-          height: 8px;
-          margin-right: 7px;
-          border-radius: 50%;
-          background: #5df0a0;
-          box-shadow: 0 0 12px #5df0a0;
-          animation: pulse 1.8s ease-in-out infinite;
-        }
-
-        .economyGrid {
-          display: grid;
-          grid-template-columns: 230px 1fr;
-          gap: 24px;
+        .brand-block {
+          display: flex;
           align-items: center;
-          margin-top: 22px;
+          gap: 12px;
+          min-width: 250px;
         }
 
-        .feeCore {
-          width: 210px;
-          height: 210px;
-          margin: auto;
-          border-radius: 50%;
-          border: 2px solid rgba(43, 183, 255, .45);
-          background:
-            radial-gradient(circle, rgba(30,133,255,.22), transparent 60%),
-            rgba(5, 17, 35, .8);
+        .brand-icon {
+          width: 52px;
+          height: 52px;
+          border-radius: 14px;
+          background: linear-gradient(180deg, #74c8ff, #1574ff 54%, #38ecff);
           display: grid;
           place-items: center;
-          align-content: center;
-          position: relative;
-          box-shadow:
-            inset 0 0 38px rgba(0, 126, 255, .15),
-            0 0 28px rgba(0, 145, 255, .2);
-        }
-
-        .feeNumber {
-          font-size: 58px;
-          font-weight: 1000;
-          line-height: 1;
-          text-shadow: 0 0 22px rgba(55,196,255,.5);
-        }
-
-        .feeLabel {
-          margin-top: 7px;
-          color: #a9bed2;
-          font-size: 12px;
-          font-weight: 800;
-        }
-
-        .feeOrbit {
-          position: absolute;
-          inset: 13px;
-          border-radius: 50%;
-          border: 1px dashed rgba(69, 187, 255, .42);
-          animation: spin 12s linear infinite;
-        }
-
-        .feeOrbit2 {
-          inset: -10px;
-          border-style: solid;
-          border-color: rgba(88, 212, 255, .14);
-          animation-direction: reverse;
-          animation-duration: 17s;
-        }
-
-        .feeFlowLine {
-          position: absolute;
-          right: -66px;
-          width: 80px;
-          height: 1px;
-          background: linear-gradient(90deg, #23baff, transparent);
-          box-shadow: 0 0 10px rgba(44, 194, 255, .8);
-        }
-
-        .f1 { top: 67px; transform: rotate(-7deg); }
-        .f2 { top: 105px; }
-        .f3 { top: 143px; transform: rotate(7deg); }
-
-        .bucketGrid {
-          display: grid;
-          grid-template-columns: repeat(4, minmax(0, 1fr));
-          gap: 12px;
-        }
-
-        .bucketCard {
-          min-height: 280px;
-          border-radius: 17px;
-          padding: 18px;
-          background: rgba(7, 22, 41, .88);
-          border: 1px solid rgba(91, 187, 255, .28);
-          position: relative;
-          overflow: hidden;
-        }
-
-        .bucketCard::after {
-          content: "";
-          position: absolute;
-          inset: auto -20% -55% 15%;
-          height: 170px;
-          filter: blur(50px);
-          opacity: .15;
-          border-radius: 50%;
-        }
-
-        .bucketCard.blue { border-color: rgba(47, 184, 255, .7); }
-        .bucketCard.blue::after { background: #00aaff; }
-
-        .bucketCard.purple { border-color: rgba(186, 94, 255, .72); }
-        .bucketCard.purple::after { background: #a04fff; }
-
-        .bucketCard.green { border-color: rgba(48, 229, 188, .62); }
-        .bucketCard.green::after { background: #1cd8a8; }
-
-        .bucketCard.gold { border-color: rgba(255, 180, 63, .72); }
-        .bucketCard.gold::after { background: #ffae38; }
-
-        .bucketTop {
-          display: flex;
-          justify-content: space-between;
-          gap: 12px;
-        }
-
-        .bucketPercent {
-          font-size: 34px;
-          font-weight: 1000;
-          color: #48c9ff;
-        }
-
-        .purple .bucketPercent { color: #cb79ff; }
-        .green .bucketPercent { color: #51e0c2; }
-        .gold .bucketPercent { color: #ffc263; }
-
-        .bucketTitle {
           font-weight: 900;
-          font-size: 16px;
-          margin-top: 1px;
+          font-size: 28px;
+          color: #05111d;
+          box-shadow: 0 0 28px rgba(52, 180, 255, .45);
         }
 
-        .bucketSubtitle {
-          font-size: 10px;
-          color: #859db5;
+        .brand-name {
+          font-size: 34px;
+          line-height: 1;
+          font-weight: 900;
+          letter-spacing: -.04em;
+        }
+
+        .brand-tag {
+          color: #9db4d7;
+          font-size: 15px;
           margin-top: 2px;
         }
 
-        .sparkline {
-          height: 58px;
-          width: 76px;
+        .topnav {
           display: flex;
-          gap: 4px;
-          align-items: end;
-          padding-bottom: 8px;
-        }
-
-        .sparkline i {
+          flex-wrap: wrap;
+          gap: 24px;
+          justify-content: center;
+          color: #d8e8ff;
+          font-size: 16px;
+          font-weight: 700;
           flex: 1;
-          border-radius: 5px 5px 1px 1px;
-          background: linear-gradient(#46d4ff, #0a4b97);
-          opacity: .8;
         }
 
-        .sparkline i:nth-child(1) { height: 25%; }
-        .sparkline i:nth-child(2) { height: 40%; }
-        .sparkline i:nth-child(3) { height: 34%; }
-        .sparkline i:nth-child(4) { height: 58%; }
-        .sparkline i:nth-child(5) { height: 48%; }
-        .sparkline i:nth-child(6) { height: 76%; }
-
-        .metric {
-          margin-top: 18px;
-          padding: 12px 0;
-          border-top: 1px solid rgba(94, 174, 235, .16);
+        .topnav span {
+          opacity: .86;
+          position: relative;
         }
 
-        .metric strong,
-        .metric span {
-          display: block;
+        .topnav .active {
+          color: #fff;
         }
 
-        .metric strong {
-          font-size: 19px;
+        .topnav .active::after {
+          content: "";
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: -10px;
+          margin: auto;
+          width: 42px;
+          height: 4px;
+          border-radius: 999px;
+          background: linear-gradient(90deg, #4bbcff, #7a74ff);
+          box-shadow: 0 0 18px rgba(75,188,255,.75);
         }
 
-        .metric span {
-          margin-top: 4px;
-          color: #829bb5;
-          font-size: 10px;
+        .top-actions {
+          display: flex;
+          align-items: center;
+          gap: 14px;
         }
 
-        .secondaryMetric {
-          margin-top: 0;
-        }
-
-        .countdown {
-          margin-top: 4px;
-          border: 1px solid rgba(70, 176, 255, .18);
-          background: rgba(6, 18, 34, .72);
-          color: #abc8df;
-          border-radius: 9px;
-          padding: 8px 9px;
-          font-size: 9px;
+        .chain-pill,
+        .wallet-btn,
+        .small-outline,
+        .mini-btn {
+          border-radius: 14px;
+          border: 1px solid rgba(94, 185, 255, .36);
+          background: rgba(5, 20, 46, .82);
+          color: #eef7ff;
           font-weight: 800;
         }
 
-        .countdown.muted {
-          color: #67819a;
+        .chain-pill {
+          padding: 14px 18px;
+          min-width: 120px;
+          text-align: center;
         }
 
-        .lowerGrid {
+        .wallet-btn {
+          padding: 15px 24px;
+          background: linear-gradient(180deg, #2b9fff, #2167ff);
+          box-shadow: 0 0 28px rgba(42, 140, 255, .42);
+        }
+
+        .hero {
+          padding: 26px;
           display: grid;
-          grid-template-columns: 1.35fr .75fr .8fr;
+          grid-template-columns: 1.2fr 1fr .9fr;
+          gap: 22px;
+          align-items: stretch;
+          margin-bottom: 14px;
+        }
+
+        .eyebrow,
+        .section-title {
+          display: inline-flex;
+          align-items: center;
+          border-radius: 999px;
+          padding: 8px 14px;
+          border: 1px solid rgba(76, 182, 255, .26);
+          background: rgba(9, 24, 52, .72);
+          color: #cbe5ff;
+          font-size: 14px;
+          font-weight: 800;
+          letter-spacing: .03em;
+        }
+
+        .hero-copy h1 {
+          font-size: clamp(66px, 6vw, 104px);
+          line-height: .92;
+          letter-spacing: -.07em;
+          margin: 18px 0 20px;
+        }
+
+        .hero-copy h1 span {
+          color: #21b6ff;
+          text-shadow: 0 0 20px rgba(33,182,255,.35);
+        }
+
+        .hero-copy p {
+          font-size: 22px;
+          line-height: 1.32;
+          color: #d3e0f3;
+          max-width: 700px;
+          margin: 0 0 18px;
+        }
+
+        .cta-row {
+          display: flex;
           gap: 14px;
+          flex-wrap: wrap;
+          margin-bottom: 18px;
+        }
+
+        .primary-btn,
+        .secondary-btn,
+        .send-btn {
+          border: none;
+          border-radius: 16px;
+          font-weight: 900;
+          cursor: pointer;
+        }
+
+        .primary-btn {
+          background: linear-gradient(180deg, #2cb1ff, #2174ff);
+          color: #fff;
+          padding: 18px 28px;
+          box-shadow: 0 0 30px rgba(44,177,255,.35);
+        }
+
+        .secondary-btn {
+          padding: 18px 26px;
+          color: #fff;
+          border: 1px solid rgba(99, 185, 255, .34);
+          background: rgba(6, 16, 37, .84);
+        }
+
+        .feature-row {
+          display: flex;
+          gap: 18px;
+          flex-wrap: wrap;
+        }
+
+        .feature-row div {
+          min-width: 170px;
+          padding: 10px 12px;
+          border-radius: 14px;
+          background: rgba(7, 18, 41, .65);
+          border: 1px solid rgba(84, 174, 255, .14);
+        }
+
+        .feature-row strong {
+          display: block;
+          font-size: 14px;
+          color: #fff;
+        }
+
+        .feature-row span {
+          display: block;
+          font-size: 13px;
+          color: #9db0ca;
+          margin-top: 3px;
+        }
+
+        .hero-scene {
+          position: relative;
+          min-height: 430px;
+          overflow: hidden;
+          border-radius: 24px;
+          background:
+            radial-gradient(circle at 50% 18%, rgba(81, 203, 255, .15), transparent 26%),
+            radial-gradient(circle at 60% 5%, rgba(182, 80, 255, .14), transparent 24%),
+            linear-gradient(180deg, rgba(7, 19, 44, .78), rgba(4, 13, 30, .82));
+          border: 1px solid rgba(80, 190, 255, .14);
+        }
+
+        .orbit-label {
+          position: absolute;
+          z-index: 5;
+          font-size: 13px;
+          line-height: 1.5;
+          letter-spacing: .13em;
+          font-weight: 800;
+          color: #26beff;
+          text-shadow: 0 0 16px rgba(38,190,255,.35);
+        }
+
+        .orbit-label.left {
+          left: 6%;
+          top: 45%;
+          max-width: 110px;
+        }
+
+        .orbit-label.right {
+          right: 5%;
+          top: 50%;
+          max-width: 90px;
+        }
+
+        .scene-core {
+          position: absolute;
+          inset: 0;
+          display: grid;
+          place-items: center;
+          perspective: 1000px;
+        }
+
+        .scene-platform {
+          position: absolute;
+          width: 320px;
+          height: 50px;
+          bottom: 26px;
+          border-radius: 50%;
+          border: 3px solid rgba(52, 190, 255, .5);
+          box-shadow: 0 0 35px rgba(52,190,255,.35), inset 0 0 24px rgba(52,190,255,.2);
+        }
+
+        .scene-platform::before,
+        .scene-platform::after {
+          content: "";
+          position: absolute;
+          inset: 8px;
+          border-radius: 50%;
+          border: 2px solid rgba(91, 184, 255, .34);
+        }
+
+        .scene-platform::after {
+          inset: 16px;
+          border-color: rgba(109, 226, 255, .2);
+        }
+
+        .ring {
+          position: absolute;
+          border-radius: 50%;
+          border: 2px solid rgba(84, 193, 255, .35);
+          box-shadow: 0 0 28px rgba(84,193,255,.16);
+        }
+
+        .ring-a {
+          width: 410px;
+          height: 190px;
+          transform: rotateX(72deg) rotateZ(8deg);
+          animation: spinRing 14s linear infinite;
+        }
+
+        .ring-b {
+          width: 320px;
+          height: 420px;
+          transform: rotateY(70deg) rotateZ(22deg);
+          animation: spinRingB 17s linear infinite;
+        }
+
+        .ring-c {
+          width: 420px;
+          height: 320px;
+          transform: rotateY(72deg) rotateX(58deg) rotateZ(-16deg);
+          animation: spinRingC 12s linear infinite;
+        }
+
+        .big-planet-wrap {
+          position: relative;
+          width: 280px;
+          height: 280px;
+          z-index: 3;
+          animation: bob 5s ease-in-out infinite;
+        }
+
+        .big-planet {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          position: relative;
+          overflow: hidden;
+          background:
+            radial-gradient(circle at 30% 30%, rgba(255,255,255,.55), rgba(255,255,255,.02) 28%),
+            radial-gradient(circle at 60% 70%, rgba(1, 184, 255, .28), transparent 34%),
+            radial-gradient(circle at 50% 45%, #0d64ff 0%, #0b2c7f 45%, #071639 100%);
+          box-shadow:
+            inset -18px -22px 40px rgba(0, 0, 0, .4),
+            inset 16px 18px 30px rgba(124, 230, 255, .18),
+            0 0 50px rgba(44, 183, 255, .45),
+            0 0 120px rgba(71, 116, 255, .2);
+          animation: globeRotate 18s linear infinite;
+        }
+
+        .big-planet::before {
+          content: "";
+          position: absolute;
+          inset: -2%;
+          border-radius: 50%;
+          background:
+            repeating-linear-gradient(110deg, rgba(255,255,255,.08) 0 2px, transparent 2px 22px),
+            radial-gradient(circle at 70% 40%, rgba(81, 214, 255, .12), transparent 25%);
+          mix-blend-mode: screen;
+          animation: textureShift 10s linear infinite;
+          opacity: .7;
+        }
+
+        .planet-shine {
+          position: absolute;
+          inset: 10% 48% 14% 12%;
+          border-radius: 50%;
+          background: linear-gradient(180deg, rgba(255,255,255,.32), rgba(255,255,255,.02));
+          filter: blur(2px);
+        }
+
+        .planet-h {
+          position: absolute;
+          inset: 0;
+          display: grid;
+          place-items: center;
+          font-size: 140px;
+          font-weight: 900;
+          color: #8fe8ff;
+          text-shadow: 0 0 30px rgba(97, 220, 255, .8), 0 0 60px rgba(40, 135, 255, .35);
+        }
+
+        .orbital-system {
+          position: absolute;
+          inset: 0;
+          transform-style: preserve-3d;
+          animation: orbitScene 22s linear infinite;
+        }
+
+        .orbit-two {
+          animation-duration: 18s;
+          animation-direction: reverse;
+        }
+
+        .orbit-three {
+          animation-duration: 15s;
+        }
+
+        .coin-planet {
+          position: absolute;
+          border-radius: 50%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          background:
+            radial-gradient(circle at 35% 28%, rgba(255,255,255,.5), rgba(255,255,255,.05) 25%),
+            linear-gradient(180deg, #2b86ff, #1e2f83);
+          box-shadow: inset -12px -15px 20px rgba(0, 0, 0, .38), 0 0 24px rgba(79, 193, 255, .45);
+          border: 2px solid rgba(109, 230, 255, .55);
+          color: #fff;
+          transform-style: preserve-3d;
+          animation-name: selfSpin;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+        }
+
+        .coin-planet.mini {
+          border-color: rgba(181, 131, 255, .48);
+          box-shadow: inset -10px -12px 18px rgba(0,0,0,.42), 0 0 18px rgba(137, 108, 255, .36);
+        }
+
+        .emoji {
+          font-size: 28px;
+          line-height: 1;
+          filter: drop-shadow(0 0 6px rgba(255,255,255,.3));
+        }
+
+        .coin-label {
+          margin-top: 4px;
+          font-size: 10px;
+          font-weight: 900;
+          letter-spacing: .08em;
+        }
+
+        .robo-panel {
+          padding: 18px 18px 16px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+
+        .robo-head {
+          display: flex;
+          justify-content: space-between;
+          gap: 12px;
+          align-items: center;
+        }
+
+        .robo-title {
+          font-size: 26px;
+          font-weight: 900;
+          color: #92ddff;
+        }
+
+        .robo-title span {
+          font-size: 16px;
+          color: #70f7a1;
+        }
+
+        .robo-subtitle {
+          color: #d9eaff;
+          font-size: 18px;
+          margin-top: 3px;
+        }
+
+        .robo-avatar {
+          width: 96px;
+          height: 96px;
+          display: grid;
+          place-items: center;
+          border-radius: 24px;
+          font-size: 56px;
+          background: radial-gradient(circle at 35% 30%, rgba(255,255,255,.45), rgba(255,255,255,.02) 30%), linear-gradient(180deg, rgba(34,113,255,.3), rgba(16,28,62,.95));
+          border: 1px solid rgba(92, 198, 255, .28);
+          box-shadow: 0 0 24px rgba(58, 165, 255, .25);
+        }
+
+        .robo-panel p {
+          font-size: 16px;
+          color: #cbdcf3;
+          line-height: 1.45;
+          margin: 14px 0;
+        }
+
+        .question-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 10px;
+        }
+
+        .question-chip {
+          border-radius: 14px;
+          border: 1px solid rgba(100, 192, 255, .24);
+          background: rgba(10, 27, 61, .74);
+          padding: 12px 14px;
+          color: #eef8ff;
+          font-size: 14px;
+          font-weight: 700;
+          display: flex;
+          justify-content: space-between;
+          gap: 10px;
+        }
+
+        .ask-input-row {
+          display: grid;
+          grid-template-columns: 1fr 70px;
+          gap: 12px;
           margin-top: 14px;
         }
 
-        .launchPanel,
-        .activityPanel {
-          border-radius: 20px;
-          padding: 18px;
-        }
-
-        .panelTitle {
+        .ask-input {
+          border-radius: 16px;
+          border: 1px solid rgba(84, 186, 255, .28);
+          background: rgba(7, 20, 45, .86);
+          color: #8ea5c5;
+          font-size: 18px;
           display: flex;
-          gap: 10px;
           align-items: center;
-          color: #55caff;
+          padding: 0 18px;
+          min-height: 64px;
         }
 
-        .panelTitle > span {
-          font-size: 22px;
+        .send-btn {
+          background: linear-gradient(180deg, #2eb2ff, #3f65ff);
+          color: #fff;
+          font-size: 28px;
+          box-shadow: 0 0 26px rgba(46,178,255,.25);
         }
 
-        .panelTitle b,
-        .panelTitle small {
-          display: block;
+        .robo-note {
+          color: #a4bbd8;
+          font-size: 13px;
+          margin-top: 10px;
+          text-align: center;
         }
 
-        .panelTitle b {
-          color: #f2f8fd;
+        .economy-section {
+          padding: 18px 18px 16px;
+          margin-bottom: 14px;
+        }
+
+        .section-head {
+          display: flex;
+          justify-content: space-between;
+          gap: 20px;
+          align-items: center;
+          flex-wrap: wrap;
+          margin-bottom: 16px;
+        }
+
+        .section-head p {
+          margin: 8px 0 0;
+          color: #d2e0f2;
           font-size: 16px;
         }
 
-        .panelTitle small {
-          color: #7892ab;
-          margin-top: 3px;
-          font-size: 9px;
+        .head-actions {
+          display: flex;
+          gap: 12px;
+          align-items: center;
+          flex-wrap: wrap;
         }
 
-        .steps {
+        .small-outline,
+        .mini-btn {
+          padding: 12px 18px;
+        }
+
+        .range-pills {
+          display: flex;
+          border: 1px solid rgba(82, 180, 255, .22);
+          border-radius: 999px;
+          background: rgba(7, 19, 44, .88);
+          overflow: hidden;
+        }
+
+        .range-pills span {
+          padding: 12px 16px;
+          color: #caddf4;
+          font-weight: 800;
+        }
+
+        .range-pills .active {
+          background: linear-gradient(180deg, #2aa4ff, #3569ff);
+          color: #fff;
+        }
+
+        .economy-grid {
+          display: grid;
+          grid-template-columns: 220px 1fr;
+          gap: 18px;
+          align-items: stretch;
+        }
+
+        .fee-gauge-wrap {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          min-height: 240px;
+        }
+
+        .fee-link {
+          position: absolute;
+          right: -10px;
+          width: 90px;
+          height: 4px;
+          background: linear-gradient(90deg, rgba(65,204,255,.8), rgba(65,204,255,0));
+          box-shadow: 0 0 14px rgba(65,204,255,.45);
+        }
+
+        .fee-gauge {
+          width: 180px;
+          height: 180px;
+          border-radius: 50%;
+          padding: 12px;
+          background: conic-gradient(from 0deg, #31b0ff, #7257ff, #31b0ff);
+          box-shadow: 0 0 44px rgba(52, 185, 255, .35);
+          animation: pulseGlow 4s ease-in-out infinite;
+        }
+
+        .fee-gauge-inner {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          background: radial-gradient(circle at 50% 20%, rgba(39,120,255,.45), rgba(5,18,40,.95));
+          border: 2px solid rgba(96, 208, 255, .26);
+        }
+
+        .fee-gauge-inner strong {
+          font-size: 62px;
+          line-height: 1;
+        }
+
+        .fee-gauge-inner span {
+          color: #cbddf3;
+          font-size: 22px;
+        }
+
+        .split-grid {
+          display: grid;
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+          gap: 16px;
+        }
+
+        .split-card {
+          position: relative;
+          overflow: hidden;
+          padding: 16px;
+          min-height: 216px;
+          border-radius: 20px;
+          border: 1px solid;
+          background: linear-gradient(180deg, rgba(11, 24, 51, .96), rgba(8, 18, 39, .98));
+        }
+
+        .card-top-line {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 3px;
+        }
+
+        .split-percent {
+          font-size: 54px;
+          line-height: .9;
+          font-weight: 900;
+        }
+
+        .split-title {
+          font-size: 26px;
+          font-weight: 900;
+        }
+
+        .split-subtitle,
+        .split-subamount,
+        .split-foot {
+          color: #c3d4ec;
+          font-size: 15px;
+          line-height: 1.35;
+        }
+
+        .split-amount {
+          font-size: 42px;
+          line-height: 1;
+          font-weight: 900;
+          margin-top: 18px;
+        }
+
+        .split-subamount {
+          margin-top: 6px;
+        }
+
+        .split-foot {
+          margin-top: 16px;
+        }
+
+        .split-foot.strong {
+          margin-top: 8px;
+          color: #fff;
+          font-weight: 800;
+        }
+
+        .dashboard-grid {
+          display: grid;
+          grid-template-columns: 1.15fr .72fr .55fr;
+          gap: 14px;
+        }
+
+        .launchpad-panel,
+        .recent-panel,
+        .activity-panel {
+          padding: 18px;
+        }
+
+        .panel-title {
+          font-size: 20px;
+          font-weight: 900;
+          letter-spacing: .02em;
+        }
+
+        .panel-subtitle {
+          color: #c7d8ef;
+          font-size: 16px;
+          margin-top: 6px;
+          max-width: 640px;
+        }
+
+        .step-row {
+          margin-top: 18px;
           display: grid;
           grid-template-columns: repeat(5, 1fr);
-          gap: 4px;
-          margin: 20px 0;
+          gap: 12px;
         }
 
-        .step {
+        .step-item {
           text-align: center;
-          position: relative;
-          color: #758ca4;
+          color: #b7c9e0;
+          font-size: 14px;
+          font-weight: 700;
         }
 
-        .step::after {
-          content: "";
-          position: absolute;
-          top: 15px;
-          left: 62%;
-          width: 77%;
-          height: 1px;
-          background: rgba(83, 170, 235, .18);
-        }
-
-        .step:last-child::after {
-          display: none;
-        }
-
-        .step div {
-          width: 30px;
-          height: 30px;
-          margin: auto;
+        .step-dot {
+          width: 38px;
+          height: 38px;
+          margin: 0 auto 8px;
           border-radius: 50%;
           display: grid;
           place-items: center;
-          border: 1px solid rgba(83, 170, 235, .25);
-          background: #071426;
-          font-size: 11px;
+          border: 1px solid rgba(96, 186, 255, .3);
+          background: rgba(10, 24, 50, .84);
+          box-shadow: inset 0 0 0 1px rgba(94,186,255,.1);
+        }
+
+        .step-dot.active {
+          background: linear-gradient(180deg, #33b4ff, #3c68ff);
+          color: #fff;
+          box-shadow: 0 0 18px rgba(51,180,255,.35);
+        }
+
+        .config-grid {
+          margin-top: 20px;
+          display: grid;
+          grid-template-columns: 1fr 1fr .9fr;
+          gap: 14px;
+        }
+
+        .field-block,
+        .preview-block {
+          padding: 16px;
+          border-radius: 16px;
+          border: 1px solid rgba(80, 180, 255, .18);
+          background: rgba(8, 18, 39, .72);
+        }
+
+        .field-block label,
+        .preview-block label {
+          display: block;
+          font-size: 13px;
+          color: #9fb6d3;
+          margin-bottom: 10px;
+          text-transform: uppercase;
+          letter-spacing: .06em;
+        }
+
+        .field-value {
+          min-height: 54px;
+          border-radius: 12px;
+          display: flex;
+          align-items: center;
+          padding: 0 14px;
+          background: rgba(4, 14, 30, .95);
+          border: 1px solid rgba(87, 183, 255, .18);
+          color: #fff;
+          font-weight: 800;
+        }
+
+        .symbol-row {
+          justify-content: space-between;
+        }
+
+        .symbol-row span {
+          padding: 8px 10px;
+          border-radius: 10px;
+          background: linear-gradient(180deg, #2eb2ff, #2d6bff);
+          color: #fff;
+          font-size: 12px;
+        }
+
+        .preview-chip {
+          min-height: 54px;
+          border-radius: 12px;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 12px;
+          background: rgba(4, 14, 30, .95);
+          border: 1px solid rgba(87, 183, 255, .18);
+        }
+
+        .preview-icon {
+          width: 42px;
+          height: 42px;
+          border-radius: 50%;
+          display: grid;
+          place-items: center;
+          background: linear-gradient(180deg, #d6e9ff, #6983ff);
+          color: #07111c;
+          font-size: 24px;
+        }
+
+        .preview-chip strong,
+        .activity-box strong {
+          display: block;
+          font-size: 20px;
           font-weight: 900;
+        }
+
+        .preview-chip span,
+        .activity-box span {
+          display: block;
+          color: #acc0da;
+          margin-top: 2px;
+        }
+
+        .recent-top,
+        .activity-head {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+          flex-wrap: wrap;
+        }
+
+        .mini-tabs {
+          display: flex;
+          gap: 8px;
+          flex-wrap: wrap;
+          margin-top: 12px;
+        }
+
+        .mini-tabs span,
+        .mini-select {
+          padding: 10px 14px;
+          border-radius: 12px;
+          border: 1px solid rgba(84, 180, 255, .18);
+          background: rgba(8, 18, 39, .72);
+          color: #cfe1f6;
+          font-size: 13px;
+          font-weight: 800;
+        }
+
+        .mini-tabs .active {
+          background: linear-gradient(180deg, #2ea7ff, #336eff);
+          color: #fff;
+        }
+
+        .launch-table {
+          margin-top: 16px;
+        }
+
+        .table-head,
+        .table-row {
+          display: grid;
+          grid-template-columns: 1.05fr 1fr .8fr .9fr;
+          gap: 8px;
+          align-items: center;
+        }
+
+        .table-head {
+          color: #8ea9c7;
+          font-size: 12px;
+          font-weight: 800;
+          letter-spacing: .05em;
+          padding: 0 10px 10px;
+        }
+
+        .table-row {
+          padding: 12px 10px;
+          border-top: 1px solid rgba(84, 180, 255, .14);
+          color: #f0f7ff;
+          font-size: 14px;
+        }
+
+        .table-row span:last-child {
+          color: #55d6ff;
+          font-weight: 800;
+        }
+
+        .activity-stats {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 10px;
+          margin-top: 16px;
+        }
+
+        .activity-box {
+          padding: 14px 12px;
+          border-radius: 16px;
+          border: 1px solid rgba(86, 183, 255, .16);
+          background: rgba(8, 18, 39, .72);
+        }
+
+        .activity-box em {
+          display: block;
+          color: #46ee9d;
+          margin-top: 6px;
+          font-style: normal;
+          font-weight: 900;
+        }
+
+        .chart-box {
+          margin-top: 16px;
+          position: relative;
+          min-height: 260px;
+          border-radius: 18px;
+          padding: 18px 10px 8px;
+          border: 1px solid rgba(84, 180, 255, .16);
+          background: linear-gradient(180deg, rgba(8, 18, 39, .72), rgba(5, 12, 28, .95));
+          overflow: hidden;
+        }
+
+        .bars {
+          height: 220px;
+          display: grid;
+          grid-template-columns: repeat(7, 1fr);
+          gap: 12px;
+          align-items: end;
           position: relative;
           z-index: 2;
         }
 
-        .step span {
-          display: block;
-          margin-top: 7px;
-          font-size: 8px;
-          font-weight: 800;
-        }
-
-        .step.active {
-          color: #aee8ff;
-        }
-
-        .step.active div {
-          color: white;
-          border-color: #31c2ff;
-          background: #0a74d8;
-          box-shadow: 0 0 20px rgba(33, 180, 255, .35);
-        }
-
-        .launchForm {
-          display: grid;
-          grid-template-columns: 1fr 1fr 1.1fr;
-          gap: 10px;
-          background: rgba(3, 12, 24, .46);
-          padding: 12px;
-          border-radius: 13px;
-          border: 1px solid rgba(75, 165, 235, .14);
-        }
-
-        .formBlock label {
-          color: #8ea5bc;
-          font-size: 9px;
-          font-weight: 800;
-          display: block;
-          margin-bottom: 6px;
-        }
-
-        .fakeInput {
-          height: 40px;
+        .bar-col {
+          height: 100%;
           display: flex;
+          flex-direction: column;
+          justify-content: end;
           align-items: center;
-          padding: 0 10px;
-          border: 1px solid rgba(73, 164, 235, .18);
-          background: #071526;
-          border-radius: 8px;
-          color: #5f7891;
-          font-size: 10px;
-        }
-
-        .symbolRow {
-          display: flex;
-          gap: 5px;
-        }
-
-        .grow { flex: 1; }
-
-        .hpayTag {
-          min-width: 54px;
-          display: grid;
-          place-items: center;
-          border-radius: 8px;
-          border: 1px solid #3697e3;
-          background: linear-gradient(135deg, #173e74, #268dcc);
-          font-size: 9px;
-          font-weight: 900;
-        }
-
-        .tokenPreview {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          min-width: 0;
-          border: 1px solid rgba(73, 164, 235, .15);
-          border-radius: 9px;
-          padding: 8px 10px;
-        }
-
-        .previewCoin {
-          width: 38px;
-          height: 38px;
-          border-radius: 50%;
-          display: grid;
-          place-items: center;
-          flex: 0 0 auto;
-          color: white;
-          font-weight: 1000;
-          background: linear-gradient(145deg, #0f7cff, #23d5ff);
-          box-shadow: 0 0 15px rgba(40, 192, 255, .24);
-        }
-
-        .tokenPreview b,
-        .tokenPreview span {
-          display: block;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-
-        .tokenPreview b {
-          font-size: 10px;
-        }
-
-        .tokenPreview span {
-          color: #748da6;
-          margin-top: 4px;
-          font-size: 8px;
-        }
-
-        .devRequirement {
-          margin-top: 10px;
-          display: flex;
-          justify-content: space-between;
-          gap: 10px;
-          border: 1px solid rgba(80, 183, 255, .18);
-          background: rgba(9, 36, 62, .55);
-          border-radius: 10px;
-          padding: 10px 12px;
-          font-size: 9px;
-        }
-
-        .devRequirement span {
-          color: #7ea4c2;
-        }
-
-        .devRequirement b {
-          color: #c6edff;
-          text-align: right;
-        }
-
-        .wideButton {
-          width: 100%;
-          margin-top: 10px;
-          border: 0;
-          min-height: 42px;
-          border-radius: 10px;
-          font-weight: 900;
-          color: #06111f;
-          background: linear-gradient(135deg, #4bc8ff, #157fff);
-          opacity: .6;
-        }
-
-        .launchTable {
-          margin-top: 14px;
-          border: 1px solid rgba(69, 158, 224, .12);
-          border-radius: 11px;
-          overflow: hidden;
-        }
-
-        .launchRow {
-          display: grid;
-          grid-template-columns: 1fr 1.3fr 1.4fr .75fr;
-          gap: 8px;
-          padding: 11px 10px;
-          border-bottom: 1px solid rgba(69, 158, 224, .09);
-          font-size: 8px;
-          color: #8fa7be;
-        }
-
-        .launchRow:last-child {
-          border-bottom: 0;
-        }
-
-        .launchRow span:last-child {
-          text-align: right;
-        }
-
-        .tableHead {
-          background: rgba(9, 35, 58, .65);
-          color: #6fb5db;
-          text-transform: uppercase;
-          font-size: 7px;
-          font-weight: 900;
-          letter-spacing: .06em;
-        }
-
-        .statTiles {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 7px;
-          margin-top: 14px;
-        }
-
-        .statTiles div {
-          min-width: 0;
-          padding: 10px 7px;
-          border: 1px solid rgba(64, 164, 235, .15);
-          background: rgba(5, 19, 36, .66);
-          border-radius: 9px;
-        }
-
-        .statTiles strong,
-        .statTiles span {
-          display: block;
-        }
-
-        .statTiles strong {
-          font-size: 11px;
-          color: #d6f1ff;
-        }
-
-        .statTiles span {
-          color: #6d88a2;
-          font-size: 7px;
-          margin-top: 4px;
-        }
-
-        .chart {
-          height: 170px;
-          margin-top: 15px;
-          display: flex;
-          gap: 9px;
-          align-items: end;
-          padding: 20px 10px 8px;
-          border: 1px solid rgba(64, 164, 235, .1);
-          border-radius: 10px;
           position: relative;
-          overflow: hidden;
-          background:
-            repeating-linear-gradient(to top, rgba(71, 166, 233, .08) 0, rgba(71, 166, 233, .08) 1px, transparent 1px, transparent 36px);
         }
 
-        .chart i {
-          flex: 1;
-          border-radius: 5px 5px 1px 1px;
-          background: linear-gradient(#23d0ff, #0d67d4);
-          opacity: .72;
-          box-shadow: 0 0 12px rgba(38, 188, 255, .15);
+        .bar {
+          width: 32px;
+          border-radius: 10px 10px 4px 4px;
+          background: linear-gradient(180deg, #2fc1ff, #2b70ff);
+          box-shadow: 0 0 18px rgba(47,193,255,.32);
         }
 
-        .chartLine {
+        .line-point {
+          position: absolute;
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: #c163ff;
+          box-shadow: 0 0 12px rgba(193,99,255,.75);
+          z-index: 3;
+        }
+
+        .bar-col span {
+          margin-top: 8px;
+          color: #95abca;
+          font-size: 12px;
+        }
+
+        .chart-line {
           position: absolute;
           left: 8%;
-          right: 8%;
-          top: 45%;
-          height: 2px;
-          transform: rotate(-3deg);
-          background: linear-gradient(90deg, #906fff, #ff5cd6);
-          box-shadow: 0 0 10px rgba(212, 84, 255, .28);
+          right: 6%;
+          top: 26%;
+          bottom: 18%;
+          background:
+            linear-gradient(135deg, transparent 5%, rgba(193,99,255,.86) 8%, transparent 10%),
+            linear-gradient(24deg, transparent 16%, rgba(193,99,255,.86) 18%, transparent 20%),
+            linear-gradient(141deg, transparent 31%, rgba(193,99,255,.86) 33%, transparent 35%),
+            linear-gradient(12deg, transparent 48%, rgba(193,99,255,.86) 50%, transparent 52%),
+            linear-gradient(156deg, transparent 65%, rgba(193,99,255,.86) 67%, transparent 69%),
+            linear-gradient(10deg, transparent 81%, rgba(193,99,255,.86) 83%, transparent 85%);
+          opacity: .9;
+          pointer-events: none;
+          filter: drop-shadow(0 0 8px rgba(193,99,255,.55));
         }
 
-        .chartOverlay {
-          position: absolute;
-          left: 10px;
-          right: 10px;
-          bottom: 10px;
-          text-align: center;
-          font-size: 7px;
-          letter-spacing: .1em;
-          font-weight: 900;
-          color: rgba(169, 209, 236, .58);
-          background: rgba(2, 10, 20, .72);
-          padding: 5px;
-          border-radius: 5px;
-        }
-
-        .infoGrid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 14px;
-          margin-top: 14px;
-        }
-
-        .infoGrid article {
-          padding: 25px;
-          border-radius: 18px;
-        }
-
-        .infoGrid article > span {
-          color: #57c8ff;
-          font-size: 9px;
-          font-weight: 900;
-          letter-spacing: .12em;
-        }
-
-        .infoGrid h3 {
-          margin: 10px 0 8px;
-          font-size: 23px;
-          letter-spacing: -.025em;
-        }
-
-        .infoGrid p {
-          margin: 0;
-          color: #8fa6bd;
-          font-size: 12px;
-          line-height: 1.6;
-        }
-
-        footer {
-          text-align: center;
-          padding: 62px 20px 16px;
-        }
-
-        .footerBrand {
-          color: #57caff;
-          font-size: 11px;
-          font-weight: 1000;
-          letter-spacing: .2em;
-        }
-
-        .footerTag {
-          margin-top: 7px;
-          font-size: clamp(28px, 4vw, 46px);
-          font-weight: 1000;
-          letter-spacing: -.035em;
-        }
-
-        footer p {
-          max-width: 780px;
-          margin: 15px auto 0;
-          color: #677f97;
-          font-size: 11px;
-          line-height: 1.6;
-        }
-
-        @keyframes worldSpin {
-          from { transform: rotateY(0deg) rotateZ(-2deg); }
-          to { transform: rotateY(360deg) rotateZ(-2deg); }
-        }
-
-        @keyframes worldFloat {
-          0%,100% { translate: 0 0; }
-          50% { translate: 0 -9px; }
-        }
-
-        @keyframes haloSpin {
-          from { rotate: 0deg; }
-          to { rotate: 360deg; }
-        }
-
-        @keyframes haloSpinReverse {
-          from { rotate: 360deg; }
-          to { rotate: 0deg; }
-        }
-
-        @keyframes orbitA {
+        @keyframes globeRotate {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
         }
 
-        @keyframes orbitB {
-          from { transform: rotate(92deg); }
-          to { transform: rotate(452deg); }
+        @keyframes textureShift {
+          from { transform: rotate(0deg) translateX(0); }
+          to { transform: rotate(360deg) translateX(-10px); }
         }
 
-        @keyframes orbitC {
-          from { transform: rotate(-50deg); }
-          to { transform: rotate(310deg); }
+        @keyframes spinRing {
+          from { transform: rotateX(72deg) rotateZ(0deg); }
+          to { transform: rotateX(72deg) rotateZ(360deg); }
         }
 
-        @keyframes orbitD {
-          from { transform: rotate(170deg); }
-          to { transform: rotate(530deg); }
+        @keyframes spinRingB {
+          from { transform: rotateY(70deg) rotateZ(0deg); }
+          to { transform: rotateY(70deg) rotateZ(-360deg); }
         }
 
-        @keyframes planetCounter {
-          from { rotate: 0deg; }
-          to { rotate: -360deg; }
+        @keyframes spinRingC {
+          from { transform: rotateY(72deg) rotateX(58deg) rotateZ(0deg); }
+          to { transform: rotateY(72deg) rotateX(58deg) rotateZ(360deg); }
         }
 
-        @keyframes basePulse {
-          0%,100% { opacity: .38; scale: 1; }
-          50% { opacity: .9; scale: 1.04; }
+        @keyframes orbitScene {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
         }
 
-        @keyframes breathe {
-          0%,100% { opacity: .65; transform: scale(.96); }
-          50% { opacity: 1; transform: scale(1.03); }
+        @keyframes selfSpin {
+          from { transform: rotate(0deg) translateZ(0); }
+          to { transform: rotate(-360deg) translateZ(0); }
         }
 
-        @keyframes twinkle {
-          0%,100% { opacity: .3; scale: .7; }
-          50% { opacity: 1; scale: 1.4; }
+        @keyframes bob {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
         }
 
-        @keyframes scan {
-          from { transform: translateX(-100%); }
-          to { transform: translateX(100%); }
+        @keyframes pulseGlow {
+          0%, 100% { box-shadow: 0 0 44px rgba(52,185,255,.25); }
+          50% { box-shadow: 0 0 60px rgba(98,109,255,.38); }
         }
 
-        @keyframes pulse {
-          0%,100% { opacity: .4; }
-          50% { opacity: 1; }
-        }
-
-        @keyframes spin {
-          from { rotate: 0deg; }
-          to { rotate: 360deg; }
-        }
-
-
-        /* ===== HOSTPAY V2 precision pass ===== */
-        .siteShell {
-          background:
-            radial-gradient(circle at 50% -8%, rgba(16, 98, 255, .24), transparent 34%),
-            radial-gradient(circle at 83% 18%, rgba(119, 47, 255, .16), transparent 30%),
-            radial-gradient(circle at 14% 42%, rgba(0, 202, 255, .08), transparent 30%),
-            linear-gradient(180deg, #020611 0%, #050d1b 48%, #020711 100%);
-        }
-
-        .gridGlow {
-          opacity: .24;
-          background-size: 44px 44px;
-        }
-
-        .page {
-          max-width: 1560px;
-          padding: 0 22px 54px;
-        }
-
-        .topbar {
-          min-height: 66px;
-          grid-template-columns: 250px 1fr auto;
-          gap: 18px;
-          border: 1px solid rgba(70, 166, 255, .18);
-          border-top: 0;
-          border-radius: 0 0 18px 18px;
-          padding: 0 14px;
-          box-shadow: 0 14px 42px rgba(0,0,0,.30), inset 0 -1px 0 rgba(43,190,255,.08);
-          background: linear-gradient(180deg, rgba(5,13,27,.96), rgba(4,11,24,.82));
-        }
-
-        .topbar::after {
-          content: "";
-          position: absolute;
-          left: 15%;
-          right: 15%;
-          bottom: -1px;
-          height: 1px;
-          background: linear-gradient(90deg, transparent, #1bbcff, #8d62ff, transparent);
-          box-shadow: 0 0 16px rgba(38,190,255,.55);
-        }
-
-        .brand {
-          height: 54px;
-          width: 220px;
-          border-radius: 11px;
-          overflow: hidden;
-          background: linear-gradient(135deg, rgba(13,42,82,.78), rgba(4,15,31,.55));
-          border: 1px solid rgba(76,174,255,.18);
-          box-shadow: inset 0 0 18px rgba(16,141,255,.08);
-        }
-
-        .brand img {
-          width: 330px;
-          max-width: none;
-          height: 54px;
-          max-height: 54px;
-          object-fit: cover;
-          object-position: left center;
-          transform: scale(1.03);
-          filter: saturate(1.28) contrast(1.08) brightness(.93);
-        }
-
-        .nav {
-          gap: 24px;
-          font-size: 12px;
-          letter-spacing: .02em;
-        }
-
-        .nav a {
-          padding: 22px 0 20px;
-        }
-
-        .networkPill,
-        .walletButton {
-          border-radius: 10px;
-          padding: 9px 12px;
-        }
-
-        .walletButton {
-          background: linear-gradient(135deg, #1d8cff, #22c9ff 70%, #825eff);
-          box-shadow: 0 0 24px rgba(28,165,255,.28), inset 0 0 14px rgba(255,255,255,.08);
-        }
-
-        .hero {
-          min-height: 455px;
-          grid-template-columns: 1.02fr .78fr .92fr;
-          gap: 18px;
-          padding: 4px 0 6px;
-          align-items: center;
-        }
-
-        .heroCopy {
-          padding: 14px 6px 10px 16px;
-        }
-
-        .hero h1 {
-          font-size: clamp(50px, 4.65vw, 76px);
-          line-height: .94;
-          margin: 15px 0 13px;
-          background: linear-gradient(180deg, #ffffff 0%, #d8eaff 58%, #8bb6e6 100%);
-          -webkit-background-clip: text;
-          color: transparent;
-          filter: drop-shadow(0 10px 25px rgba(0,0,0,.22));
-        }
-
-        .hero h1 span {
-          background: linear-gradient(95deg, #22bfff, #3fe4ff 48%, #8e6cff 100%);
-          -webkit-background-clip: text;
-          color: transparent;
-          text-shadow: none;
-        }
-
-        .heroCopy > p {
-          max-width: 610px;
-          font-size: clamp(15px, 1.08vw, 18px);
-          line-height: 1.48;
-          color: #a9bfd7;
-          margin: 0;
-        }
-
-        .heroButtons {
-          margin-top: 17px;
-        }
-
-        .primaryButton,
-        .secondaryButton {
-          padding: 11px 16px;
-          border-radius: 10px;
-          font-size: 12px;
-        }
-
-        .primaryButton {
-          background: linear-gradient(105deg, #127dff, #1fd0ff 62%, #745bff);
-          box-shadow: 0 0 28px rgba(34, 184, 255, .28);
-        }
-
-        .featureStrip {
-          margin-top: 19px;
-          gap: 8px;
-        }
-
-        .featureStrip div {
-          padding-top: 8px;
-        }
-
-        .featureStrip strong { font-size: 10px; }
-        .featureStrip span { font-size: 8px; }
-
-        .worldStage {
-          height: 390px;
-          min-width: 0;
-          perspective: 1200px;
-        }
-
-        .worldStage::before {
-          width: 350px;
-          height: 350px;
-          background: radial-gradient(circle, rgba(41, 145, 255, .28), rgba(51, 58, 255, .08) 43%, transparent 68%);
-          filter: blur(16px);
-        }
-
-        .world {
-          width: 220px;
-          height: 220px;
-          overflow: hidden;
-          animation: worldFloat 5.5s ease-in-out infinite;
-          transform: rotateX(7deg) rotateZ(-3deg);
-          background:
-            radial-gradient(circle at 33% 26%, rgba(159,235,255,.18), transparent 21%),
-            radial-gradient(circle at 65% 69%, rgba(16,81,255,.38), transparent 46%),
-            linear-gradient(145deg, #063a79, #07182f 51%, #03142a);
-          box-shadow:
-            inset -46px -28px 55px rgba(0,0,0,.72),
-            inset 24px 15px 45px rgba(95,225,255,.18),
-            inset -7px 0 22px rgba(0,63,155,.55),
-            0 0 0 1px rgba(125,225,255,.66),
-            0 0 26px rgba(55,207,255,.70),
-            0 0 78px rgba(24,87,255,.36);
-          transform-style: preserve-3d;
-        }
-
-        .world::after {
-          background:
-            radial-gradient(circle at 28% 24%, rgba(255,255,255,.30), transparent 18%),
-            linear-gradient(100deg, rgba(255,255,255,.11), transparent 30%, transparent 67%, rgba(0,0,0,.42));
-          z-index: 12;
-        }
-
-        .globeSurface {
-          position: absolute;
-          inset: -6% -42%;
-          border-radius: 50%;
-          animation: globeSurfaceShift 13s linear infinite;
-          opacity: .96;
-          transform: translateZ(3px);
-        }
-
-        .surfaceGrid {
-          position: absolute;
-          inset: 0;
-          opacity: .58;
-          background:
-            repeating-linear-gradient(90deg, transparent 0 28px, rgba(105,223,255,.17) 29px 30px),
-            repeating-linear-gradient(0deg, transparent 0 27px, rgba(105,223,255,.12) 28px 29px);
-          filter: drop-shadow(0 0 5px rgba(73,204,255,.3));
-        }
-
-        .continent {
-          position: absolute;
-          background: linear-gradient(145deg, rgba(45,221,255,.35), rgba(23,116,255,.18));
-          border: 1px solid rgba(129,228,255,.20);
-          box-shadow: 0 0 16px rgba(50,204,255,.20);
-        }
-
-        .c1 {
-          width: 110px; height: 74px; left: 86px; top: 52px;
-          border-radius: 60% 40% 64% 36% / 44% 60% 40% 56%;
-          transform: rotate(-12deg);
-        }
-        .c2 {
-          width: 76px; height: 101px; left: 226px; top: 106px;
-          border-radius: 43% 57% 35% 65% / 58% 35% 65% 42%;
-          transform: rotate(18deg);
-        }
-        .c3 {
-          width: 68px; height: 48px; left: 342px; top: 62px;
-          border-radius: 57% 43% 67% 33% / 41% 56% 44% 59%;
-          transform: rotate(9deg);
-        }
-
-        .meridian,
-        .latitude {
-          position: absolute;
-          inset: 13px 49px;
-          border-radius: 50%;
-          border: 1px solid rgba(133,226,255,.23);
-          z-index: 5;
-          transform-style: preserve-3d;
-        }
-
-        .meridian1 { transform: rotateY(62deg); }
-        .meridian2 { transform: rotateY(-62deg); }
-        .meridian3 { transform: rotateY(82deg) scaleX(.62); opacity: .7; }
-
-        .latitude {
-          inset: 58px 12px;
-        }
-        .latitude1 { transform: rotateX(67deg); }
-        .latitude2 { transform: rotateX(-67deg); }
-
-        .globeGlow {
-          position: absolute;
-          inset: 12px;
-          border-radius: 50%;
-          box-shadow: inset 0 0 20px rgba(48,216,255,.28), 0 0 16px rgba(48,216,255,.10);
-          z-index: 8;
-        }
-
-        .globeShine {
-          position: absolute;
-          width: 70px;
-          height: 150px;
-          left: 24px;
-          top: 19px;
-          border-radius: 50%;
-          transform: rotate(20deg);
-          background: linear-gradient(90deg, rgba(255,255,255,.20), rgba(255,255,255,.02));
-          filter: blur(7px);
-          z-index: 9;
-        }
-
-        .hMark {
-          font-size: 92px;
-          z-index: 15;
-          transform: translateZ(24px) rotate(-2deg);
-          text-shadow:
-            -4px 7px 0 rgba(20,105,255,.72),
-            0 0 15px #68e6ff,
-            0 0 35px rgba(33,126,255,.72);
-          animation: hPulse 3.6s ease-in-out infinite;
-        }
-
-        .worldHalo {
-          border-color: rgba(84,194,255,.48);
-          box-shadow: 0 0 18px rgba(22,159,255,.18), inset 0 0 10px rgba(80,202,255,.08);
-          transform-style: preserve-3d;
-        }
-
-        .haloOne {
-          width: 330px;
-          height: 108px;
-          transform: rotateX(69deg) rotateZ(-9deg);
-          animation: halo3dA 7.5s linear infinite;
-        }
-
-        .haloTwo {
-          width: 360px;
-          height: 142px;
-          transform: rotateX(66deg) rotateZ(23deg);
-          animation: halo3dB 10.5s linear infinite reverse;
-        }
-
-        .haloThree {
-          width: 280px;
-          height: 300px;
-          transform: rotateY(72deg) rotateZ(9deg);
-          opacity: .72;
-          animation: halo3dC 13s linear infinite;
-        }
-
-        .orbitA { animation: orbit3dA 7.2s linear infinite; }
-        .orbitB { animation: orbit3dB 10s linear infinite; }
-        .orbitC { animation: orbit3dC 12.6s linear infinite reverse; }
-        .orbitD { animation: orbit3dD 16s linear infinite; }
-
-        .planet {
-          width: 43px;
-          height: 43px;
-          font-size: 14px;
-          background:
-            radial-gradient(circle at 34% 27%, rgba(158,243,255,.78), transparent 17%),
-            radial-gradient(circle at 58% 64%, rgba(45,77,255,.44), transparent 45%),
-            linear-gradient(145deg, #0d4e99, #06172d 72%);
-          border-color: rgba(116,224,255,.75);
-          box-shadow: inset -10px -8px 18px rgba(0,0,0,.45), 0 0 18px rgba(49,197,255,.55);
-        }
-
-        .p1 { transform: translate(158px, -18px); }
-        .p2 { transform: translate(-175px, 34px); }
-        .p3 { transform: translate(112px, 112px); }
-        .p4 { width: 38px; height: 38px; transform: translate(-127px, -132px); }
-
-        .worldBase {
-          width: 260px;
-          height: 54px;
-          top: calc(50% + 110px);
-        }
-        .r1 { width: 246px; height: 52px; }
-        .r2 { width: 190px; height: 37px; }
-        .r3 { width: 118px; height: 21px; }
-
-        .worldLegend {
-          right: -2px;
-          gap: 4px;
-          font-size: 8px;
-          opacity: .78;
-        }
-
-        .roboPanel {
-          min-height: 338px;
-          border-radius: 20px;
-          padding: 17px;
-          border-color: rgba(59,187,255,.48);
-          background:
-            radial-gradient(circle at 92% 10%, rgba(40,107,255,.18), transparent 32%),
-            linear-gradient(145deg, rgba(8,30,58,.96), rgba(5,13,28,.98));
-          box-shadow: 0 0 0 1px rgba(52,150,255,.05), 0 20px 52px rgba(0,0,0,.34), 0 0 35px rgba(18,115,255,.07);
-        }
-
-        .roboTitle {
-          font-size: 22px;
-          background: linear-gradient(90deg, #65ecff, #5f9cff);
-          -webkit-background-clip: text;
-          color: transparent;
-        }
-
-        .roboPanel > p {
-          font-size: 11px;
-          margin: 11px 0 12px;
-        }
-
-        .promptChips {
-          gap: 6px;
-        }
-
-        .promptChips button {
-          padding: 7px 9px;
-          font-size: 8px;
-        }
-
-        .roboInput {
-          min-height: 43px;
-          margin-top: 11px;
-          font-size: 9px;
-        }
-
-        .economyPanel {
-          margin-top: 2px;
-          border-radius: 22px;
-          padding: 18px;
-          border-color: rgba(67,175,255,.42);
-          background:
-            radial-gradient(circle at 10% 15%, rgba(0,112,255,.10), transparent 28%),
-            linear-gradient(145deg, rgba(7,23,45,.98), rgba(3,11,24,.98));
-          box-shadow: 0 18px 58px rgba(0,0,0,.34), 0 0 40px rgba(15,102,255,.08);
-        }
-
-        .sectionHeading h2 {
-          font-size: clamp(26px, 2.55vw, 39px);
-          margin-top: 5px;
-        }
-
-        .statusPill {
-          padding: 8px 10px;
-          font-size: 9px;
-          border-color: rgba(76,202,255,.32);
-        }
-
-        .economyGrid {
-          grid-template-columns: 180px 1fr;
-          gap: 18px;
-          margin-top: 15px;
-        }
-
-        .feeCore {
-          width: 168px;
-          height: 168px;
-          background:
-            radial-gradient(circle, rgba(24,117,255,.24), transparent 58%),
-            rgba(4,15,31,.9);
-          box-shadow: inset 0 0 34px rgba(0,132,255,.15), 0 0 34px rgba(0,160,255,.24);
-        }
-
-        .feeNumber { font-size: 46px; }
-        .feeLabel { font-size: 10px; }
-
-        .bucketGrid {
-          gap: 10px;
-        }
-
-        .bucketCard {
-          min-height: 230px;
-          padding: 15px;
-          border-radius: 15px;
-          background: linear-gradient(180deg, rgba(9,29,55,.96), rgba(4,15,31,.96));
-          box-shadow: inset 0 0 22px rgba(41,143,255,.05), 0 10px 26px rgba(0,0,0,.22);
-        }
-
-        .bucketCard.blue { box-shadow: inset 0 0 24px rgba(28,177,255,.10), 0 0 20px rgba(28,177,255,.06); }
-        .bucketCard.purple { box-shadow: inset 0 0 24px rgba(169,83,255,.11), 0 0 20px rgba(169,83,255,.06); }
-        .bucketCard.green { box-shadow: inset 0 0 24px rgba(35,222,177,.09), 0 0 20px rgba(35,222,177,.05); }
-        .bucketCard.gold { box-shadow: inset 0 0 24px rgba(255,181,71,.09), 0 0 20px rgba(255,181,71,.05); }
-
-        .bucketPercent { font-size: 31px; }
-        .bucketTitle { font-size: 14px; }
-        .bucketSubtitle { font-size: 8px; }
-
-        .sparkline {
-          width: 63px;
-          height: 48px;
-        }
-
-        .metric {
-          margin-top: 11px;
-          padding: 9px 0;
-        }
-
-        .metric strong { font-size: 15px; }
-        .metric span { font-size: 8px; }
-
-        .countdown {
-          margin-top: 0;
-          padding: 6px 7px;
-          font-size: 7px;
-        }
-
-        .lowerGrid {
-          margin-top: 10px;
-          gap: 10px;
-        }
-
-        .launchPanel,
-        .activityPanel {
-          border-color: rgba(68,169,255,.30);
-          background: linear-gradient(145deg, rgba(7,24,46,.97), rgba(3,12,25,.98));
-          box-shadow: 0 14px 38px rgba(0,0,0,.25);
-        }
-
-        @keyframes globeSurfaceShift {
-          from { transform: translateX(-5%) rotate(0.001deg); }
-          to { transform: translateX(-30%) rotate(0.001deg); }
-        }
-
-        @keyframes hPulse {
-          0%,100% { transform: translateZ(24px) rotate(-2deg) scale(1); filter: brightness(1); }
-          50% { transform: translateZ(24px) rotate(-2deg) scale(1.035); filter: brightness(1.18); }
-        }
-
-        @keyframes halo3dA {
-          from { transform: rotateX(69deg) rotateZ(-9deg) rotate(0deg); }
-          to { transform: rotateX(69deg) rotateZ(-9deg) rotate(360deg); }
-        }
-
-        @keyframes halo3dB {
-          from { transform: rotateX(66deg) rotateZ(23deg) rotate(0deg); }
-          to { transform: rotateX(66deg) rotateZ(23deg) rotate(360deg); }
-        }
-
-        @keyframes halo3dC {
-          from { transform: rotateY(72deg) rotateZ(9deg) rotate(0deg); }
-          to { transform: rotateY(72deg) rotateZ(9deg) rotate(360deg); }
-        }
-
-        @keyframes orbit3dA {
-          from { transform: rotateX(20deg) rotateZ(0deg); }
-          to { transform: rotateX(20deg) rotateZ(360deg); }
-        }
-        @keyframes orbit3dB {
-          from { transform: rotateX(58deg) rotateZ(85deg); }
-          to { transform: rotateX(58deg) rotateZ(445deg); }
-        }
-        @keyframes orbit3dC {
-          from { transform: rotateY(40deg) rotateZ(-50deg); }
-          to { transform: rotateY(40deg) rotateZ(310deg); }
-        }
-        @keyframes orbit3dD {
-          from { transform: rotateX(70deg) rotateZ(170deg); }
-          to { transform: rotateX(70deg) rotateZ(530deg); }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          *,
-          *::before,
-          *::after {
-            animation-duration: .001ms !important;
-            animation-iteration-count: 1 !important;
-            scroll-behavior: auto !important;
-          }
-        }
-
-        @media (max-width: 1180px) {
-          .topbar {
-            grid-template-columns: 220px 1fr auto;
-          }
-
-          .brand img {
-            max-width: 210px;
-          }
-
-          .nav {
-            gap: 14px;
-          }
-
-          .hero {
-            grid-template-columns: 1fr 1fr;
-          }
-
-          .roboPanel {
-            grid-column: 1 / -1;
-            min-height: 0;
-          }
-
-          .economyGrid {
-            grid-template-columns: 1fr;
-          }
-
-          .feeCore {
-            margin-bottom: 18px;
-          }
-
-          .bucketGrid {
-            grid-template-columns: repeat(2, 1fr);
-          }
-
-          .lowerGrid {
-            grid-template-columns: 1fr 1fr;
-          }
-
-          .launchPanel {
-            grid-column: 1 / -1;
-          }
-        }
-
-        @media (max-width: 820px) {
-          .page {
-            padding: 0 12px 50px;
-          }
-
-          .topbar {
-            grid-template-columns: 1fr auto;
-            min-height: 68px;
-          }
-
-          .brand {
-            height: 54px;
-          }
-
-          .nav {
-            display: none;
-          }
-
-          .networkPill {
-            display: none;
-          }
-
+        @media (max-width: 1450px) {
           .hero {
             grid-template-columns: 1fr;
-            padding-top: 8px;
           }
 
-          .heroCopy {
-            padding: 20px 6px 0;
+          .hero-scene {
+            order: 2;
           }
 
-          .hero h1 {
-            font-size: clamp(48px, 15vw, 72px);
+          .robo-panel {
+            order: 3;
           }
 
-          .worldStage {
-            height: 470px;
-          }
-
-          .worldLegend {
-            right: 0;
-          }
-
-          .featureStrip {
+          .economy-grid,
+          .dashboard-grid {
             grid-template-columns: 1fr;
           }
 
-          .bucketGrid {
+          .split-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
+        }
+
+        @media (max-width: 980px) {
+          .topbar {
+            flex-direction: column;
+            align-items: stretch;
+          }
+
+          .topnav {
+            justify-content: flex-start;
+          }
+
+          .question-grid,
+          .config-grid,
+          .activity-stats,
+          .step-row,
+          .split-grid {
             grid-template-columns: 1fr;
           }
 
-          .feeFlowLine {
-            display: none;
-          }
-
-          .lowerGrid,
-          .infoGrid {
+          .ask-input-row,
+          .table-head,
+          .table-row {
             grid-template-columns: 1fr;
           }
 
-          .launchPanel {
-            grid-column: auto;
+          .hero-copy h1 {
+            font-size: 54px;
           }
 
-          .launchForm {
-            grid-template-columns: 1fr;
-          }
-
-          .steps {
-            overflow-x: auto;
-            grid-template-columns: repeat(5, 120px);
-            padding-bottom: 7px;
-          }
-
-          .promptChips {
-            grid-template-columns: 1fr;
+          .hero-copy p {
+            font-size: 18px;
           }
         }
       `}</style>

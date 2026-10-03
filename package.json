@@ -9,7 +9,12 @@
   },
   "dependencies": {
     "next": "latest",
+    "postgres": "^3.4.9",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "twitter-text": "^3.1.0"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.8"
   }
 }

@@ -41,7 +41,7 @@ Supported: `/start`, `/help`, `/about`, `/rules`, `/security`, `/official`, incl
 
 Normal group chat stays silent. Exact bot mentions and replies to messages authored by the token's actual bot ID trigger deterministic answers. Bot messages, channel updates and sender-chat messages are ignored. Edited messages undergo moderation only; they do not repeat ordinary replies.
 
-Rules forbid scams, spam, impersonation, harassment and guaranteed-return statements presented as official. Security responses warn against sharing seeds/private keys, verification payments and unsolicited support DMs. Pasted addresses and HPAY suffixes never establish official provenance. HOST mint, X identity, public wallets and child directory are **Not yet officially published** in Telegram configuration until an authoritative public source is supplied.
+Rules forbid scams, spam, impersonation, harassment and guaranteed-return statements presented as official. Security responses warn against sharing seeds/private keys, verification payments and unsolicited support DMs. Pasted addresses and HPAY suffixes never establish official provenance. The official X link is https://x.com/HOSTPAY_SOL, sourced from the existing approved homepage. HOST mint, public wallets and child directory are **Not yet officially published** in Telegram configuration until an authoritative public source is supplied.
 
 ## Economics
 
@@ -102,6 +102,6 @@ No token revocation is needed absent compromise. Removal of a Vercel environment
 
 ## Future work
 
-Connect a read-only authoritative provenance/model service with source attribution, scoped tools, abuse/cost controls and explicit unavailable-data behavior. Add durable idempotency/queueing before promising reliable delivery. Keep signing and reward execution outside ROBO. X integration requires a separately authorized account and publishing policy; no X identity, keys or posting connection was invented here.
+Connect a read-only authoritative provenance/model service with source attribution, scoped tools, abuse/cost controls and explicit unavailable-data behavior. Add durable idempotency/queueing before promising reliable delivery. Keep signing and reward execution outside ROBO. X integration requires a separately authorized account and publishing policy; the existing public X link is informational only; no X keys or posting connection was added.
 
 Official references accessed 2026-10-03: [Telegram Bot API / setWebhook](https://core.telegram.org/bots/api#setwebhook), [Next.js after](https://nextjs.org/docs/app/api-reference/functions/after).

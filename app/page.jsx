@@ -96,8 +96,8 @@ function createHostpayScene(canvas, assets, onStatus) {
 
 
 const RULES = {
-  overview: "HOSTPAY is being built as a Solana launchpad. The 1% platform fee is allocated 40% to developers, 30% to HOST-holder rewards, 20% to Treasury and 10% to the selected Host Community. Launching and automated mainnet rewards are not open in this preview.",
-  fees: "The split of the 1% platform fee is 40 / 30 / 20 / 10. Developers receive SOL; the 30% holder and 10% community allocations buy HOST for rewards. Treasury supports operations and permitted delivery costs. These percentages are shares of the platform fee, not additional trading fees.",
+  overview: "HOSTPAY is being built as a Solana launchpad. The 1.2% platform fee is allocated 40% to developers, 30% to HOST-holder rewards, 20% to Treasury and 10% to the selected Host Community. Launching and automated mainnet rewards are not open in this preview.",
+  fees: "The split of the 1.2% platform fee is 40 / 30 / 20 / 10. Developers receive SOL; the 30% holder and 10% community allocations buy HOST for rewards. Treasury supports operations and permitted delivery costs. These percentages are shares of the platform fee, not additional trading fees.",
   rewards: "The intended reward schedule begins approximately one hour after a child starts trading, then repeats every six hours. HOST purchases run independently of distribution times. Rewards depend on actual fees, eligibility and safe execution; they are not guaranteed income.",
   launch: "Planned developer access requires US$50 worth of HOST locked to launch, with no free opening-day exception. Final lock terms and price validation must be shown before signing. The launch app is not active here, so this page cannot lock funds or create tokens.",
   community: "Host Community eligibility starts at US$100 worth of the selected external Host token. The serviceable cohort expands each cycle as the child's delivery budget permits. The full 10% allocation buys HOST; cumulative community delivery costs are capped at 50% of that child's cumulative Treasury allocation.",
@@ -193,7 +193,7 @@ export default function HomePage() {
           <h1 id="hp-title">Launch.<br/>Reward.<br/><em>Grow.</em></h1>
           <p>A launchpad designed to share real platform fees with developers, HOST holders and selected host communities.</p>
           <div className="hp-hero-actions"><a className="hp-button hp-primary" href="#launchpad"><Icon name="rocket" size={17}/>Explore launching<Icon name="arrow" size={15}/></a><a className="hp-button hp-secondary" href="#how-it-works">How it works</a></div>
-          <div className="hp-features"><div><Icon name="shield"/><span><strong>1% platform fee</strong><small>40 / 30 / 20 / 10</small></span></div><div><Icon name="coins"/><span><strong>Fee-funded rewards</strong><small>No staking required</small></span></div></div>
+          <div className="hp-features"><div><Icon name="shield"/><span><strong>1.2% platform fee</strong><small>40 / 30 / 20 / 10</small></span></div><div><Icon name="coins"/><span><strong>Fee-funded rewards</strong><small>No staking required</small></span></div></div>
         </div>
 
         <div className="hp-world-area">
@@ -208,7 +208,7 @@ export default function HomePage() {
           <div className="hp-robo-intro"><div className="hp-robo-name"><Image src={ART.mark} width={31} height={33} alt="" unoptimized/><div><h2 id="robo-title">ASK ROBO</h2><span className="hp-preview-dot">Rules preview</span></div></div><Image src={ART.robot} className="hp-robot" width={177} height={154} alt="ROBO, the HOSTPAY assistant" unoptimized/></div>
           <p className="hp-robo-tag">Your HOSTPAY intelligence centre.</p>
           <p className="hp-robo-copy">Explore the platform rules now. Verified launch, wallet and reward lookups are coming next.</p>
-          <div className="hp-questions"><button data-question="overview" type="button">How does HOSTPAY work?<Icon name="arrow" size={13}/></button><button data-question="fees" type="button">Explain the 1% split<Icon name="arrow" size={13}/></button><button data-question="launch" type="button">How do I launch?<Icon name="arrow" size={13}/></button><button data-question="rewards" type="button">How do rewards work?<Icon name="arrow" size={13}/></button></div>
+          <div className="hp-questions"><button data-question="overview" type="button">How does HOSTPAY work?<Icon name="arrow" size={13}/></button><button data-question="fees" type="button">Explain the 1.2% split<Icon name="arrow" size={13}/></button><button data-question="launch" type="button">How do I launch?<Icon name="arrow" size={13}/></button><button data-question="rewards" type="button">How do rewards work?<Icon name="arrow" size={13}/></button></div>
           <form data-robo-form className="hp-robo-form"><label htmlFor="hp-robo-question" className="hp-sr">Ask about HOSTPAY platform rules</label><input id="hp-robo-question" data-robo-input placeholder="Ask about HOSTPAY…" maxLength={300} autoComplete="off"/><button type="submit" aria-label="Ask ROBO"><Icon name="send" size={20}/></button></form>
           <div className="hp-robo-answer" data-robo-answer hidden role="status" aria-live="polite"/>
           <small className="hp-robo-disclosure"><Icon name="shield" size={12}/>HOSTPAY only · approved rules, not live AI or on-chain data</small>
@@ -218,7 +218,7 @@ export default function HomePage() {
       <section id="economy" className="hp-economy hp-panel" aria-labelledby="economy-title">
         <div className="hp-section-head"><div><h2 id="economy-title"><Icon name="rocket" size={25}/>HOSTPAY ECONOMY <span>— PRE-LAUNCH</span></h2><p>One platform fee. Four destinations. Accumulation, purchases and payouts will be independently verifiable.</p></div><span className="hp-data-state">Live data not connected</span></div>
         <div className="hp-economy-grid">
-          <div className="hp-fee-visual" aria-label="1% platform fee, divided 40, 30, 20, 10"><div className="hp-fee-ring"><i/><div><strong>1%</strong><span>Platform fee</span></div></div><svg className="hp-fee-streams" viewBox="0 0 85 170" aria-hidden="true"><path d="M0 85C45 85 24 8 85 8M0 85C45 85 35 59 85 59M0 85C45 85 35 111 85 111M0 85C45 85 24 162 85 162"/></svg></div>
+          <div className="hp-fee-visual" aria-label="1.2% platform fee, divided 40, 30, 20, 10"><div className="hp-fee-ring"><i/><div><strong>1.2%</strong><span>Platform fee</span></div></div><svg className="hp-fee-streams" viewBox="0 0 85 170" aria-hidden="true"><path d="M0 85C45 85 24 8 85 8M0 85C45 85 35 59 85 59M0 85C45 85 35 111 85 111M0 85C45 85 24 162 85 162"/></svg></div>
           <div className="hp-buckets"><Bucket type="developers" share="40" title="Developers" subtitle="Paid in SOL to authenticated creators" icon="code"/><Bucket type="holders" share="30" title="HOST Holders" subtitle="Market-purchased HOST rewards" icon="coins"/><Bucket type="treasury" share="20" title="Treasury / Operations" subtitle="Infrastructure and bounded delivery" icon="treasury"/><Bucket type="communities" share="10" title="Host Communities" subtitle="HOST for qualifying community holders" icon="community"/></div>
         </div>
         <div id="rewards" className="hp-economy-foot"><span><Icon name="clock" size={13}/>Distribution target: first ~1 hour, then every 6 hours.</span><span>HOST purchases run separately. No public purchase countdown.</span></div>

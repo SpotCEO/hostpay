@@ -17,6 +17,10 @@ function permitted(method, params) {
   if (method === 'getMinimumBalanceForRentExemption') {
     return Array.isArray(params) && params.length === 2 && params[0] === 231 && params[1]?.commitment === 'finalized';
   }
+  if (method === 'getBlockHeight') {
+    return Array.isArray(params) && params.length === 1 &&
+      params[0]?.commitment === 'confirmed' && Object.keys(params[0]).length === 1;
+  }
   return false;
 }
 

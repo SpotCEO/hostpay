@@ -18,6 +18,7 @@ const fromHex=s=>Uint8Array.from(Buffer.from(s,'hex'));
 
 function fixture(changed){
   const elements=new Map(),storage=new Map();
+  storage.set('hostpay:p01:desktop:evidence:v2','{"expiredPriorSignedWire":"retained"}');
   const el=id=>{if(!elements.has(id))elements.set(id,{hidden:true,disabled:false,textContent:'',click(){}});return elements.get(id);};
   const keys=[F01,TREASURY,P01,PROGRAM,CONFIG,SYSTEM,...changed===true?[COMPUTE]:[]].map(pub);
   const original={version:0,serialize:()=>Uint8Array.from([1]),recentBlockhash:'test-blockhash',header:{numRequiredSignatures:1,numReadonlySignedAccounts:0,numReadonlyUnsignedAccounts:3},staticAccountKeys:keys.slice(0,6),addressTableLookups:[],compiledInstructions:[{programIdIndex:3,accountKeyIndexes:[4,1,2,0,0,5],data:approvedData}]};
@@ -33,13 +34,14 @@ function fixture(changed){
     ]}: {...original,serialize:()=>Uint8Array.from([changed?2:1]),staticAccountKeys:keys,
     compiledInstructions:changed?[{programIdIndex:6,accountKeyIndexes:[],data:Uint8Array.from([2,1,0,0,0])},...original.compiledInstructions]:original.compiledInstructions};
   let sends=0,simulations=0;
-  const provider={isPhantom:true,publicKey:pub(F01),on(){},async signTransaction(){return {serialize:()=>Uint8Array.from([9])};}};
+  const signingFlow=[];
+  const provider={isPhantom:true,publicKey:pub(F01),on(){},async signTransaction(){signingFlow.push('phantom-sign');return {serialize:()=>Uint8Array.from([9])};}};
   class VersionedTransaction{constructor(message){this.message=message;}static deserialize(){return {message:returned,signatures:[new Uint8Array(64).fill(1)],serialize:()=>Uint8Array.of(9)};}}
   const W={VersionedTransaction,MessageV0:{deserialize:()=>original},TransactionMessage:class{compileToV0Message(){return original;}},PublicKey:class{constructor(s){this.s=s;}toBase58(){return this.s;}toBytes(){return new Uint8Array(32);}},
     SystemProgram:{programId:pub(SYSTEM)},ComputeBudgetProgram:{programId:pub(COMPUTE)},Connection:class{
       sendRawTransaction(){sends++;throw Error('send must not occur');}
-      async getLatestBlockhash(){return {blockhash:'test-blockhash',lastValidBlockHeight:123};}
-      async getFeeForMessage(){return {value:5000};}
+      async getLatestBlockhash(commitment){assert.equal(commitment,'confirmed');signingFlow.push('blockhash');return {blockhash:'test-blockhash',lastValidBlockHeight:123};}
+      async getFeeForMessage(){signingFlow.push('fee');return {value:5000};}
       async getSignatureStatuses(){return {value:[null]};}
       async getBlockHeight(){return 100;}
       async simulateTransaction(tx,config){simulations++;assert.equal(tx.message,returned);assert.equal(config.sigVerify,true);assert.equal(config.replaceRecentBlockhash,false);return {value:{err:'SIMULATED_FAILURE'}};}
@@ -49,13 +51,15 @@ function fixture(changed){
     crypto:webcrypto,Uint8Array,Array,BigInt,Date,JSON,TextEncoder,atob,btoa,Blob,URL,setTimeout});
   vm.runInContext(source,context);
   vm.runInContext('prepared={message:globalThis.testMessage,instruction:{},connection:new window.solanaWeb3.Connection(),blockhash:"test-blockhash",lastValidBlockHeight:123,slot:1,rent:1823720,maxTotalCost:1903720}',Object.assign(context,{testMessage:original}));
-  return {context,storage,el,sends:()=>sends,simulations:()=>simulations};
+  return {context,storage,el,sends:()=>sends,simulations:()=>simulations,signingFlow};
 }
 
 for(const changed of [false,true,'bounded']){
   const f=fixture(changed);
   await vm.runInContext('sign()',f.context);
-  const e=JSON.parse(f.storage.get('hostpay:p01:desktop:evidence:v2'));
+  const e=JSON.parse(f.storage.get('hostpay:p01:desktop:evidence:v3'));
+  assert.equal(f.storage.get('hostpay:p01:desktop:evidence:v2'),'{"expiredPriorSignedWire":"retained"}','prior signed evidence remains untouched');
+  assert.deepEqual(f.signingFlow,['blockhash','phantom-sign'],'no RPC call after signing blockhash acquisition');
   assert.equal(e.wireBase64,'CQ==','returned signed wire retained before validation');
   assert.equal(e.exactMessage,changed===false);
   assert.equal(e.signatureValid,true);
@@ -68,7 +72,7 @@ for(const changed of [false,true,'bounded']){
     await assert.rejects(()=>vm.runInContext('broadcast()',f.context),/simulation failed/);
     assert.equal(f.simulations(),1,'exact signed transaction simulated');
     assert.equal(f.sends(),0,'simulation failure prevents broadcast');
-    assert.equal(JSON.parse(f.storage.get('hostpay:p01:desktop:evidence:v2')).sendAttempted,false);
+    assert.equal(JSON.parse(f.storage.get('hostpay:p01:desktop:evidence:v3')).sendAttempted,false);
   }
 }
 console.log('P01 return retention, fresh blockhash, separate broadcast and simulation gate: PASS');

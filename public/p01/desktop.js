@@ -13,7 +13,7 @@ const P02='BffRdcpiDLztBsqEp8KY15m5pmhrK8mXGzTz2mBeLMQe';
 const VAULT='83ZqHeirHttsf9EqXX3DJfYkVgzWM1GuBXrwGyPE9Hni';
 const DATA='Mt3HXSj1i+kAAgADAAAAGN3dmnqY6HXZ3IFnT72QTSveu7YvtRbfpq52zLNtXP0HgebuEg4G/vFSr2HwIzE1QbU64GqMujQqtNT5UB860dEHjSPYrVfirPlOWjbo790zQEsC3tYhsA3Rsd0rMZa8qGYHAAAAAAAA';
 const DATA_SHA256='5772dca2fed60c47ea85e45002744d04331b233ded952e63d3ded8bc60e87a29';
-const RPC='https://solana-rpc.publicnode.com',BRIDGE=`${location.origin}/api/p01-rpc`,STORE='hostpay:p01:desktop:evidence:v2';
+const RPC='https://solana-rpc.publicnode.com',BRIDGE=`${location.origin}/api/p01-rpc`,STORE='hostpay:p01:desktop:evidence:v3';
 const COMPUTE='ComputeBudget111111111111111111111111111111';
 const LIGHTHOUSE='L2TExMFKdjpN9kozasaurPirfHy9P8sbXoAN1qA3S95';
 const MAX_CU=200000,MAX_MICROLAMPORTS_PER_CU=375000n,MAX_PRIORITY_LAMPORTS=75000n,BASE_FEE=5000;
@@ -150,11 +150,11 @@ async function prepare(){
 async function sign(){
   assert(prepared&&!evidence(),'No fresh approved P01 transaction');requireF01();
   const p=window.phantom.solana;show('sign',false);
-  const latest=await prepared.connection.getLatestBlockhash('finalized');
+  // Preparation quoted the fee; the manual broadcast gate quotes the exact signed message again.
+  // No RPC round trip may occur between this fresh blockhash and Phantom signing.
+  const latest=await prepared.connection.getLatestBlockhash('confirmed');
   const original=new W.TransactionMessage({payerKey:key(F01),recentBlockhash:latest.blockhash,instructions:[prepared.instruction]}).compileToV0Message();
   assertApprovedMessage(original,b64(DATA));
-  const refreshedFee=await prepared.connection.getFeeForMessage(original,'finalized');
-  assert(refreshedFee.value===BASE_FEE,`Refreshed network fee changed: ${refreshedFee.value}`);
   prepared.message=original;prepared.blockhash=latest.blockhash;prepared.lastValidBlockHeight=latest.lastValidBlockHeight;
   const tx=new W.VersionedTransaction(original);
   const expectedBytes=original.serialize(),expectedHash=await sha256(expectedBytes);

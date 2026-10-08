@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HOSTPAY P02 desktop signing</title>
+<style>body{font:16px system-ui,sans-serif;max-width:780px;margin:32px auto;padding:0 16px;line-height:1.5;background:#101820;color:#f5f7fa}button{font:inherit;padding:12px 18px;margin:10px 8px 10px 0;background:#a9e8d2;color:#101820;border:0;border-radius:6px;cursor:pointer}button:disabled{opacity:.5}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#1d2b35;padding:14px;border-radius:6px}[hidden]{display:none!important}</style>
+<h1>HOSTPAY P02 — Phantom desktop extension</h1>
+<p><strong>P02 only.</strong> Use the laptop browser with your existing Phantom extension. This page asks Phantom to sign without sending. It saves and decodes the returned transaction locally. The approved Squads instruction must remain exact; only the observed bounded Phantom ComputeBudget and Lighthouse additions are permitted. The page shows the maximum cost before signing and requires a separate manual broadcast action after checking the signed transaction. Any prior P01 signed transaction remains separate and cannot be broadcast from this P02 page. Keep any downloaded signed wire private while its blockhash is valid.</p>
+<pre id="details"></pre>
+<button id="connect">Connect F02 in Phantom</button>
+<button id="prepare" hidden>Prepare approved P02</button>
+<button id="sign" hidden>Ask Phantom to sign P02 without sending</button>
+<button id="broadcast" hidden>Simulate, then broadcast verified signed P02 once</button>
+<button id="download" hidden>Download local signed-transaction evidence</button>
+<pre id="status">Loading. No transaction has been signed or sent by this page.</pre>
+<pre id="comparison" hidden></pre>
+<script src="/p01/solana-web3.iife.min.js"></script>
+<script src="/p01/nacl-fast.min.js"></script>
+<script src="/p02/desktop.js?v=1"></script>
+</html>

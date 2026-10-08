@@ -13,7 +13,13 @@ const P02='BffRdcpiDLztBsqEp8KY15m5pmhrK8mXGzTz2mBeLMQe';
 const VAULT='83ZqHeirHttsf9EqXX3DJfYkVgzWM1GuBXrwGyPE9Hni';
 const DATA='Mt3HXSj1i+kAAgADAAAAGN3dmnqY6HXZ3IFnT72QTSveu7YvtRbfpq52zLNtXP0HgebuEg4G/vFSr2HwIzE1QbU64GqMujQqtNT5UB860dEHjSPYrVfirPlOWjbo790zQEsC3tYhsA3Rsd0rMZa8qGYHAAAAAAAA';
 const DATA_SHA256='5772dca2fed60c47ea85e45002744d04331b233ded952e63d3ded8bc60e87a29';
-const RPC='https://solana-rpc.publicnode.com',BRIDGE=`${location.origin}/api/p01-rpc`,STORE='hostpay:p01:desktop:evidence:v1';
+const RPC='https://solana-rpc.publicnode.com',BRIDGE=`${location.origin}/api/p01-rpc`,STORE='hostpay:p01:desktop:evidence:v2';
+const COMPUTE='ComputeBudget111111111111111111111111111111';
+const LIGHTHOUSE='L2TExMFKdjpN9kozasaurPirfHy9P8sbXoAN1qA3S95';
+const MAX_CU=200000,MAX_MICROLAMPORTS_PER_CU=375000n,MAX_PRIORITY_LAMPORTS=75000n,BASE_FEE=5000;
+const LIGHTHOUSE_TREASURY='06040203000001000000000000000000';
+const LIGHTHOUSE_P01='06040100000000000000000000';
+const LIGHTHOUSE_F01='06040300f4c08905000000000403000001000000000000000000';
 const assert=(ok,msg)=>{if(!ok)throw new Error(msg);};
 const key=v=>new W.PublicKey(v),hex=b=>Array.from(b,x=>x.toString(16).padStart(2,'0')).join('');
 const b64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
@@ -45,14 +51,51 @@ async function read(url){
 }
 async function preflight(){const [a,b]=await Promise.all([read(RPC),read(BRIDGE)]);assert(a.rent===b.rent&&a.f01===b.f01&&a.f02===b.f02,'Provider preflight disagreement');return a;}
 function assertApprovedMessage(m,data){
-  assert(m.header.numRequiredSignatures===1&&m.compiledInstructions.length===1&&m.addressTableLookups.length===0,'Unexpected transaction shape');
+  assert(m.version===0&&m.header.numRequiredSignatures===1&&m.header.numReadonlySignedAccounts===0&&m.header.numReadonlyUnsignedAccounts===3&&m.compiledInstructions.length===1&&m.addressTableLookups.length===0,'Unexpected approved transaction shape');
   assert(m.staticAccountKeys[0].toBase58()===F01,'Wrong fee payer');
+  const keys=m.staticAccountKeys.map(k=>k.toBase58());
+  assert(keys.length===6&&new Set(keys).size===6&&[F01,TREASURY,P01,PROGRAM,CONFIG,W.SystemProgram.programId.toBase58()].every(k=>keys.includes(k)),'Wrong approved account keys');
+  const unsignedWritable=keys.slice(1,keys.length-m.header.numReadonlyUnsignedAccounts);
+  assert(unsignedWritable.length===2&&unsignedWritable.includes(TREASURY)&&unsignedWritable.includes(P01),'Wrong approved writable accounts');
   const ix=m.compiledInstructions[0];
   assert(m.staticAccountKeys[ix.programIdIndex].toBase58()===PROGRAM,'Wrong program');
   assert(hex(ix.data)===hex(data),'Instruction data changed');
   const expected=[CONFIG,TREASURY,P01,F01,F01,W.SystemProgram.programId.toBase58()];
   assert(ix.accountKeyIndexes.length===expected.length,'Wrong account count');
   expected.forEach((v,i)=>assert(m.staticAccountKeys[ix.accountKeyIndexes[i]].toBase58()===v,`Wrong account ${i}`));
+}
+function assertCompatibleMessage(m,original,data){
+  assert(m.version===0&&m.addressTableLookups.length===0,'Wrong transaction version or address lookup');
+  assert(m.recentBlockhash===original.recentBlockhash,'Phantom changed the blockhash');
+  const keys=m.staticAccountKeys.map(k=>k.toBase58()),h=m.header;
+  assert(keys[0]===F01&&h.numRequiredSignatures===1&&h.numReadonlySignedAccounts===0,'Wrong payer or signer');
+  if(m.compiledInstructions.length===1){
+    assertApprovedMessage(m,data);
+    assert(hex(m.serialize())===hex(original.serialize()),'Unexpected change to one-instruction message');
+    return {kind:'EXACT',priorityFeeLamports:0,maxNetworkFeeLamports:BASE_FEE};
+  }
+  assert(m.compiledInstructions.length===6&&keys.length===8&&h.numReadonlyUnsignedAccounts===5,'Unexpected Phantom transaction shape');
+  const allowed=[F01,P01,TREASURY,W.SystemProgram.programId.toBase58(),COMPUTE,LIGHTHOUSE,PROGRAM,CONFIG];
+  assert(new Set(keys).size===allowed.length&&allowed.every(k=>keys.includes(k)),'Additional or missing account key');
+  const unsignedWritable=keys.slice(h.numRequiredSignatures,keys.length-h.numReadonlyUnsignedAccounts);
+  assert(unsignedWritable.length===2&&unsignedWritable.includes(TREASURY)&&unsignedWritable.includes(P01),'Added or changed writable account');
+  const ix=m.compiledInstructions;
+  const check=(n,program,accounts,dataHex)=>{
+    const x=ix[n];assert(keys[x.programIdIndex]===program,`Wrong instruction ${n+1} program`);
+    assert(x.accountKeyIndexes.length===accounts.length&&accounts.every((v,i)=>keys[x.accountKeyIndexes[i]]===v),`Wrong instruction ${n+1} accounts`);
+    assert(hex(x.data)===dataHex,`Wrong instruction ${n+1} data`);
+  };
+  check(0,COMPUTE,[],'02400d0300');
+  const price=ix[1],priceData=Uint8Array.from(price.data);
+  assert(keys[price.programIdIndex]===COMPUTE&&price.accountKeyIndexes.length===0&&priceData.length===9&&priceData[0]===3,'Wrong ComputeBudget price instruction');
+  const microLamports=new DataView(priceData.buffer,priceData.byteOffset,priceData.byteLength).getBigUint64(1,true);
+  const priorityFee=(BigInt(MAX_CU)*microLamports+999999n)/1000000n;
+  assert(microLamports<=MAX_MICROLAMPORTS_PER_CU&&priorityFee<=MAX_PRIORITY_LAMPORTS,'Phantom priority fee exceeds approved cap');
+  check(2,LIGHTHOUSE,[TREASURY],LIGHTHOUSE_TREASURY);
+  check(3,LIGHTHOUSE,[P01],LIGHTHOUSE_P01);
+  check(4,PROGRAM,[CONFIG,TREASURY,P01,F01,F01,W.SystemProgram.programId.toBase58()],hex(data));
+  check(5,LIGHTHOUSE,[F01],LIGHTHOUSE_F01);
+  return {kind:'BOUNDED_PHANTOM',priorityFeeLamports:Number(priorityFee),maxNetworkFeeLamports:BASE_FEE+Number(priorityFee)};
 }
 function decoded(m){
   const keys=m.staticAccountKeys.map(k=>k.toBase58());
@@ -69,9 +112,10 @@ function decoded(m){
 function renderEvidence(e){
   show('comparison',true);show('download',true);
   $('comparison').textContent=JSON.stringify({
-    result:e.exactMessage&&e.approvedShape&&e.signatureValid?'EXACT APPROVED MESSAGE':'MESSAGE CHANGED OR SIGNATURE/SHAPE INVALID — NO BROADCAST',
+    result:e.approvedShape&&e.signatureValid?'APPROVED P01 INSTRUCTION WITH BOUNDED PHANTOM ADDITIONS — NOT SENT':'MESSAGE OR SIGNATURE INVALID — NO BROADCAST',
     expectedMessageSha256:e.expectedMessageSha256,returnedMessageSha256:e.returnedMessageSha256,
     signature:e.signature,signatureValid:e.signatureValid,exactMessage:e.exactMessage,approvedShape:e.approvedShape,
+    acceptedKind:e.acceptedKind,priorityFeeLamports:e.priorityFeeLamports,maxNetworkFeeLamports:e.maxNetworkFeeLamports,maxTotalCostLamports:e.maxTotalCostLamports,
     expected:e.expected,returned:e.returned,validationError:e.validationError||null
   },null,2);
 }
@@ -97,22 +141,31 @@ async function prepare(){
   const latest=await a.c.getLatestBlockhash('finalized');
   const message=new W.TransactionMessage({payerKey:key(F01),recentBlockhash:latest.blockhash,instructions:[ix]}).compileToV0Message();
   assertApprovedMessage(message,data);
-  const fee=await a.c.getFeeForMessage(message,'finalized');assert(fee.value===5000,`Network fee changed: ${fee.value}`);
-  prepared={message,blockhash:latest.blockhash,lastValidBlockHeight:latest.lastValidBlockHeight,slot:a.slot,rent:a.rent};
-  show('sign',true);status(`F01 selected. P01 checks passed at finalized slot ${a.slot}. One approved Squads instruction; threshold 2/3; timelock 0. Cost quote: ${a.rent} rent + ${fee.value} network + 0 Squads fee lamports. Signing does not broadcast.`);
+  const fee=await a.c.getFeeForMessage(message,'finalized');assert(fee.value===BASE_FEE,`Network fee changed: ${fee.value}`);
+  const maxTotalCost=a.rent+BASE_FEE+Number(MAX_PRIORITY_LAMPORTS);
+  assert(a.f01>=maxTotalCost,'F01 balance below maximum P01 cost');
+  prepared={message,instruction:ix,connection:a.c,blockhash:latest.blockhash,lastValidBlockHeight:latest.lastValidBlockHeight,slot:a.slot,rent:a.rent,maxTotalCost};
+  show('sign',true);status(`F01 selected. P01 checks passed at finalized slot ${a.slot}. One approved Squads instruction; threshold 2/3; timelock 0. Maximum authorized cost: ${maxTotalCost} lamports (${(maxTotalCost/1e9).toFixed(9)} SOL) = ${a.rent} rent + ${BASE_FEE} base network fee + at most ${MAX_PRIORITY_LAMPORTS} Phantom priority fee + 0 Squads fee. Phantom may add only the exact bounded instructions and account checks listed above. Signing does not broadcast.`);
 }
 async function sign(){
   assert(prepared&&!evidence(),'No fresh approved P01 transaction');requireF01();
   const p=window.phantom.solana;show('sign',false);
-  const original=prepared.message,tx=new W.VersionedTransaction(original);
+  const latest=await prepared.connection.getLatestBlockhash('finalized');
+  const original=new W.TransactionMessage({payerKey:key(F01),recentBlockhash:latest.blockhash,instructions:[prepared.instruction]}).compileToV0Message();
+  assertApprovedMessage(original,b64(DATA));
+  const refreshedFee=await prepared.connection.getFeeForMessage(original,'finalized');
+  assert(refreshedFee.value===BASE_FEE,`Refreshed network fee changed: ${refreshedFee.value}`);
+  prepared.message=original;prepared.blockhash=latest.blockhash;prepared.lastValidBlockHeight=latest.lastValidBlockHeight;
+  const tx=new W.VersionedTransaction(original);
   const expectedBytes=original.serialize(),expectedHash=await sha256(expectedBytes);
-  status('Waiting for Phantom signature. No transaction will be broadcast automatically.');
+  status(`Fresh blockhash acquired. Maximum P01 cost ${prepared.maxTotalCost} lamports, including capped priority fee. Waiting for Phantom signature. No automatic broadcast.`);
   let returned;try{returned=await p.signTransaction(tx);}catch(e){stop(`Phantom signing did not return a transaction: ${e?.message||String(e)}`);return;}
   // Retain the exact returned wire before parsing, comparing, or exposing any send path.
   const raw=Uint8Array.from(returned.serialize());
-  const e={v:1,capturedAt:new Date().toISOString(),wireBase64:toB64(raw),expectedMessageBase64:toB64(expectedBytes),
+  const e={v:2,capturedAt:new Date().toISOString(),wireBase64:toB64(raw),expectedMessageBase64:toB64(expectedBytes),
     expectedMessageSha256:expectedHash,approvedInstructionSha256:DATA_SHA256,preparedBlockhash:prepared.blockhash,
     lastValidBlockHeight:prepared.lastValidBlockHeight,preflightFinalizedSlot:prepared.slot,
+    rentLamports:prepared.rent,maxTotalCostLamports:prepared.maxTotalCost,
     exactMessage:false,approvedShape:false,signatureValid:false,sendAttempted:false};
   saveEvidence(e);
   try{
@@ -121,20 +174,28 @@ async function sign(){
     e.expected=decoded(original);e.returned=decoded(signed.message);
     e.signature=signed.signatures.length===1?base58(signed.signatures[0]):null;
     e.signatureValid=signed.signatures.length===1&&signed.signatures[0].length===64&&N.sign.detached.verify(msg,signed.signatures[0],key(F01).toBytes());
-    try{assertApprovedMessage(signed.message,b64(DATA));e.approvedShape=true;}catch(x){e.validationError=x.message;}
+    try{const accepted=assertCompatibleMessage(signed.message,original,b64(DATA));
+      assert(e.rentLamports+accepted.maxNetworkFeeLamports<=e.maxTotalCostLamports,'Returned cost exceeds displayed cap');
+      e.approvedShape=true;e.acceptedKind=accepted.kind;e.priorityFeeLamports=accepted.priorityFeeLamports;
+      e.maxNetworkFeeLamports=accepted.maxNetworkFeeLamports;
+    }catch(x){e.validationError=x.message;}
   }catch(x){e.validationError=`Returned wire decoding failed: ${x?.message||String(x)}`;}
   saveEvidence(e);renderEvidence(e);prepared=null;
-  if(e.exactMessage&&e.approvedShape&&e.signatureValid){show('broadcast',true);status(`F01 signed the exact approved P01 message. Signature recorded locally. NOT SENT. Review the comparison before the separate one-time broadcast action.`);}
+  if(e.approvedShape&&e.signatureValid){show('broadcast',true);status(`F01 signed the approved P01 instruction with ${e.acceptedKind==='EXACT'?'no additions':'the bounded Phantom additions'}. Network fee at most ${e.maxNetworkFeeLamports} lamports. Signature recorded locally. NOT SENT. Review the comparison before the separate one-time broadcast action.`);}
   else stop('Phantom returned a changed or invalid P01 transaction; exact wire and decoded comparison retained locally');
 }
 async function broadcast(){
   const e=evidence();assert(e?.wireBase64&&!e.sendAttempted,'No eligible signed P01 or send already attempted');
-  assert(e.exactMessage&&e.approvedShape&&e.signatureValid,'Changed or invalid transaction cannot be broadcast');
+  assert(e.v===2&&e.approvedShape&&e.signatureValid,'Unqualified or previous signed transaction cannot be broadcast');
   requireF01();show('broadcast',false);
   const tx=W.VersionedTransaction.deserialize(b64(e.wireBase64)),msg=tx.message.serialize();
-  assert(hex(msg)===hex(b64(e.expectedMessageBase64)),'Retained signed message changed');
-  assert(await sha256(msg)===e.expectedMessageSha256,'Retained message hash changed');
-  assertApprovedMessage(tx.message,b64(DATA));
+  assert(await sha256(b64(e.expectedMessageBase64))===e.expectedMessageSha256,'Retained original message hash changed');
+  assert(await sha256(msg)===e.returnedMessageSha256,'Retained signed message hash changed');
+  const original=W.MessageV0.deserialize(b64(e.expectedMessageBase64));
+  assertApprovedMessage(original,b64(DATA));
+  const accepted=assertCompatibleMessage(tx.message,original,b64(DATA));
+  assert(accepted.kind===e.acceptedKind&&accepted.priorityFeeLamports===e.priorityFeeLamports&&accepted.maxNetworkFeeLamports===e.maxNetworkFeeLamports,'Retained Phantom fee policy changed');
+  assert(e.rentLamports+accepted.maxNetworkFeeLamports<=e.maxTotalCostLamports,'Retained cost exceeds displayed cap');
   assert(N.sign.detached.verify(msg,tx.signatures[0],key(F01).toBytes()),'Retained F01 signature invalid');
   const c=new W.Connection(RPC,'finalized');
   // Base58 signature is derived from the actual signed wire; never from displayed text.
@@ -142,7 +203,13 @@ async function broadcast(){
   const existing=await c.getSignatureStatuses([sig58],{searchTransactionHistory:true});
   assert(existing.value[0]===null,'Signature already has network status');
   assert(await c.getBlockHeight('confirmed')<=e.lastValidBlockHeight,'Signed blockhash expired; no broadcast');
-  await preflight();
+  const live=await preflight();
+  assert(live.rent===e.rentLamports,'Rent changed since signed evidence was recorded');
+  const liveFee=await c.getFeeForMessage(tx.message,'confirmed');
+  assert(liveFee.value!==null&&liveFee.value<=accepted.maxNetworkFeeLamports&&live.rent+liveFee.value<=e.maxTotalCostLamports,'Live network fee exceeds displayed cap');
+  const sim=await c.simulateTransaction(tx,{sigVerify:true,replaceRecentBlockhash:false,commitment:'confirmed'});
+  assert(sim.value?.err===null,`Exact signed transaction simulation failed: ${JSON.stringify(sim.value?.err)}`);
+  assert(await c.getBlockHeight('confirmed')<=e.lastValidBlockHeight,'Signed blockhash expired after simulation; no broadcast');
   e.sendAttempted=true;e.sendAttemptedAt=new Date().toISOString();e.signatureBase58=sig58;saveEvidence(e);
   status(`Submitting exact signed P01 once. Signature ${sig58}. No retry.`);
   try{const returned=await c.sendRawTransaction(tx.serialize(),{skipPreflight:false,maxRetries:0,preflightCommitment:'confirmed'});
@@ -153,7 +220,7 @@ async function broadcast(){
 function base58(bytes){const alphabet='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';let n=0n;for(const x of bytes)n=n*256n+BigInt(x);let s='';while(n){s=alphabet[Number(n%58n)]+s;n/=58n;}for(const x of bytes){if(x)break;s='1'+s;}return s;}
 function init(){
   assert(W&&N&&crypto?.subtle,'Required local browser libraries unavailable');
-  $('details').textContent=`Program: ${PROGRAM}\nMembers: ${F01}, ${F02}, ${GOV}\nThreshold: 2 of 3; timelock: 0 seconds\nCreator / createKey / payer / signer: ${F01}\nNew multisig: ${P01}\nVault index 0: ${VAULT}\nConfig authority: null; rent collector: null\nCreation instruction SHA256: ${DATA_SHA256}`;
+  $('details').textContent=`Program: ${PROGRAM}\nMembers: ${F01}, ${F02}, ${GOV}\nThreshold: 2 of 3; timelock: 0 seconds\nCreator / createKey / payer / signer: ${F01}\nNew multisig: ${P01}\nVault index 0: ${VAULT}\nConfig authority: null; rent collector: null\nCreation instruction SHA256: ${DATA_SHA256}\nAllowed Phantom additions, in order: 200,000 compute-unit limit; compute-unit price at most 375,000 micro-lamports (priority fee at most 75,000 lamports); Lighthouse asserts treasury System-owned/data length 0; P01 zero lamports; then the unchanged Squads creation; then Lighthouse asserts F01 balance >= 92,913,908 lamports and System-owned/data length 0. No other changes are accepted.`;
   const p=window.phantom?.solana;
   if(p?.isPhantom)p.on('accountChanged',()=>{prepared=null;show('prepare',false);show('sign',false);show('broadcast',false);status(`Phantom account changed. Selected: ${selected()||'none'}. Any prepared P01 was discarded; no automatic retry.`);});
   $('connect').onclick=()=>connect().catch(x=>stop(x.message));
@@ -162,7 +229,7 @@ function init(){
   $('broadcast').onclick=()=>broadcast().catch(x=>stop(x.message));
   $('download').onclick=()=>{try{downloadEvidence();}catch(x){stop(x.message);}};
   const e=evidence();if(e?.wireBase64){renderEvidence(e);$('connect').disabled=true;
-    if(e.exactMessage&&e.approvedShape&&e.signatureValid&&!e.sendAttempted)show('broadcast',true);
+    if(e.v===2&&e.approvedShape&&e.signatureValid&&!e.sendAttempted)show('broadcast',true);
     status(`Previous P01 signed-return evidence retained in this browser. ${e.sendAttempted?'A send was attempted; check its signature on-chain.':'No send attempted by this page.'} No retry offered.`);return;}
   if(!p?.isPhantom){$('connect').disabled=true;status('Phantom desktop extension not detected. Open this page in the browser where your existing Phantom extension is installed.');return;}
   status('Phantom desktop extension detected. Connect F01 first. No transaction has been signed or sent by this page.');

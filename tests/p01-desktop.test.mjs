@@ -18,7 +18,9 @@ const fromHex=s=>Uint8Array.from(Buffer.from(s,'hex'));
 
 function fixture(changed){
   const elements=new Map(),storage=new Map();
+  storage.set('hostpay:p01:desktop:evidence:v1','{"earlyPriorSignedWire":"retained"}');
   storage.set('hostpay:p01:desktop:evidence:v2','{"expiredPriorSignedWire":"retained"}');
+  storage.set('hostpay:p01:desktop:evidence:v3','{"wireBase64":"old-signed-wire","sendAttempted":false}');
   const el=id=>{if(!elements.has(id))elements.set(id,{hidden:true,disabled:false,textContent:'',click(){}});return elements.get(id);};
   const keys=[F01,TREASURY,P01,PROGRAM,CONFIG,SYSTEM,...changed===true?[COMPUTE]:[]].map(pub);
   const original={version:0,serialize:()=>Uint8Array.from([1]),recentBlockhash:'test-blockhash',header:{numRequiredSignatures:1,numReadonlySignedAccounts:0,numReadonlyUnsignedAccounts:3},staticAccountKeys:keys.slice(0,6),addressTableLookups:[],compiledInstructions:[{programIdIndex:3,accountKeyIndexes:[4,1,2,0,0,5],data:approvedData}]};
@@ -50,6 +52,7 @@ function fixture(changed){
     document:{getElementById:el},location:{origin:'https://www.hostpayapp.com'},localStorage:{getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v)},
     crypto:webcrypto,Uint8Array,Array,BigInt,Date,JSON,TextEncoder,atob,btoa,Blob,URL,setTimeout});
   vm.runInContext(source,context);
+  assert.equal(el('connect').disabled,false,'old v1/v2/v3 evidence does not disable the fresh Connect F01 attempt');
   vm.runInContext('prepared={message:globalThis.testMessage,instruction:{},connection:new window.solanaWeb3.Connection(),blockhash:"test-blockhash",lastValidBlockHeight:123,slot:1,rent:1823720,maxTotalCost:1903720}',Object.assign(context,{testMessage:original}));
   return {context,storage,el,sends:()=>sends,simulations:()=>simulations,signingFlow};
 }
@@ -57,8 +60,10 @@ function fixture(changed){
 for(const changed of [false,true,'bounded']){
   const f=fixture(changed);
   await vm.runInContext('sign()',f.context);
-  const e=JSON.parse(f.storage.get('hostpay:p01:desktop:evidence:v3'));
+  const e=JSON.parse(f.storage.get('hostpay:p01:desktop:evidence:v4'));
+  assert.equal(f.storage.get('hostpay:p01:desktop:evidence:v1'),'{"earlyPriorSignedWire":"retained"}','v1 evidence remains untouched');
   assert.equal(f.storage.get('hostpay:p01:desktop:evidence:v2'),'{"expiredPriorSignedWire":"retained"}','prior signed evidence remains untouched');
+  assert.equal(f.storage.get('hostpay:p01:desktop:evidence:v3'),'{"wireBase64":"old-signed-wire","sendAttempted":false}','v3 signed wire remains untouched');
   assert.deepEqual(f.signingFlow,['blockhash','phantom-sign'],'no RPC call after signing blockhash acquisition');
   assert.equal(e.wireBase64,'CQ==','returned signed wire retained before validation');
   assert.equal(e.exactMessage,changed===false);
@@ -72,7 +77,7 @@ for(const changed of [false,true,'bounded']){
     await assert.rejects(()=>vm.runInContext('broadcast()',f.context),/simulation failed/);
     assert.equal(f.simulations(),1,'exact signed transaction simulated');
     assert.equal(f.sends(),0,'simulation failure prevents broadcast');
-    assert.equal(JSON.parse(f.storage.get('hostpay:p01:desktop:evidence:v3')).sendAttempted,false);
+    assert.equal(JSON.parse(f.storage.get('hostpay:p01:desktop:evidence:v4')).sendAttempted,false);
   }
 }
 console.log('P01 return retention, fresh blockhash, separate broadcast and simulation gate: PASS');

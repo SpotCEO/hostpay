@@ -13,7 +13,7 @@ const P02='BffRdcpiDLztBsqEp8KY15m5pmhrK8mXGzTz2mBeLMQe';
 const VAULT='83ZqHeirHttsf9EqXX3DJfYkVgzWM1GuBXrwGyPE9Hni';
 const DATA='Mt3HXSj1i+kAAgADAAAAGN3dmnqY6HXZ3IFnT72QTSveu7YvtRbfpq52zLNtXP0HgebuEg4G/vFSr2HwIzE1QbU64GqMujQqtNT5UB860dEHjSPYrVfirPlOWjbo790zQEsC3tYhsA3Rsd0rMZa8qGYHAAAAAAAA';
 const DATA_SHA256='5772dca2fed60c47ea85e45002744d04331b233ded952e63d3ded8bc60e87a29';
-const RPC='https://solana-rpc.publicnode.com',BRIDGE=`${location.origin}/api/p01-rpc`,STORE='hostpay:p01:desktop:evidence:v5';
+const RPC='https://solana-rpc.publicnode.com',BRIDGE=`${location.origin}/api/p01-rpc`,STORE='hostpay:p01:desktop:evidence:v6';
 const COMPUTE='ComputeBudget111111111111111111111111111111';
 const LIGHTHOUSE='L2TExMFKdjpN9kozasaurPirfHy9P8sbXoAN1qA3S95';
 const MAX_CU=200000,MAX_MICROLAMPORTS_PER_CU=375000n,MAX_PRIORITY_LAMPORTS=75000n,BASE_FEE=5000;
@@ -121,6 +121,9 @@ function renderEvidence(e){
     expectedMessageSha256:e.expectedMessageSha256,returnedMessageSha256:e.returnedMessageSha256,
     signature:e.signature,signatureValid:e.signatureValid,exactMessage:e.exactMessage,approvedShape:e.approvedShape,
     acceptedKind:e.acceptedKind,priorityFeeLamports:e.priorityFeeLamports,maxNetworkFeeLamports:e.maxNetworkFeeLamports,maxTotalCostLamports:e.maxTotalCostLamports,
+    signingBlockhashRead:e.signingBlockhashRead||null,
+    expiryHeightReadBeforePreflight:e.expiryHeightReadBeforePreflight||null,
+    expiryHeightReadAfterSimulation:e.expiryHeightReadAfterSimulation||null,
     expected:e.expected,returned:e.returned,validationError:e.validationError||null
   },null,2);
 }
@@ -157,7 +160,9 @@ async function sign(){
   const p=window.phantom.solana;show('sign',false);
   // Preparation quoted the fee; the manual broadcast gate quotes the exact signed message again.
   // No RPC round trip may occur between this fresh blockhash and Phantom signing.
+  const signingRequestedAt=new Date().toISOString();
   const latest=await prepared.connection.getLatestBlockhash('confirmed');
+  const signingReceivedAt=new Date().toISOString();
   const original=new W.TransactionMessage({payerKey:key(F01),recentBlockhash:latest.blockhash,instructions:[prepared.instruction]}).compileToV0Message();
   assertApprovedMessage(original,b64(DATA));
   prepared.message=original;prepared.blockhash=latest.blockhash;prepared.lastValidBlockHeight=latest.lastValidBlockHeight;
@@ -170,6 +175,8 @@ async function sign(){
   const e={v:2,capturedAt:new Date().toISOString(),wireBase64:toB64(raw),expectedMessageBase64:toB64(expectedBytes),
     expectedMessageSha256:expectedHash,approvedInstructionSha256:DATA_SHA256,preparedBlockhash:prepared.blockhash,
     lastValidBlockHeight:prepared.lastValidBlockHeight,preflightFinalizedSlot:prepared.slot,
+    signingBlockhashRead:{blockhash:latest.blockhash,lastValidBlockHeight:latest.lastValidBlockHeight,
+      rpcEndpoint:RPC,commitment:'confirmed',requestedAt:signingRequestedAt,receivedAt:signingReceivedAt},
     rentLamports:prepared.rent,maxTotalCostLamports:prepared.maxTotalCost,
     exactMessage:false,approvedShape:false,signatureValid:false,sendAttempted:false};
   saveEvidence(e);
@@ -207,14 +214,24 @@ async function broadcast(){
   const sig58=base58(tx.signatures[0]);
   const existing=await c.getSignatureStatuses([sig58],{searchTransactionHistory:true});
   assert(existing.value[0]===null,'Signature already has network status');
-  assert(await c.getBlockHeight('confirmed')<=e.lastValidBlockHeight,'Signed blockhash expired; no broadcast');
+  const beforeRequestedAt=new Date().toISOString();
+  const beforeHeight=await c.getBlockHeight('confirmed');
+  e.expiryHeightReadBeforePreflight={blockHeight:beforeHeight,comparedLastValidBlockHeight:e.lastValidBlockHeight,
+    rpcEndpoint:RPC,commitment:'confirmed',requestedAt:beforeRequestedAt,receivedAt:new Date().toISOString()};
+  saveEvidence(e);renderEvidence(e);
+  assert(beforeHeight<=e.lastValidBlockHeight,'Signed blockhash expired; no broadcast');
   const live=await preflight();
   assert(live.rent===e.rentLamports,'Rent changed since signed evidence was recorded');
   const liveFee=await c.getFeeForMessage(tx.message,'confirmed');
   assert(liveFee.value!==null&&liveFee.value<=accepted.maxNetworkFeeLamports&&live.rent+liveFee.value<=e.maxTotalCostLamports,'Live network fee exceeds displayed cap');
   const sim=await c.simulateTransaction(tx,{sigVerify:true,replaceRecentBlockhash:false,commitment:'confirmed'});
   assert(sim.value?.err===null,`Exact signed transaction simulation failed: ${JSON.stringify(sim.value?.err)}`);
-  assert(await c.getBlockHeight('confirmed')<=e.lastValidBlockHeight,'Signed blockhash expired after simulation; no broadcast');
+  const afterRequestedAt=new Date().toISOString();
+  const afterHeight=await c.getBlockHeight('confirmed');
+  e.expiryHeightReadAfterSimulation={blockHeight:afterHeight,comparedLastValidBlockHeight:e.lastValidBlockHeight,
+    rpcEndpoint:RPC,commitment:'confirmed',requestedAt:afterRequestedAt,receivedAt:new Date().toISOString()};
+  saveEvidence(e);renderEvidence(e);
+  assert(afterHeight<=e.lastValidBlockHeight,'Signed blockhash expired after simulation; no broadcast');
   e.sendAttempted=true;e.sendAttemptedAt=new Date().toISOString();e.signatureBase58=sig58;saveEvidence(e);
   status(`Submitting exact signed P01 once. Signature ${sig58}. No retry.`);
   try{const returned=await c.sendRawTransaction(tx.serialize(),{skipPreflight:false,maxRetries:0,preflightCommitment:'confirmed'});

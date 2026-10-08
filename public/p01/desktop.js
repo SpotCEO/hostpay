@@ -91,8 +91,13 @@ function assertCompatibleMessage(m,original,data){
   const microLamports=new DataView(priceData.buffer,priceData.byteOffset,priceData.byteLength).getBigUint64(1,true);
   const priorityFee=(BigInt(MAX_CU)*microLamports+999999n)/1000000n;
   assert(microLamports<=MAX_MICROLAMPORTS_PER_CU&&priorityFee<=MAX_PRIORITY_LAMPORTS,'Phantom priority fee exceeds approved cap');
-  check(2,LIGHTHOUSE,[TREASURY],LIGHTHOUSE_TREASURY);
-  check(3,LIGHTHOUSE,[P01],LIGHTHOUSE_P01);
+  if(keys[ix[2].accountKeyIndexes[0]]===P01){
+    check(2,LIGHTHOUSE,[P01],LIGHTHOUSE_P01);
+    check(3,LIGHTHOUSE,[TREASURY],LIGHTHOUSE_TREASURY);
+  }else{
+    check(2,LIGHTHOUSE,[TREASURY],LIGHTHOUSE_TREASURY);
+    check(3,LIGHTHOUSE,[P01],LIGHTHOUSE_P01);
+  }
   check(4,PROGRAM,[CONFIG,TREASURY,P01,F01,F01,W.SystemProgram.programId.toBase58()],hex(data));
   check(5,LIGHTHOUSE,[F01],LIGHTHOUSE_F01);
   return {kind:'BOUNDED_PHANTOM',priorityFeeLamports:Number(priorityFee),maxNetworkFeeLamports:BASE_FEE+Number(priorityFee)};
@@ -220,7 +225,7 @@ async function broadcast(){
 function base58(bytes){const alphabet='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';let n=0n;for(const x of bytes)n=n*256n+BigInt(x);let s='';while(n){s=alphabet[Number(n%58n)]+s;n/=58n;}for(const x of bytes){if(x)break;s='1'+s;}return s;}
 function init(){
   assert(W&&N&&crypto?.subtle,'Required local browser libraries unavailable');
-  $('details').textContent=`Program: ${PROGRAM}\nMembers: ${F01}, ${F02}, ${GOV}\nThreshold: 2 of 3; timelock: 0 seconds\nCreator / createKey / payer / signer: ${F01}\nNew multisig: ${P01}\nVault index 0: ${VAULT}\nConfig authority: null; rent collector: null\nCreation instruction SHA256: ${DATA_SHA256}\nAllowed Phantom additions, in order: 200,000 compute-unit limit; compute-unit price at most 375,000 micro-lamports (priority fee at most 75,000 lamports); Lighthouse asserts treasury System-owned/data length 0; P01 zero lamports; then the unchanged Squads creation; then Lighthouse asserts F01 balance >= 92,913,908 lamports and System-owned/data length 0. No other changes are accepted.`;
+  $('details').textContent=`Program: ${PROGRAM}\nMembers: ${F01}, ${F02}, ${GOV}\nThreshold: 2 of 3; timelock: 0 seconds\nCreator / createKey / payer / signer: ${F01}\nNew multisig: ${P01}\nVault index 0: ${VAULT}\nConfig authority: null; rent collector: null\nCreation instruction SHA256: ${DATA_SHA256}\nAllowed Phantom additions, in order: 200,000 compute-unit limit; compute-unit price at most 375,000 micro-lamports (priority fee at most 75,000 lamports); Lighthouse asserts treasury System-owned/data length 0 and P01 zero lamports in either exact order; then the unchanged Squads creation; then Lighthouse asserts F01 balance >= 92,913,908 lamports and System-owned/data length 0. No other changes are accepted.`;
   const p=window.phantom?.solana;
   if(p?.isPhantom)p.on('accountChanged',()=>{prepared=null;show('prepare',false);show('sign',false);show('broadcast',false);status(`Phantom account changed. Selected: ${selected()||'none'}. Any prepared P01 was discarded; no automatic retry.`);});
   $('connect').onclick=()=>connect().catch(x=>stop(x.message));

@@ -26,6 +26,11 @@ function observed(price=375000n){
     {programIdIndex:5,accountKeyIndexes:[0],data:bytes('06040300f4c08905000000000403000001000000000000000000')}
   ]};
 }
+function p01First(price=375000n){
+  const m=observed(price);
+  [m.compiledInstructions[2],m.compiledInstructions[3]]=[m.compiledInstructions[3],m.compiledInstructions[2]];
+  return m;
+}
 const elements=new Map();
 const el=id=>{if(!elements.has(id))elements.set(id,{hidden:true,disabled:false,textContent:''});return elements.get(id);};
 const context=vm.createContext({window:{solanaWeb3:{SystemProgram:{programId:pub(S)},ComputeBudgetProgram:{programId:pub(B)}},nacl:{}},document:{getElementById:el},location:{origin:'https://www.hostpayapp.com'},localStorage:{getItem:()=>null},crypto:{subtle:{}},Uint8Array,Array,BigInt,JSON});
@@ -33,16 +38,23 @@ vm.runInContext(script,context);
 const validate=m=>vm.runInContext('assertCompatibleMessage(candidate,original,create)',Object.assign(context,{candidate:m,original,create}));
 assert.equal(validate(original).kind,'EXACT');
 assert.equal(validate(observed()).priorityFeeLamports,75000);
+assert.equal(validate(p01First()).priorityFeeLamports,75000);
 assert.equal(validate(observed(0n)).priorityFeeLamports,0);
+assert.equal(validate(p01First(0n)).priorityFeeLamports,0);
 const rejected=(m,name)=>assert.throws(()=>validate(m),undefined,name);
 rejected(observed(375001n),'priority-fee cap');
 let m=observed();m.compiledInstructions[2].data=bytes('06040100000000000000000000');rejected(m,'changed treasury predicate');
 m=observed();m.compiledInstructions[3].accountKeyIndexes=[2];rejected(m,'changed Lighthouse target');
+m=p01First();m.compiledInstructions[2].data=bytes('06040203000001000000000000000000');assert.throws(()=>validate(m),/Wrong instruction 3 data/,'P01-first wrong predicate');
+m=p01First();m.compiledInstructions[3].accountKeyIndexes=[1];assert.throws(()=>validate(m),/Wrong instruction 4 accounts/,'P01-first wrong treasury target');
+m=p01First();m.compiledInstructions[3]=m.compiledInstructions[2];assert.throws(()=>validate(m),/Wrong instruction 4 accounts/,'duplicate P01 assertion');
 m=observed();m.compiledInstructions[4].data=Uint8Array.of(1);rejected(m,'changed Squads instruction');
 m=observed();m.compiledInstructions.reverse();rejected(m,'reordered instructions');
+m=p01First();[m.compiledInstructions[3],m.compiledInstructions[4]]=[m.compiledInstructions[4],m.compiledInstructions[3]];rejected(m,'Squads interleaved with assertions');
+m=p01First();[m.compiledInstructions[4],m.compiledInstructions[5]]=[m.compiledInstructions[5],m.compiledInstructions[4]];rejected(m,'final F01 assertion moved');
 m=observed();m.header.numReadonlyUnsignedAccounts=4;rejected(m,'new writable account');
 m=observed();m.header.numRequiredSignatures=2;rejected(m,'new signer');
 m=observed();m.addressTableLookups=[{}];rejected(m,'address lookup');
 m=observed();m.recentBlockhash='changed';rejected(m,'blockhash substitution');
 m=observed();m.compiledInstructions.push(m.compiledInstructions[0]);rejected(m,'extra instruction');
-console.log('P01 exact observed Phantom allowlist and adversarial mutations: PASS');
+console.log('P01 exact two-permutation Lighthouse allowlist and adversarial mutations: PASS');

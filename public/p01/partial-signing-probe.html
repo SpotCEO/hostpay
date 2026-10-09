@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HOSTPAY — Phantom partial-signing Test 1</title>
+<style>body{font:16px system-ui,sans-serif;max-width:780px;margin:32px auto;padding:0 16px;line-height:1.5;background:#101820;color:#f5f7fa}button{font:inherit;padding:12px 18px;margin:10px 8px 10px 0;background:#a9e8d2;color:#101820;border:0;border-radius:6px;cursor:pointer}button:disabled{opacity:.5}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#1d2b35;padding:14px;border-radius:6px}</style>
+<h1>HOSTPAY — Phantom partial-signing Test 1</h1>
+<p>This is a harmless Memo transaction used only to test whether F01 can sign while a disposable local fee-payer slot is empty. It has no transfer, Squads, CORE, production-source, Test 2, or broadcast action. Phantom is asked to <strong>sign without sending</strong>.</p>
+<p>Use the existing F01 Treasury account in your desktop Phantom extension. If Phantom warns or changes the message, stop; do not bypass the warning.</p>
+<button id="connect">Connect F01</button>
+<button id="sign" disabled>Sign Test 1 without sending</button>
+<button id="download" disabled>Download retained Test 1 evidence</button>
+<pre id="status">Loading. No transaction signed or sent.</pre>
+<pre id="result">{}</pre>
+<script src="/p01/solana-web3.iife.min.js"></script>
+<script src="/p01/nacl-fast.min.js"></script>
+<script src="/p01/partial-signing-probe.js?v=1"></script>
+</html>

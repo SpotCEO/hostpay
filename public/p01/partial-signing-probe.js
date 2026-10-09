@@ -1,10 +1,10 @@
-/* Test 1 only. Reuses P01's Phantom desktop connection and bundled Solana libraries. No send path. */
+/* Test 1B only. Reuses P01's Phantom desktop connection and bundled Solana libraries. No send path. */
 'use strict';
 const W=window.solanaWeb3,N=window.nacl,$=id=>document.getElementById(id);
 const F01='2g51DvYUJjzddhBLcqSZardaiqpm9oVSYjW6scrS2p2G';
 const MEMO='MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr';
 const RPC='https://solana-rpc.publicnode.com';
-const STORE='hostpay:p01:partial-signing-test1:20261009';
+const STORE='hostpay:p01:partial-signing-test1b:20261009';
 const zero=new Uint8Array(64);
 const assert=(v,m)=>{if(!v)throw Error(m)};
 const key=x=>new W.PublicKey(x);
@@ -40,10 +40,10 @@ async function connect(){
   connected=true;p.on('accountChanged',()=>{started=true;show();$('status').textContent='STOP — Phantom account changed.';});
   $('status').textContent=`F01 selected: ${F01}. No transaction signed or sent.`;show();
 }
-async function test1(){
+async function test1b(){
   assert(connected&&!started&&selected()===F01,'F01 must remain selected');
   started=true;show();
-  record={test:1,at:new Date().toISOString(),status:'STARTED',broadcastCount:0};save();
+  record={test:'1B',at:new Date().toISOString(),status:'STARTED',broadcastCount:0};save();
   try{
     const payer=W.Keypair.generate();
     const latest=await new W.Connection(RPC,'confirmed').getLatestBlockhash('confirmed');
@@ -51,12 +51,20 @@ async function test1(){
     const message=new W.TransactionMessage({payerKey:payer.publicKey,recentBlockhash:latest.blockhash,instructions:[memo]}).compileToV0Message();
     const tx=new W.VersionedTransaction(message),before=Uint8Array.from(message.serialize());
     const signers=message.staticAccountKeys.slice(0,message.header.numRequiredSignatures).map(String);
-    assert(signers.length===2&&signers[0]===String(payer.publicKey)&&signers[1]===F01,'Wrong Test 1 signer layout');
-    assert(tx.signatures.every(s=>same(s,zero)),'Local signer slot was not empty');
+    assert(signers.length===2&&signers[0]===String(payer.publicKey)&&signers[1]===F01,'Wrong Test 1B signer layout');
+    assert(tx.signatures.every(s=>same(s,zero)),'Signer slots were not initially empty');
+    tx.sign([payer]);
+    const afterLocal=Uint8Array.from(tx.message.serialize());
+    assert(same(before,afterLocal),'Local signing changed the message');
+    assert(N.sign.detached.verify(afterLocal,tx.signatures[0],payer.publicKey.toBytes()),'Local payer signature invalid');
+    assert(same(tx.signatures[1],zero),'F01 slot filled before Phantom');
+    const payerSignatureBefore=Uint8Array.from(tx.signatures[0]);
     Object.assign(record,{requiredSigners:signers,phantomSigner:F01,localTestPayer:String(payer.publicKey),blockhash:latest.blockhash,
-      lastValidBlockHeight:latest.lastValidBlockHeight,expectedMessageSha256:await sha(before),prePhantom:decoded(message),slotsEmptyBeforePhantom:true,status:'WAITING_FOR_PHANTOM'});save();show();
+      lastValidBlockHeight:latest.lastValidBlockHeight,expectedMessageSha256:await sha(before),prePhantom:decoded(message),
+      prePhantomWireBase64:b64(Uint8Array.from(tx.serialize())),payerSignatureBeforeBase64:b64(payerSignatureBefore),
+      localSigningMessageUnchanged:true,payerSignatureValidBeforePhantom:true,f01SlotEmptyBeforePhantom:true,status:'WAITING_FOR_PHANTOM'});save();show();
     assert(selected()===F01,'F01 selection changed before signing');
-    $('status').textContent='Test 1: Phantom may sign this harmless Memo. This page cannot broadcast it.';
+    $('status').textContent='Test 1B: if Phantom displays any security warning, click Close. This page cannot broadcast.';
     let returned;
     try{returned=await window.phantom.solana.signTransaction(tx)}catch(error){
       record.status='PHANTOM_REFUSED';record.error=String(error?.message||error);save();show();$('status').textContent='STOP — Phantom refused. No retry or broadcast.';return;
@@ -68,22 +76,25 @@ async function test1(){
     record.postPhantom=decoded(signed.message);
     record.mutations=differences(record.prePhantom,record.postPhantom);
     record.messageUnchanged=same(before,after);
+    record.requiredSignersUnchanged=signed.message.staticAccountKeys.slice(0,signed.message.header.numRequiredSignatures).map(String).join('|')===signers.join('|');
+    record.blockhashUnchanged=signed.message.recentBlockhash===latest.blockhash;
+    record.payerSignaturePreserved=signed.signatures.length===2&&same(signed.signatures[0],payerSignatureBefore);
+    record.payerSignatureValid=signed.signatures.length===2&&N.sign.detached.verify(after,signed.signatures[0],payer.publicKey.toBytes());
     record.f01SignatureValid=signed.signatures.length===2&&N.sign.detached.verify(after,signed.signatures[1],key(F01).toBytes());
-    record.otherSlotsPreservedEmpty=signed.signatures.length===2&&same(signed.signatures[0],zero);
-    record.status=record.messageUnchanged&&record.f01SignatureValid&&record.otherSlotsPreservedEmpty?'PASS':'FAIL';save();show();
-    $('status').textContent=record.status==='PASS'?'Test 1 PASS. No broadcast.':'STOP — Phantom changed the message or signature slots. No retry or broadcast.';
-  }catch(error){record.status='PROBE_ERROR';record.error=String(error?.message||error);save();show();$('status').textContent='STOP — Test 1 error. No retry or broadcast.';}
+    record.status=record.messageUnchanged&&record.requiredSignersUnchanged&&record.blockhashUnchanged&&record.payerSignaturePreserved&&record.payerSignatureValid&&record.f01SignatureValid&&record.mutations.length===0?'PASS':'FAIL';save();show();
+    $('status').textContent=record.status==='PASS'?'Test 1B PASS. No broadcast.':'STOP — Phantom changed the message or signatures. No retry or broadcast.';
+  }catch(error){record.status='PROBE_ERROR';record.error=String(error?.message||error);save();show();$('status').textContent='STOP — Test 1B error. No retry or broadcast.';}
 }
 function download(){
   const blob=new Blob([JSON.stringify(record,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');
-  a.href=url;a.download='hostpay-phantom-partial-signing-test1.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+  a.href=url;a.download='hostpay-phantom-partial-signing-test1b.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 function init(){
   assert(W&&N&&crypto?.subtle,'Required libraries unavailable');
   const prior=localStorage.getItem(STORE);
-  if(prior){record=JSON.parse(prior);started=true;$('status').textContent='Prior Test 1 evidence retained. No retry from this page.';show();return;}
+  if(prior){record=JSON.parse(prior);started=true;$('status').textContent='Prior Test 1B evidence retained. No retry from this page.';show();return;}
   $('connect').onclick=()=>connect().catch(error=>{$('status').textContent=`Connect stopped: ${String(error?.message||error)}`;});
-  $('sign').onclick=()=>test1();$('download').onclick=download;
+  $('sign').onclick=()=>test1b();$('download').onclick=download;
   $('status').textContent='Connect F01 to start. No transaction signed or sent.';show();
 }
 init();
